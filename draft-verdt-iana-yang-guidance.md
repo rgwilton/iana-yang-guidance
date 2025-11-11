@@ -43,7 +43,7 @@ informative:
 
 --- abstract
 
-This document provides guidance to the Internet Assigned Numbers Authority (IANA) for managing YANG modules. It covers two primary cases: (1) handling YANG modules published in IETF documents, and (2) managing YANG modules derived from IANA registries. The guidance builds upon the YANG module versioning framework, YANG Semantic Versioning (YANG Semver), and associated IETF standards to ensure consistent and correct versioning of IANA-maintained YANG modules.
+This document provides guidance to the Internet Assigned Numbers Authority (IANA) for managing YANG modules. It covers two primary cases: (1) handling YANG modules published in IETF documents, and (2) managing YANG modules derived from IANA registries. The guidance builds upon the YANG Module Versioning Framework, YANG Semantic Versioning (YANG Semver), and associated IETF standards to ensure consistent and correct versioning of IANA-maintained YANG modules.
 
 --- middle
 
@@ -65,29 +65,6 @@ The guidance in this document is based on several key IETF documents:
 - {{I-D.ietf-netmod-yang-semver}} - Defines YANG Semantic Versioning (YANG Semver) for YANG modules
 - {{I-D.ietf-netmod-yang-module-filename}} - Defines filename conventions for YANG modules
 - {{I-D.ietf-netmod-rfc8407bis}} - Provides general guidelines for YANG module authors
-
-## Scope
-
-This document focuses specifically on IANA's role in maintaining YANG modules. It provides:
-
-- Clear decision criteria for classifying changes
-- Detailed scenarios with examples
-- References to available tooling
-- Processes for seeking expert guidance when needed
-
-## Document Organization
-
-{{sec-background}} provides background on YANG versioning concepts.
-
-{{sec-cases}} describes the two primary cases IANA handles.
-
-{{sec-classification}} explains how to classify changes as NBC, BC, or editorial.
-
-{{sec-scenarios}} provides detailed scenarios for common registry actions.
-
-{{sec-tooling}} describes available tooling and recommended usage.
-
-{{sec-expert-guidance}} explains when and how to seek expert guidance.
 
 # Conventions and Definitions
 
@@ -253,17 +230,17 @@ It is better to ask for clarification than to publish an incorrectly versioned m
 
 ## Quick Classification Guide
 
-| Change Type | Classification | Version | Extension |
+| Change Type | Classification | Version Change | Add NBC Extension |
 |:------------|:--------------|:--------|:----------|
 | Add new enum/identity | BC | MINOR | No |
 | Update reference statement | Editorial | PATCH | No |
 | Change status to deprecated | BC | MINOR | No |
-| Change status to obsolete | NBC | MAJOR | YES |
-| Remove enum/identity | NBC | MAJOR | YES |
-| Rename enum/identity | NBC | MAJOR | YES |
-| Change enum value number | NBC | MAJOR | YES |
+| Change status to obsolete | NBC | MAJOR | Yes |
+| Remove enum/identity | NBC | MAJOR | Yes |
+| Rename enum/identity | NBC | MAJOR | Yes |
+| Change enum value number | NBC | MAJOR | Yes |
 | Clarify description (no meaning change) | Editorial | PATCH | No |
-| Change description meaning | NBC | MAJOR | YES |
+| Change description meaning | NBC | MAJOR | Yes |
 
 # Common Scenarios {#sec-scenarios}
 
@@ -415,14 +392,21 @@ A comprehensive list of scenarios with detailed examples is provided in the comp
 **Example**:
 
 ~~~~ yang
-  // Previous version 1.0.0
+  revision 2025-10-15 {
+    ysv:version "1.0.0";
+    description "Initial version";
+  }
+
   enum foo {
     value 42;
     description "Foo interface type";
     reference "RFC 1234";
   }
+~~~~
+{: align="left" title="Previous module version (1.0.0)"}
 
-  // New version 1.0.1
+
+~~~~ yang
   revision 2025-11-15 {
     ysv:version "1.0.1";
     description "Updated reference for RFC obsolescence";
@@ -434,6 +418,8 @@ A comprehensive list of scenarios with detailed examples is provided in the comp
     reference "RFC 5678 (obsoletes RFC 1234)";
   }
 ~~~~
+{: align="right" title="New module version (1.0.1)"}
+
 
 # Available Tooling {#sec-tooling}
 
@@ -444,16 +430,19 @@ Several tools are available to assist IANA in validating and versioning YANG mod
 ### pyang
 
 **pyang** is a widely-used YANG validator and converter. It can:
+
 - Validate YANG syntax
 - Check for backwards-compatible violations
 - Generate tree diagrams and documentation
 
 **Basic Usage**:
+
 ~~~~ shell
   pyang --ietf module-name.yang
 ~~~~
 
 **Checking for NBC Changes** (comparing two versions):
+
 ~~~~ shell
   pyang --check-update-from old-module.yang new-module.yang
 ~~~~
@@ -463,11 +452,13 @@ This command will report violations of the backwards-compatible update rules.
 ### yanglint
 
 **yanglint** (from the libyang project) can:
+
 - Validate YANG modules
 - Check cross-module dependencies
 - Validate instance data against YANG models
 
 **Basic Usage**:
+
 ~~~~ shell
   yanglint module-name.yang
 ~~~~
@@ -475,6 +466,7 @@ This command will report violations of the backwards-compatible update rules.
 ### YANG Catalog Tools
 
 The YANG Catalog (https://www.yangcatalog.org) provides online tools for:
+
 - Validating YANG modules
 - Comparing module versions
 - Viewing module dependencies
@@ -504,6 +496,7 @@ Always combine tool usage with the classification guidance in this document and 
 ## Future Tool Development
 
 The NETMOD working group is developing additional tools specifically for IANA YANG module management, including:
+
 - Automated registry-to-YANG conversion
 - NBC change detection optimized for IANA modules
 - Version recommendation based on changes
@@ -529,6 +522,7 @@ IANA SHOULD contact YANG experts in the following situations:
 ### Primary Contact: YANG Doctors
 
 Email the YANG Doctors mailing list:
+
 - **Email**: yang-doctors@ietf.org
 - **Purpose**: Technical review and guidance on YANG modules
 - **Response Time**: Typically 1-2 weeks
@@ -607,26 +601,26 @@ This appendix provides a comprehensive reference table of common registry action
 
 ## Quick Reference Table
 
-| Registry Action | YANG Change | Classification | Version | NBC Extension Required |
+| Registry Action | YANG Change | Change classification | Version Change | NBC Extension Required |
 |:----------------|:------------|:---------------|:--------|:-------------------|
 | Add new registration | Add enum/identity | BC | MINOR | No |
 | Update reference (obsoleted RFC) | Update reference | Editorial | PATCH | No |
 | Add additional reference | Update reference | Editorial | PATCH | No |
 | Draft → RFC reference | Update reference | Editorial | PATCH | No |
 | Deprecate (keep name) | status deprecated | BC | MINOR | No |
-| Obsolete entry | status obsolete | NBC | MAJOR | YES |
-| Remove entry completely | Remove enum/identity | NBC | MAJOR | YES |
-| Deprecate + remove name | Remove enum/identity | NBC | MAJOR | YES |
-| Change value number | Change value | NBC | MAJOR | YES |
-| Reuse old value | Add with old value | NBC | MAJOR | YES |
+| Obsolete entry | status obsolete | NBC | MAJOR | Yes |
+| Remove entry completely | Remove enum/identity | NBC | MAJOR | Yes |
+| Deprecate + remove name | Remove enum/identity | NBC | MAJOR | Yes |
+| Change value number | Change value | NBC | MAJOR | Yes |
+| Reuse old value | Add with old value | NBC | MAJOR | Yes |
 | Update description (clarify) | Update description | Editorial | PATCH | No |
-| Update description (change meaning) | Update description | NBC | MAJOR | YES |
-| Rename entry | Change identifier | NBC | MAJOR | YES |
+| Update description (change meaning) | Update description | NBC | MAJOR | Yes |
+| Rename entry | Change identifier | NBC | MAJOR | Yes |
 | Add footnote | Optionally update | Editorial | PATCH | No |
 | Non-YANG field changes | No change | N/A | None | No |
 | Errata | Depends on content | Analyze | Varies | Maybe |
 | Early alloc expired (left as-is) | No change | N/A | None | No |
-| Early alloc expired (removed) | Follow removal rules | NBC | MAJOR | YES |
+| Early alloc expired (removed) | Follow removal rules | NBC | MAJOR | Yes |
 | Revive expired allocation | Add enum/identity | BC | MINOR | No |
 
 ## Notes on the Table
@@ -634,7 +628,7 @@ This appendix provides a comprehensive reference table of common registry action
 - **BC** = Backwards-Compatible
 - **NBC** = Non-Backwards-Compatible
 - **MAJOR/MINOR/PATCH** refer to the YANG Semver version components
-- **Extension Required YES** means rev:non-backwards-compatible MUST be added
+- **NBC Extension Required** *Yes* means *rev:non-backwards-compatible* MUST be added under the new revision statement.
 - When **Varies** or **Maybe** is shown, analyze the specific change using the detailed scenario guidance
 
 # Appendix B: Example IANA-Maintained Modules

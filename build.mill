@@ -14,24 +14,16 @@ object `package` extends IETF:
 
   // All RFCs that we need to extract YANG from.
   def rfcDeps = List(
-    //8525, // Replaces 7895
-    //8072, 8341, 8342, 8343, 8344, 8529, 8639, 8641, 9196, 9640, 9641, 9642, 9643, 9645,
-  )
+    7950
+ )
 
   // All drafts that we need to extract YANG from.
   def draftDeps = Seq(
-    // "draft-ietf-netmod-rfc6991-bis-18",
-    // "draft-ietf-netconf-https-notif-15",
-    // "draft-ietf-netconf-udp-notif-23",
-    // "draft-ietf-netconf-udp-client-server-08",
-    // "draft-ietf-netconf-distributed-notif-16",
-    // "draft-ietf-netconf-http-client-server-29",
-    // "draft-ietf-netconf-yang-notifications-versioning-09",
-    // "draft-ietf-netconf-yang-library-augmentedby-12",
-    // "draft-ietf-netmod-yang-module-versioning-15",
-    // "draft-ietf-netmod-yang-semver-24",
-    // "draft-netana-netconf-yp-transport-capabilities-01",
-    // "draft-netana-netconf-notif-envelope-02"
+     "draft-ietf-netmod-yang-module-versioning-15",
+     "draft-ietf-netmod-yang-semver-24",
+     "draft-ietf-netmod-rfc8407bis-28",
+     "draft-ietf-netmod-yang-module-filename-03",
+     "draft-ietf-netmod-yang-schema-comparison-05"
   )
 
   // IANA YANG dependencies.
