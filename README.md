@@ -1,15 +1,8 @@
 <!-- regenerate: on (set to off if you edit this file) -->
 
-# YOURNAME Drafts
+# IANA Guidance Drafts
 
 This is the working area for individual Internet-Drafts.
-
-## TODO - Your title
-
-* [Editor's Copy](https://rgwilton.github.io/iana-yang-guidance/#go.draft-todo-yourname-protocol.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-todo-yourname-protocol)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-todo-yourname-protocol)
-* [Compare Editor's Copy to Individual Draft](https://rgwilton.github.io/iana-yang-guidance/#go.draft-todo-yourname-protocol.diff)
 
 ## Guidance to IANA for managing YANG modules
 
