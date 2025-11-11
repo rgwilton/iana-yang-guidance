@@ -2,14 +2,14 @@
 
 
 
-WG Working Group                                              Y. N. Here
+IANA                                                           R. Wilton
 Internet-Draft                                    Your Organization Here
 Intended status: Informational                          11 November 2025
 Expires: 15 May 2026
 
 
                Guidance to IANA for managing YANG modules
-                      draft-todo-yourname-protocol
+                 draft-verdt-iana-yang-guidance-latest
 
 Abstract
 
@@ -20,15 +20,13 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://example.com/LATEST.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-todo-yourname/.
+   https://rgwilton.github.io/iana-yang-guidance/draft-verdt-iana-yang-
+   guidance.html.  Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-verdt-iana-yang-guidance/.
 
-   Discussion of this document takes place on the WG Working Group
-   mailing list (mailto:WG@example.com), which is archived at
-   https://example.com/WG.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/USER/REPO.
+   https://github.com/rgwilton/iana-yang-guidance.
 
 Status of This Memo
 
@@ -108,6 +106,6 @@ Acknowledgments
 
 Author's Address
 
-   Your Name Here
+   Robert Wilton
    Your Organization Here
-   Email: your.email@example.com
+   Email: robert.public@wilton.org.uk
