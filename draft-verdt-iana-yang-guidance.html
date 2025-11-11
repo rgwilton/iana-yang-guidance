@@ -7,7 +7,7 @@
 <title>Guidance to IANA for managing YANG modules</title>
 <meta content="Robert Wilton" name="author">
 <meta content="
-       TODO Abstract 
+       This document provides guidance to the Internet Assigned Numbers Authority (IANA) for managing YANG modules. It covers two primary cases: (1) handling YANG modules published in IETF documents, and (2) managing YANG modules derived from IANA registries. The guidance builds upon the YANG module versioning framework, YANG Semantic Versioning (YANG Semver), and associated IETF standards to ensure consistent and correct versioning of IANA-maintained YANG modules. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
 <meta content="IANA" name="keyword">
@@ -1080,7 +1080,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Guidance to IANA for managing YANG modules</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document provides guidance to the Internet Assigned Numbers Authority (IANA) for managing YANG modules. It covers two primary cases: (1) handling YANG modules published in IETF documents, and (2) managing YANG modules derived from IANA registries. The guidance builds upon the YANG module versioning framework, YANG Semantic Versioning (YANG Semver), and associated IETF standards to ensure consistent and correct versioning of IANA-maintained YANG modules.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1090,7 +1090,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-note.1-2">
         The latest revision of this draft can be found at <span><a href="https://rgwilton.github.io/iana-yang-guidance/draft-verdt-iana-yang-guidance.html">https://rgwilton.github.io/iana-yang-guidance/draft-verdt-iana-yang-guidance.html</a></span>.
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-verdt-iana-yang-guidance/">https://datatracker.ietf.org/doc/draft-verdt-iana-yang-guidance/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3"></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        Network Modelling Working Group mailing list (<span><a href="mailto:netmod@ietf.org">mailto:netmod@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/netmod/">https://mailarchive.ietf.org/arch/browse/netmod/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/netmod/">https://www.ietf.org/mailman/listinfo/netmod/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
         <span><a href="https://github.com/rgwilton/iana-yang-guidance">https://github.com/rgwilton/iana-yang-guidance</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
@@ -1144,24 +1148,192 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-scope" class="internal xref">Scope</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-document-organization" class="internal xref">Document Organization</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-background-on-yang-versioni" class="internal xref">Background on YANG Versioning</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-yang-semantic-versioning" class="internal xref">YANG Semantic Versioning</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-the-revnon-backwards-compat" class="internal xref">The rev:non-backwards-compatible Extension</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-backwards-compatible-change" class="internal xref">Backwards-Compatible Change Rules</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-non-backwards-compatible-ch" class="internal xref">Non-Backwards-Compatible Changes</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-two-primary-cases-for-iana" class="internal xref">Two Primary Cases for IANA</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-case-1-yang-modules-publish" class="internal xref">Case 1: YANG Modules Published in IETF Documents</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.1">
+                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="auto internal xref">4.1.1</a>.  <a href="#name-iana-actions-for-case-1" class="internal xref">IANA Actions for Case 1</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-case-2-yang-modules-derived" class="internal xref">Case 2: YANG Modules Derived from IANA Registries</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="auto internal xref">4.2.1</a>.  <a href="#name-characteristics-of-iana-mai" class="internal xref">Characteristics of IANA-Maintained Modules</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.2">
+                    <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="auto internal xref">4.2.2</a>.  <a href="#name-iana-actions-for-case-2" class="internal xref">IANA Actions for Case 2</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-classifying-changes" class="internal xref">Classifying Changes</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-classification-principles" class="internal xref">Classification Principles</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.1">
+                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-principle-1-the-source-does" class="internal xref">Principle 1: The Source Does Not Determine Classification</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.2">
+                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-principle-2-focus-on-module" class="internal xref">Principle 2: Focus on Module Content</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.3">
+                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-principle-3-when-in-doubt-a" class="internal xref">Principle 3: When in Doubt, Ask</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-quick-classification-guide" class="internal xref">Quick Classification Guide</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-common-scenarios" class="internal xref">Common Scenarios</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-adding-a-new-registry-entry" class="internal xref">Adding a New Registry Entry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-deprecating-a-registry-entr" class="internal xref">Deprecating a Registry Entry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-obsoleting-a-registry-entry" class="internal xref">Obsoleting a Registry Entry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-updating-references" class="internal xref">Updating References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-available-tooling" class="internal xref">Available Tooling</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-yang-validation-tools" class="internal xref">YANG Validation Tools</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.1">
+                    <p id="section-toc.1-1.7.2.1.2.1.1"><a href="#section-7.1.1" class="auto internal xref">7.1.1</a>.  <a href="#name-pyang" class="internal xref">pyang</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.2">
+                    <p id="section-toc.1-1.7.2.1.2.2.1"><a href="#section-7.1.2" class="auto internal xref">7.1.2</a>.  <a href="#name-yanglint" class="internal xref">yanglint</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.3">
+                    <p id="section-toc.1-1.7.2.1.2.3.1"><a href="#section-7.1.3" class="auto internal xref">7.1.3</a>.  <a href="#name-yang-catalog-tools" class="internal xref">YANG Catalog Tools</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-recommended-workflow" class="internal xref">Recommended Workflow</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-tool-limitations" class="internal xref">Tool Limitations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.4">
+                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="auto internal xref">7.4</a>.  <a href="#name-future-tool-development" class="internal xref">Future Tool Development</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-seeking-expert-guidance" class="internal xref">Seeking Expert Guidance</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-when-to-seek-guidance" class="internal xref">When to Seek Guidance</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-how-to-seek-guidance" class="internal xref">How to Seek Guidance</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.1">
+                    <p id="section-toc.1-1.8.2.2.2.1.1"><a href="#section-8.2.1" class="auto internal xref">8.2.1</a>.  <a href="#name-primary-contact-yang-doctor" class="internal xref">Primary Contact: YANG Doctors</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.2">
+                    <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="auto internal xref">8.2.2</a>.  <a href="#name-secondary-contact-netmod-wg" class="internal xref">Secondary Contact: NETMOD WG</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.3">
+                    <p id="section-toc.1-1.8.2.2.2.3.1"><a href="#section-8.2.3" class="auto internal xref">8.2.3</a>.  <a href="#name-area-director-contact" class="internal xref">Area Director Contact</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-example-request" class="internal xref">Example Request</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-appendix-a-summary-of-regis" class="internal xref">Appendix A: Summary of Registry Action Scenarios</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
+                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-quick-reference-table" class="internal xref">Quick Reference Table</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
+                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-notes-on-the-table" class="internal xref">Notes on the Table</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-appendix-b-example-iana-mai" class="internal xref">Appendix B: Example IANA-Maintained Modules</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.1">
+                <p id="section-toc.1-1.13.2.1.1"><a href="#appendix-B.1" class="auto internal xref">B.1</a>.  <a href="#name-example-iana-if-type-module" class="internal xref">Example: iana-if-type Module Structure</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
+            <p id="section-toc.1-1.15.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1172,7 +1344,75 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">The Internet Assigned Numbers Authority (IANA) maintains numerous registries that contain protocol parameters, identifiers, and other values used in Internet protocols. Many of these registries have corresponding YANG <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span> modules that provide a machine-readable representation of the registry contents. When registries are updated, the corresponding YANG modules must also be updated following specific versioning rules defined by the IETF.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">This document provides comprehensive guidance to IANA on:<a href="#section-1-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-1-3">
+<li id="section-1-3.1">
+          <p id="section-1-3.1.1">How to handle YANG modules being published in IETF documents<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-1-3.2">
+          <p id="section-1-3.2.1">How to manage YANG modules derived from IANA registries<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-1-3.3">
+          <p id="section-1-3.3.1">How to determine the correct version for updated YANG modules<a href="#section-1-3.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-1-3.4">
+          <p id="section-1-3.4.1">How to classify changes as non-backwards-compatible (NBC), backwards-compatible (BC), or editorial<a href="#section-1-3.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-1-3.5">
+          <p id="section-1-3.5.1">When to seek additional expert guidance<a href="#section-1-3.5.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+<p id="section-1-4">The guidance in this document is based on several key IETF documents:<a href="#section-1-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-5.1">
+          <p id="section-1-5.1.1"><span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> - Defines updated YANG module revision handling, including rules for non-backwards-compatible changes<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-5.2">
+          <p id="section-1-5.2.1"><span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span> - Defines YANG Semantic Versioning (YANG Semver) for YANG modules<a href="#section-1-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-5.3">
+          <p id="section-1-5.3.1"><span>[<a href="#I-D.ietf-netmod-yang-module-filename" class="cite xref">I-D.ietf-netmod-yang-module-filename</a>]</span> - Defines filename conventions for YANG modules<a href="#section-1-5.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-5.4">
+          <p id="section-1-5.4.1"><span>[<a href="#I-D.ietf-netmod-rfc8407bis" class="cite xref">I-D.ietf-netmod-rfc8407bis</a>]</span> - Provides general guidelines for YANG module authors<a href="#section-1-5.4.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<div id="scope">
+<section id="section-1.1">
+        <h3 id="name-scope">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-scope" class="section-name selfRef">Scope</a>
+        </h3>
+<p id="section-1.1-1">This document focuses specifically on IANA's role in maintaining YANG modules. It provides:<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.1-2.1">
+            <p id="section-1.1-2.1.1">Clear decision criteria for classifying changes<a href="#section-1.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.2">
+            <p id="section-1.1-2.2.1">Detailed scenarios with examples<a href="#section-1.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.3">
+            <p id="section-1.1-2.3.1">References to available tooling<a href="#section-1.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.4">
+            <p id="section-1.1-2.4.1">Processes for seeking expert guidance when needed<a href="#section-1.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="document-organization">
+<section id="section-1.2">
+        <h3 id="name-document-organization">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-document-organization" class="section-name selfRef">Document Organization</a>
+        </h3>
+<p id="section-1.2-1"><a href="#sec-background" class="auto internal xref">Section 3</a> provides background on YANG versioning concepts.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2"><a href="#sec-cases" class="auto internal xref">Section 4</a> describes the two primary cases IANA handles.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3"><a href="#sec-classification" class="auto internal xref">Section 5</a> explains how to classify changes as NBC, BC, or editorial.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4"><a href="#sec-scenarios" class="auto internal xref">Section 6</a> provides detailed scenarios for common registry actions.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5"><a href="#sec-tooling" class="auto internal xref">Section 7</a> describes available tooling and recommended usage.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6"><a href="#sec-expert-guidance" class="auto internal xref">Section 8</a> explains when and how to seek expert guidance.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1184,51 +1424,1233 @@ svg :is([fill="white"], [fill^="#fff"]) {
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">This document uses the following terminology:<a href="#section-2-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-3">
+        <dt id="section-2-3.1"><strong>Non-Backwards-Compatible (NBC) Change</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.2">
+          <p id="section-2-3.2.1">A change to a YANG module that does not conform to the backwards-compatible update rules defined in <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. NBC changes require incrementing the MAJOR version number and adding the rev:non-backwards-compatible extension statement.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.3"><strong>Backwards-Compatible (BC) Change</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.4">
+          <p id="section-2-3.4.1">A change to a YANG module that conforms to the backwards-compatible update rules defined in <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. BC changes require incrementing the MINOR version number.<a href="#section-2-3.4.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.5"><strong>Editorial Change</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.6">
+          <p id="section-2-3.6.1">A change to a YANG module that does not affect the semantic meaning of the module. Editorial changes require incrementing the PATCH version number.<a href="#section-2-3.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.7"><strong>YANG Semver</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.8">
+          <p id="section-2-3.8.1">YANG Semantic Versioning - a version identifier in the format MAJOR.MINOR.PATCH that indicates the compatibility level of a YANG module, as defined in <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span>.<a href="#section-2-3.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.9"><strong>IANA-Maintained Module</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.10">
+          <p id="section-2-3.10.1">A YANG module maintained by IANA, typically derived from one or more IANA registries. These modules have names starting with "iana-" (e.g., iana-if-type, iana-routing-types).<a href="#section-2-3.10.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-background">
+<section id="section-3">
+      <h2 id="name-background-on-yang-versioni">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-background-on-yang-versioni" class="section-name selfRef">Background on YANG Versioning</a>
+      </h2>
+<div id="yang-semantic-versioning">
+<section id="section-3.1">
+        <h3 id="name-yang-semantic-versioning">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-yang-semantic-versioning" class="section-name selfRef">YANG Semantic Versioning</a>
+        </h3>
+<p id="section-3.1-1">YANG Semantic Versioning (YANG Semver), defined in <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span>, uses a three-part version identifier in the format MAJOR.MINOR.PATCH:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.1">
+            <p id="section-3.1-2.1.1"><strong>MAJOR</strong> version increments indicate non-backwards-compatible changes<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-2.2">
+            <p id="section-3.1-2.2.1"><strong>MINOR</strong> version increments indicate backwards-compatible feature additions<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-2.3">
+            <p id="section-3.1-2.3.1"><strong>PATCH</strong> version increments indicate editorial or documentation-only changes<a href="#section-3.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.1-3">For example, if a YANG module is at version 1.2.3:
+- A non-backwards-compatible change would update it to 2.0.0
+- A backwards-compatible feature addition would update it to 1.3.0
+- An editorial change would update it to 1.2.4<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="the-revnon-backwards-compatible-extension">
+<section id="section-3.2">
+        <h3 id="name-the-revnon-backwards-compat">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-the-revnon-backwards-compat" class="section-name selfRef">The rev:non-backwards-compatible Extension</a>
+        </h3>
+<p id="section-3.2-1">The YANG module versioning framework <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines the "rev:non-backwards-compatible" extension statement. This extension <span class="bcp14">MUST</span> be added as a substatement of a revision statement whenever that revision contains non-backwards-compatible changes relative to the previous revision.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">Example:<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="section-3.2-3">
+<pre>
+  revision 2025-11-15 {
+    ysv:version "2.0.0";
+    rev:non-backwards-compatible;
+    description
+      "Removed obsolete interface types. This is a
+       non-backwards-compatible change.";
+  }
+</pre><a href="#section-3.2-3" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="backwards-compatible-change-rules">
+<section id="section-3.3">
+        <h3 id="name-backwards-compatible-change">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-backwards-compatible-change" class="section-name selfRef">Backwards-Compatible Change Rules</a>
+        </h3>
+<p id="section-3.3-1">According to <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>, the following types of changes are considered backwards-compatible:<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3-2.1">
+            <p id="section-3.3-2.1.1">Adding new data nodes (e.g., new enums, identities, leafs)<a href="#section-3.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.2">
+            <p id="section-3.3-2.2.1">Adding new optional elements<a href="#section-3.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.3">
+            <p id="section-3.3-2.3.1">Changing status from "current" to "deprecated"<a href="#section-3.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.4">
+            <p id="section-3.3-2.4.1">Removing schema nodes with status "obsolete"<a href="#section-3.3-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.5">
+            <p id="section-3.3-2.5.1">Adding or updating "description" and "reference" statements (if the semantic meaning is unchanged)<a href="#section-3.3-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.6">
+            <p id="section-3.3-2.6.1">Adding, removing, or changing extension statements (depending on the specific extension)<a href="#section-3.3-2.6.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="non-backwards-compatible-changes">
+<section id="section-3.4">
+        <h3 id="name-non-backwards-compatible-ch">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-non-backwards-compatible-ch" class="section-name selfRef">Non-Backwards-Compatible Changes</a>
+        </h3>
+<p id="section-3.4-1">The following types of changes are non-backwards-compatible:<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4-2.1">
+            <p id="section-3.4-2.1.1">Removing data nodes (unless already marked obsolete)<a href="#section-3.4-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.2">
+            <p id="section-3.4-2.2.1">Changing status from "current" or "deprecated" to "obsolete"<a href="#section-3.4-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.3">
+            <p id="section-3.4-2.3.1">Renaming data nodes or changing their identifiers<a href="#section-3.4-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.4">
+            <p id="section-3.4-2.4.1">Changing the type of a data node in a way that alters syntax or semantics<a href="#section-3.4-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.5">
+            <p id="section-3.4-2.5.1">Changing numeric values assigned to enums<a href="#section-3.4-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.6">
+            <p id="section-3.4-2.6.1">Modifying descriptions in ways that change semantic meaning<a href="#section-3.4-2.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.7">
+            <p id="section-3.4-2.7.1">Restricting the allowed value set (e.g., reducing ranges, removing enum values)<a href="#section-3.4-2.7.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-cases">
+<section id="section-4">
+      <h2 id="name-two-primary-cases-for-iana">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-two-primary-cases-for-iana" class="section-name selfRef">Two Primary Cases for IANA</a>
+      </h2>
+<div id="case-1-yang-modules-published-in-ietf-documents">
+<section id="section-4.1">
+        <h3 id="name-case-1-yang-modules-publish">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-case-1-yang-modules-publish" class="section-name selfRef">Case 1: YANG Modules Published in IETF Documents</a>
+        </h3>
+<p id="section-4.1-1">When IETF documents containing YANG modules are published as RFCs, IANA is responsible for:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.1-2">
+<li id="section-4.1-2.1">
+            <p id="section-4.1-2.1.1">Registering the YANG module in the "YANG Module Names" registry<a href="#section-4.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-4.1-2.2">
+            <p id="section-4.1-2.2.1">Ensuring the module file is available via the IANA website<a href="#section-4.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-4.1-2.3">
+            <p id="section-4.1-2.3.1">Verifying that the module includes the required YANG Semver version identifier<a href="#section-4.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-4.1-2.4">
+            <p id="section-4.1-2.4.1">Checking that the rev:non-backwards-compatible extension is present when required<a href="#section-4.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+<p id="section-4.1-3">For modules published in RFCs, the IETF document authors are responsible for determining the correct version and ensuring compliance with versioning rules. IANA's role is primarily verification and registration.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<div id="iana-actions-for-case-1">
+<section id="section-4.1.1">
+          <h4 id="name-iana-actions-for-case-1">
+<a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-iana-actions-for-case-1" class="section-name selfRef">IANA Actions for Case 1</a>
+          </h4>
+<p id="section-4.1.1-1">When processing a YANG module from an RFC:<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.1.1-2">
+<li id="section-4.1.1-2.1">
+              <p id="section-4.1.1-2.1.1"><strong>Verify Version Presence</strong>: Check that the module includes a ysv:version statement in the most recent revision<a href="#section-4.1.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.1.1-2.2">
+              <p id="section-4.1.1-2.2.1"><strong>Verify NBC Extension</strong>: If the version indicates an NBC change (MAJOR version increment from previous RFC), verify that rev:non-backwards-compatible is present<a href="#section-4.1.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.1.1-2.3">
+              <p id="section-4.1.1-2.3.1"><strong>Register Module</strong>: Add the module to the YANG Module Names registry<a href="#section-4.1.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.1.1-2.4">
+              <p id="section-4.1.1-2.4.1"><strong>Publish Module</strong>: Make the module file available on the IANA website<a href="#section-4.1.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.1.1-2.5">
+              <p id="section-4.1.1-2.5.1"><strong>Report Issues</strong>: If versioning problems are found, report them to the RFC authors and the NETMOD working group<a href="#section-4.1.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
+</section>
+</div>
+</section>
+</div>
+<div id="case-2-yang-modules-derived-from-iana-registries">
+<section id="section-4.2">
+        <h3 id="name-case-2-yang-modules-derived">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-case-2-yang-modules-derived" class="section-name selfRef">Case 2: YANG Modules Derived from IANA Registries</a>
+        </h3>
+<p id="section-4.2-1">Many IANA registries have corresponding YANG modules that represent registry contents in a machine-readable format. Examples include:<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.2-2.1">
+            <p id="section-4.2-2.1.1"><strong>iana-if-type</strong> - derived from the Interface Types (ifType) registry<a href="#section-4.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-2.2">
+            <p id="section-4.2-2.2.1"><strong>iana-routing-types</strong> - derived from Address Family Numbers and SAFI Parameters registries<a href="#section-4.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-2.3">
+            <p id="section-4.2-2.3.1"><strong>iana-bgp-types</strong> - derived from BGP Parameters registries<a href="#section-4.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-4.2-3">When these registries are updated, the corresponding YANG modules <span class="bcp14">MUST</span> be updated accordingly, following the versioning rules defined in this document.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<div id="characteristics-of-iana-maintained-modules">
+<section id="section-4.2.1">
+          <h4 id="name-characteristics-of-iana-mai">
+<a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-characteristics-of-iana-mai" class="section-name selfRef">Characteristics of IANA-Maintained Modules</a>
+          </h4>
+<p id="section-4.2.1-1">IANA-maintained modules typically:<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.2.1-2.1">
+              <p id="section-4.2.1-2.1.1">Have names starting with "iana-"<a href="#section-4.2.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.2">
+              <p id="section-4.2.1-2.2.1">Contain enumeration typedefs or identity definitions<a href="#section-4.2.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.3">
+              <p id="section-4.2.1-2.3.1">Map directly to registry entries<a href="#section-4.2.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.4">
+              <p id="section-4.2.1-2.4.1">Are updated more frequently than IETF-defined modules<a href="#section-4.2.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.1-2.5">
+              <p id="section-4.2.1-2.5.1">Follow a linear version history (no branching)<a href="#section-4.2.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="iana-actions-for-case-2">
+<section id="section-4.2.2">
+          <h4 id="name-iana-actions-for-case-2">
+<a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-iana-actions-for-case-2" class="section-name selfRef">IANA Actions for Case 2</a>
+          </h4>
+<p id="section-4.2.2-1">When updating an IANA-maintained YANG module:<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.2.2-2">
+<li id="section-4.2.2-2.1">
+              <p id="section-4.2.2-2.1.1"><strong>Identify Registry Change</strong>: Determine what changed in the source registry<a href="#section-4.2.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.2.2-2.2">
+              <p id="section-4.2.2-2.2.1"><strong>Classify Change</strong>: Determine if the change is NBC, BC, or Editorial using the guidance in <a href="#sec-classification" class="auto internal xref">Section 5</a><a href="#section-4.2.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.2.2-2.3">
+              <p id="section-4.2.2-2.3.1"><strong>Determine Version</strong>: Calculate the new YANG Semver version based on the classification<a href="#section-4.2.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.2.2-2.4">
+              <p id="section-4.2.2-2.4.1"><strong>Update Module</strong>: Make the necessary changes to the YANG module<a href="#section-4.2.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.2.2-2.5">
+              <p id="section-4.2.2-2.5.1"><strong>Add Revision</strong>: Add a new revision statement with the date, version, description, and NBC extension if required<a href="#section-4.2.2-2.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.2.2-2.6">
+              <p id="section-4.2.2-2.6.1"><strong>Validate Module</strong>: Use YANG validation tools to check the updated module<a href="#section-4.2.2-2.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.2.2-2.7">
+              <p id="section-4.2.2-2.7.1"><strong>Seek Review if Uncertain</strong>: Contact YANG Doctors or the NETMOD WG if classification is unclear<a href="#section-4.2.2-2.7.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-4.2.2-2.8">
+              <p id="section-4.2.2-2.8.1"><strong>Publish Module</strong>: Make the updated module available on the IANA website<a href="#section-4.2.2-2.8.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-classification">
+<section id="section-5">
+      <h2 id="name-classifying-changes">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-classifying-changes" class="section-name selfRef">Classifying Changes</a>
+      </h2>
+<p id="section-5-1">The most critical step in updating IANA-maintained YANG modules is correctly classifying the type of change. This determines the version number and whether the rev:non-backwards-compatible extension is required.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="classification-principles">
+<section id="section-5.1">
+        <h3 id="name-classification-principles">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-classification-principles" class="section-name selfRef">Classification Principles</a>
+        </h3>
+<div id="principle-1-the-source-does-not-determine-classification">
+<section id="section-5.1.1">
+          <h4 id="name-principle-1-the-source-does">
+<a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-principle-1-the-source-does" class="section-name selfRef">Principle 1: The Source Does Not Determine Classification</a>
+          </h4>
+<p id="section-5.1.1-1">The source or trigger of a change (errata report, new RFC, registry update, etc.) does NOT determine whether it is NBC, BC, or Editorial. What matters is the actual change made to the YANG module.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-2">Example: An errata report could result in any type of change:
+- Fixing a typo in a description → Editorial
+- Adding a missing enum value → BC
+- Correcting an incorrect value assignment → NBC<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="principle-2-focus-on-module-content">
+<section id="section-5.1.2">
+          <h4 id="name-principle-2-focus-on-module">
+<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-principle-2-focus-on-module" class="section-name selfRef">Principle 2: Focus on Module Content</a>
+          </h4>
+<p id="section-5.1.2-1">Only changes to the module's content affect classification. Changes to:
+- Registry metadata not represented in YANG → No module change needed
+- Registry fields not mapped to YANG statements → No module change needed
+- Comments in the registry → May or may not require module update<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="principle-3-when-in-doubt-ask">
+<section id="section-5.1.3">
+          <h4 id="name-principle-3-when-in-doubt-a">
+<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-principle-3-when-in-doubt-a" class="section-name selfRef">Principle 3: When in Doubt, Ask</a>
+          </h4>
+<p id="section-5.1.3-1">If the classification is unclear or complex, IANA <span class="bcp14">SHOULD</span> seek guidance from:
+- The YANG Doctors mailing list (yang-doctors@ietf.org)
+- The NETMOD Working Group
+- The OPS/Management Area Directors<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-2">It is better to ask for clarification than to publish an incorrectly versioned module.<a href="#section-5.1.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="quick-classification-guide">
+<section id="section-5.2">
+        <h3 id="name-quick-classification-guide">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-quick-classification-guide" class="section-name selfRef">Quick Classification Guide</a>
+        </h3>
+<table class="center" id="table-1">
+          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Change Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Classification</th>
+              <th class="text-left" rowspan="1" colspan="1">Version</th>
+              <th class="text-left" rowspan="1" colspan="1">Extension</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Add new enum/identity</td>
+              <td class="text-left" rowspan="1" colspan="1">BC</td>
+              <td class="text-left" rowspan="1" colspan="1">MINOR</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Update reference statement</td>
+              <td class="text-left" rowspan="1" colspan="1">Editorial</td>
+              <td class="text-left" rowspan="1" colspan="1">PATCH</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Change status to deprecated</td>
+              <td class="text-left" rowspan="1" colspan="1">BC</td>
+              <td class="text-left" rowspan="1" colspan="1">MINOR</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Change status to obsolete</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Remove enum/identity</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Rename enum/identity</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Change enum value number</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Clarify description (no meaning change)</td>
+              <td class="text-left" rowspan="1" colspan="1">Editorial</td>
+              <td class="text-left" rowspan="1" colspan="1">PATCH</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Change description meaning</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-scenarios">
+<section id="section-6">
+      <h2 id="name-common-scenarios">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-common-scenarios" class="section-name selfRef">Common Scenarios</a>
+      </h2>
+<p id="section-6-1">This section describes common scenarios that IANA encounters when updating YANG modules derived from registries. For each scenario, the classification, version change, and required actions are specified.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">A comprehensive list of scenarios with detailed examples is provided in the companion document "IANA YANG Module Update Guidance - Summary Document" which is included as an appendix to this RFC.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<div id="adding-a-new-registry-entry">
+<section id="section-6.1">
+        <h3 id="name-adding-a-new-registry-entry">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-adding-a-new-registry-entry" class="section-name selfRef">Adding a New Registry Entry</a>
+        </h3>
+<p id="section-6.1-1"><strong>Scenario</strong>: A new entry is added to an IANA registry (e.g., a new interface type, new SAFI value).<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-2"><strong>YANG Module Change</strong>: Add a new enum value or identity to the corresponding typedef or base identity.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1-3"><strong>Classification</strong>: Backwards-Compatible (BC)<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-4"><strong>Version Change</strong>: Increment MINOR version (e.g., 1.0.0 → 1.1.0)<a href="#section-6.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1-5"><strong>Extension Required</strong>: None<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-6"><strong>Example</strong>:<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="section-6.1-7">
+<pre>
+  // Previous version 1.0.0
+  typedef interface-type {
+    type enumeration {
+      enum ethernet {
+        value 6;
+        description "Ethernet interface";
+      }
+    }
+  }
+
+  // New version 1.1.0
+  revision 2025-11-15 {
+    ysv:version "1.1.0";
+    description "Added wifi interface type";
+  }
+
+  typedef interface-type {
+    type enumeration {
+      enum ethernet {
+        value 6;
+        description "Ethernet interface";
+      }
+      enum wifi {
+        value 71;
+        description "IEEE 802.11 wireless interface";
+      }
+    }
+  }
+</pre><a href="#section-6.1-7" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="deprecating-a-registry-entry">
+<section id="section-6.2">
+        <h3 id="name-deprecating-a-registry-entr">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-deprecating-a-registry-entr" class="section-name selfRef">Deprecating a Registry Entry</a>
+        </h3>
+<p id="section-6.2-1"><strong>Scenario</strong>: A registry entry is marked as deprecated (e.g., because it's being phased out).<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-2"><strong>YANG Module Change</strong>: Change the status of the corresponding enum or identity from "current" to "deprecated".<a href="#section-6.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.2-3"><strong>Classification</strong>: Backwards-Compatible (BC)<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.2-4"><strong>Version Change</strong>: Increment MINOR version (e.g., 1.0.0 → 1.1.0)<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+<p id="section-6.2-5"><strong>Extension Required</strong>: None<a href="#section-6.2-5" class="pilcrow">¶</a></p>
+<p id="section-6.2-6"><strong>Rationale</strong>: Per <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>, adding or changing status to "deprecated" is explicitly allowed as a BC change.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
+<p id="section-6.2-7"><strong>Example</strong>:<a href="#section-6.2-7" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="section-6.2-8">
+<pre>
+  // Previous version 1.0.0
+  enum oldtype {
+    value 99;
+    status current;
+    description "Old interface type";
+  }
+
+  // New version 1.1.0
+  revision 2025-11-15 {
+    ysv:version "1.1.0";
+    description "Deprecated oldtype interface";
+  }
+
+  enum oldtype {
+    value 99;
+    status deprecated;
+    description
+      "Old interface type. This value is deprecated and
+       SHOULD NOT be used in new implementations.";
+  }
+</pre><a href="#section-6.2-8" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="obsoleting-a-registry-entry">
+<section id="section-6.3">
+        <h3 id="name-obsoleting-a-registry-entry">
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-obsoleting-a-registry-entry" class="section-name selfRef">Obsoleting a Registry Entry</a>
+        </h3>
+<p id="section-6.3-1"><strong>Scenario</strong>: A registry entry is marked as obsolete (e.g., because support has been removed).<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-2"><strong>YANG Module Change</strong>: Change the status of the corresponding enum or identity from "deprecated" (or "current") to "obsolete".<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-3"><strong>Classification</strong>: Non-Backwards-Compatible (NBC)<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.3-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)<a href="#section-6.3-4" class="pilcrow">¶</a></p>
+<p id="section-6.3-5"><strong>Extension Required</strong>: rev:non-backwards-compatible <span class="bcp14">MUST</span> be added<a href="#section-6.3-5" class="pilcrow">¶</a></p>
+<p id="section-6.3-6"><strong>Rationale</strong>: Changing status to "obsolete" indicates that the value <span class="bcp14">MUST NOT</span> be used, which breaks compatibility with implementations that may still use it.<a href="#section-6.3-6" class="pilcrow">¶</a></p>
+<p id="section-6.3-7"><strong>Example</strong>:<a href="#section-6.3-7" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="section-6.3-8">
+<pre>
+  // Previous version 1.0.0
+  enum removedtype {
+    value 98;
+    status deprecated;
+    description "Type being removed";
+  }
+
+  // New version 2.0.0
+  revision 2025-11-15 {
+    ysv:version "2.0.0";
+    rev:non-backwards-compatible;
+    description
+      "Obsoleted removedtype interface. Support has been removed.";
+  }
+
+  enum removedtype {
+    value 98;
+    status obsolete;
+    description
+      "Obsolete interface type. This value MUST NOT be used.
+       Support was removed as of 2025-11-15.";
+  }
+</pre><a href="#section-6.3-8" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="updating-references">
+<section id="section-6.4">
+        <h3 id="name-updating-references">
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-updating-references" class="section-name selfRef">Updating References</a>
+        </h3>
+<p id="section-6.4-1"><strong>Scenario</strong>: A reference is updated in the registry (e.g., replacing an obsoleted RFC, adding a new reference, updating a draft reference to an RFC number).<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.4-2"><strong>YANG Module Change</strong>: Update or add to the "reference" statement of the corresponding enum or identity.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-3"><strong>Classification</strong>: Editorial<a href="#section-6.4-3" class="pilcrow">¶</a></p>
+<p id="section-6.4-4"><strong>Version Change</strong>: Increment PATCH version (e.g., 1.0.0 → 1.0.1)<a href="#section-6.4-4" class="pilcrow">¶</a></p>
+<p id="section-6.4-5"><strong>Extension Required</strong>: None<a href="#section-6.4-5" class="pilcrow">¶</a></p>
+<p id="section-6.4-6"><strong>Rationale</strong>: Per RFC 7950, "A 'reference' statement may be added or updated." Since this doesn't change the semantic meaning of the module, it's editorial.<a href="#section-6.4-6" class="pilcrow">¶</a></p>
+<p id="section-6.4-7"><strong>Note</strong>: If a new enum/identity is being added WITH a reference, that addition is BC (MINOR increment). Later updating just the reference is Editorial (PATCH increment).<a href="#section-6.4-7" class="pilcrow">¶</a></p>
+<p id="section-6.4-8"><strong>Example</strong>:<a href="#section-6.4-8" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="section-6.4-9">
+<pre>
+  // Previous version 1.0.0
+  enum foo {
+    value 42;
+    description "Foo interface type";
+    reference "RFC 1234";
+  }
+
+  // New version 1.0.1
+  revision 2025-11-15 {
+    ysv:version "1.0.1";
+    description "Updated reference for RFC obsolescence";
+  }
+
+  enum foo {
+    value 42;
+    description "Foo interface type";
+    reference "RFC 5678 (obsoletes RFC 1234)";
+  }
+</pre><a href="#section-6.4-9" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-tooling">
+<section id="section-7">
+      <h2 id="name-available-tooling">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-available-tooling" class="section-name selfRef">Available Tooling</a>
+      </h2>
+<p id="section-7-1">Several tools are available to assist IANA in validating and versioning YANG modules. This section describes the primary tools and their recommended usage.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<div id="yang-validation-tools">
+<section id="section-7.1">
+        <h3 id="name-yang-validation-tools">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-yang-validation-tools" class="section-name selfRef">YANG Validation Tools</a>
+        </h3>
+<div id="pyang">
+<section id="section-7.1.1">
+          <h4 id="name-pyang">
+<a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-pyang" class="section-name selfRef">pyang</a>
+          </h4>
+<p id="section-7.1.1-1"><strong>pyang</strong> is a widely-used YANG validator and converter. It can:
+- Validate YANG syntax
+- Check for backwards-compatible violations
+- Generate tree diagrams and documentation<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-2"><strong>Basic Usage</strong>:
+~~~~ shell
+  pyang --ietf module-name.yang
+~~~~<a href="#section-7.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-3"><strong>Checking for NBC Changes</strong> (comparing two versions):
+~~~~ shell
+  pyang --check-update-from old-module.yang new-module.yang
+~~~~<a href="#section-7.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-4">This command will report violations of the backwards-compatible update rules.<a href="#section-7.1.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="yanglint">
+<section id="section-7.1.2">
+          <h4 id="name-yanglint">
+<a href="#section-7.1.2" class="section-number selfRef">7.1.2. </a><a href="#name-yanglint" class="section-name selfRef">yanglint</a>
+          </h4>
+<p id="section-7.1.2-1"><strong>yanglint</strong> (from the libyang project) can:
+- Validate YANG modules
+- Check cross-module dependencies
+- Validate instance data against YANG models<a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.2-2"><strong>Basic Usage</strong>:
+~~~~ shell
+  yanglint module-name.yang
+~~~~<a href="#section-7.1.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="yang-catalog-tools">
+<section id="section-7.1.3">
+          <h4 id="name-yang-catalog-tools">
+<a href="#section-7.1.3" class="section-number selfRef">7.1.3. </a><a href="#name-yang-catalog-tools" class="section-name selfRef">YANG Catalog Tools</a>
+          </h4>
+<p id="section-7.1.3-1">The YANG Catalog (https://www.yangcatalog.org) provides online tools for:
+- Validating YANG modules
+- Comparing module versions
+- Viewing module dependencies
+- Searching for modules<a href="#section-7.1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="recommended-workflow">
+<section id="section-7.2">
+        <h3 id="name-recommended-workflow">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-recommended-workflow" class="section-name selfRef">Recommended Workflow</a>
+        </h3>
+<ol start="1" type="1" class="normal type-1" id="section-7.2-1">
+<li id="section-7.2-1.1">
+            <p id="section-7.2-1.1.1"><strong>Make Changes to Module</strong> - Update the YANG file based on registry changes<a href="#section-7.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.2-1.2">
+            <p id="section-7.2-1.2.1"><strong>Validate Syntax</strong> - Run pyang or yanglint to check for syntax errors<a href="#section-7.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.2-1.3">
+            <p id="section-7.2-1.3.1"><strong>Check for NBC Changes</strong> - Use pyang --check-update-from to compare with previous version<a href="#section-7.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.2-1.4">
+            <p id="section-7.2-1.4.1"><strong>Review Tool Output</strong> - Analyze any reported issues<a href="#section-7.2-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.2-1.5">
+            <p id="section-7.2-1.5.1"><strong>Determine Version</strong> - Based on classification, set the new version number<a href="#section-7.2-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.2-1.6">
+            <p id="section-7.2-1.6.1"><strong>Add Revision Statement</strong> - Include date, version, description, and NBC extension if needed<a href="#section-7.2-1.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.2-1.7">
+            <p id="section-7.2-1.7.1"><strong>Final Validation</strong> - Validate the complete updated module<a href="#section-7.2-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-7.2-1.8">
+            <p id="section-7.2-1.8.1"><strong>Seek Review if Needed</strong> - Contact experts if tool output is unclear or surprising<a href="#section-7.2-1.8.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+<div id="tool-limitations">
+<section id="section-7.3">
+        <h3 id="name-tool-limitations">
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-tool-limitations" class="section-name selfRef">Tool Limitations</a>
+        </h3>
+<p id="section-7.3-1">While tools are very helpful, they have limitations:<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.3-2.1">
+            <p id="section-7.3-2.1.1"><strong>Cannot determine Editorial vs BC for descriptions</strong> - A description change may or may not change semantics; tools cannot always tell<a href="#section-7.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.3-2.2">
+            <p id="section-7.3-2.2.1"><strong>Cannot assess impact</strong> - Tools identify NBC changes but cannot assess the practical impact<a href="#section-7.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.3-2.3">
+            <p id="section-7.3-2.3.1"><strong>May have false positives/negatives</strong> - Tool output should be reviewed by a human<a href="#section-7.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-7.3-3">Always combine tool usage with the classification guidance in this document and seek expert review when uncertain.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="future-tool-development">
+<section id="section-7.4">
+        <h3 id="name-future-tool-development">
+<a href="#section-7.4" class="section-number selfRef">7.4. </a><a href="#name-future-tool-development" class="section-name selfRef">Future Tool Development</a>
+        </h3>
+<p id="section-7.4-1">The NETMOD working group is developing additional tools specifically for IANA YANG module management, including:
+- Automated registry-to-YANG conversion
+- NBC change detection optimized for IANA modules
+- Version recommendation based on changes<a href="#section-7.4-1" class="pilcrow">¶</a></p>
+<p id="section-7.4-2">IANA will be informed as these tools become available.<a href="#section-7.4-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-expert-guidance">
+<section id="section-8">
+      <h2 id="name-seeking-expert-guidance">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-seeking-expert-guidance" class="section-name selfRef">Seeking Expert Guidance</a>
+      </h2>
+<div id="when-to-seek-guidance">
+<section id="section-8.1">
+        <h3 id="name-when-to-seek-guidance">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-when-to-seek-guidance" class="section-name selfRef">When to Seek Guidance</a>
+        </h3>
+<p id="section-8.1-1">IANA <span class="bcp14">SHOULD</span> contact YANG experts in the following situations:<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-8.1-2">
+<li id="section-8.1-2.1">
+            <p id="section-8.1-2.1.1"><strong>Classification Uncertainty</strong> - When it's unclear whether a change is NBC, BC, or Editorial<a href="#section-8.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-8.1-2.2">
+            <p id="section-8.1-2.2.1"><strong>Complex Changes</strong> - Multiple simultaneous changes to a registry that are difficult to classify individually<a href="#section-8.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-8.1-2.3">
+            <p id="section-8.1-2.3.1"><strong>Description Changes</strong> - When a description update may alter the semantic meaning<a href="#section-8.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-8.1-2.4">
+            <p id="section-8.1-2.4.1"><strong>Unusual Situations</strong> - Any scenario not clearly covered in this document<a href="#section-8.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-8.1-2.5">
+            <p id="section-8.1-2.5.1"><strong>Registry Restructuring</strong> - Major changes to how a registry is organized<a href="#section-8.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-8.1-2.6">
+            <p id="section-8.1-2.6.1"><strong>Value Reuse</strong> - When considering reusing a previously assigned value number<a href="#section-8.1-2.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-8.1-2.7">
+            <p id="section-8.1-2.7.1"><strong>Tool Disagreement</strong> - When validation tools give unexpected or contradictory results<a href="#section-8.1-2.7.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+<div id="how-to-seek-guidance">
+<section id="section-8.2">
+        <h3 id="name-how-to-seek-guidance">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-how-to-seek-guidance" class="section-name selfRef">How to Seek Guidance</a>
+        </h3>
+<div id="primary-contact-yang-doctors">
+<section id="section-8.2.1">
+          <h4 id="name-primary-contact-yang-doctor">
+<a href="#section-8.2.1" class="section-number selfRef">8.2.1. </a><a href="#name-primary-contact-yang-doctor" class="section-name selfRef">Primary Contact: YANG Doctors</a>
+          </h4>
+<p id="section-8.2.1-1">Email the YANG Doctors mailing list:
+- <strong>Email</strong>: yang-doctors@ietf.org
+- <strong>Purpose</strong>: Technical review and guidance on YANG modules
+- <strong>Response Time</strong>: Typically 1-2 weeks<a href="#section-8.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.2.1-2">When emailing, please include:
+- Description of the registry change
+- The affected YANG module and relevant excerpts
+- Your proposed classification and version change
+- Specific questions or concerns
+- Any relevant tool output<a href="#section-8.2.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="secondary-contact-netmod-wg">
+<section id="section-8.2.2">
+          <h4 id="name-secondary-contact-netmod-wg">
+<a href="#section-8.2.2" class="section-number selfRef">8.2.2. </a><a href="#name-secondary-contact-netmod-wg" class="section-name selfRef">Secondary Contact: NETMOD WG</a>
+          </h4>
+<p id="section-8.2.2-1">For broader issues or when needing working group discussion:
+- <strong>Email</strong>: netmod@ietf.org
+- <strong>Purpose</strong>: Working group discussion of YANG issues<a href="#section-8.2.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="area-director-contact">
+<section id="section-8.2.3">
+          <h4 id="name-area-director-contact">
+<a href="#section-8.2.3" class="section-number selfRef">8.2.3. </a><a href="#name-area-director-contact" class="section-name selfRef">Area Director Contact</a>
+          </h4>
+<p id="section-8.2.3-1">For urgent issues or escalation:
+- <strong>Copy</strong>: OPS/Management Area Directors
+- <strong>Purpose</strong>: Escalation and prioritization<a href="#section-8.2.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="example-request">
+<section id="section-8.3">
+        <h3 id="name-example-request">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-example-request" class="section-name selfRef">Example Request</a>
+        </h3>
+<div class="lang-text sourcecode" id="section-8.3-1">
+<pre>
+  Subject: YANG Versioning Question - iana-if-type Update
+
+  Dear YANG Doctors,
+
+  I need guidance on classifying a change to the iana-if-type module.
+
+  Registry Change:
+  The Interface Types registry has updated the description for
+  interface type 6 (ethernet) to clarify that it includes both
+  10BASE-T and 100BASE-T variants.
+
+  Proposed YANG Change:
+  Update the description statement for the "ethernet" enum to
+  include the clarification.
+
+  Question:
+  Should this be classified as Editorial (PATCH increment) since
+  it's clarifying existing behavior, or as BC (MINOR increment)
+  because it's adding new information?
+
+  The old description said: "Ethernet interface"
+  The new description says: "Ethernet interface, including
+  10BASE-T and 100BASE-T variants"
+
+  Current module version: 1.5.0
+  Proposed version: 1.5.1 (if Editorial) or 1.6.0 (if BC)
+
+  Thank you for your guidance.
+</pre><a href="#section-8.3-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-3">
+<section id="section-9">
       <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-9-1">This document gives instructions to IANA on how to handle YANG modules that are published in RFCs and also YANG modules that are derived from IANA registries.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">Incorrect interpretion of this document could cause incorrect handling or versioning of IANA maintained YANG modules.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<p id="section-9-3">This document recommends the usage of various tools.  Bugs or attacks on these tools could cause the tools to give incorrect or misleading guidance.  In all cases, secondary evaluation of output of the tools should be performed to confirm that they are giving the anticipated results.  The <em>YANG Doctors</em> team can also be contacted for further advice, if required.<a href="#section-9-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-10">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-10-1">This entire document relates to guidance to IANA, and hence can be deemed to be considerations to IANA.  <strong>RFC Editor (or IANA), please consider whether this section of the document should be elided.</strong><a href="#section-10-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="sec-normative-references">
-<section id="section-5">
-      <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<div id="sec-combined-references">
+<section id="section-11">
+      <h2 id="name-references">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-11.1">
+        <h3 id="name-normative-references">
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
+<dt id="I-D.ietf-netmod-rfc8407bis">[I-D.ietf-netmod-rfc8407bis]</dt>
+        <dd>
+<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Boucadair, M.</span>, and <span class="refAuthor">Q. Wu</span>, <span class="refTitle">"Guidelines for Authors and Reviewers of Documents Containing YANG Data Models"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-rfc8407bis-28</span>, <time datetime="2025-06-05" class="refDate">5 June 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-28">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-28</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-netmod-yang-module-versioning">[I-D.ietf-netmod-yang-module-versioning]</dt>
+        <dd>
+<span class="refAuthor">Wilton, R.</span>, <span class="refAuthor">Rahman, R.</span>, <span class="refAuthor">Lengyel, B.</span>, <span class="refAuthor">Clarke, J.</span>, and <span class="refAuthor">J. Sterne</span>, <span class="refTitle">"Updated YANG Module Revision Handling"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-module-versioning-15</span>, <time datetime="2025-10-18" class="refDate">18 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-netmod-yang-semver">[I-D.ietf-netmod-yang-semver]</dt>
+        <dd>
+<span class="refAuthor">Clarke, J.</span>, <span class="refAuthor">Wilton, R.</span>, <span class="refAuthor">Rahman, R.</span>, <span class="refAuthor">Lengyel, B.</span>, <span class="refAuthor">Sterne, J.</span>, and <span class="refAuthor">B. Claise</span>, <span class="refTitle">"YANG Semantic Versioning"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-semver-24</span>, <time datetime="2025-09-29" class="refDate">29 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-semver-24">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-semver-24</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC7950">[RFC7950]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refTitle">"The YANG 1.1 Data Modeling Language"</span>, <span class="seriesInfo">RFC 7950</span>, <span class="seriesInfo">DOI 10.17487/RFC7950</span>, <time datetime="2016-08" class="refDate">August 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7950">https://www.rfc-editor.org/rfc/rfc7950</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
 </div>
-<div id="acknowledgments">
+<div id="sec-informative-references">
+<section id="section-11.2">
+        <h3 id="name-informative-references">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-netmod-yang-module-filename">[I-D.ietf-netmod-yang-module-filename]</dt>
+        <dd>
+<span class="refAuthor">Andersson, P.</span>, <span class="refTitle">"YANG module file name convention"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-module-filename-03</span>, <time datetime="2025-10-20" class="refDate">20 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-filename-03">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-filename-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-netmod-yang-schema-comparison">[I-D.ietf-netmod-yang-schema-comparison]</dt>
+      <dd>
+<span class="refAuthor">Andersson, P.</span>, <span class="refAuthor">Wilton, R.</span>, and <span class="refAuthor">M. Vaško</span>, <span class="refTitle">"YANG Schema Comparison"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-schema-comparison-05</span>, <time datetime="2025-10-20" class="refDate">20 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-schema-comparison-05">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-schema-comparison-05</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="appendix-scenarios">
 <section id="appendix-A">
+      <h2 id="name-appendix-a-summary-of-regis">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-appendix-a-summary-of-regis" class="section-name selfRef">Appendix A: Summary of Registry Action Scenarios</a>
+      </h2>
+<p id="appendix-A-1">This appendix provides a comprehensive reference table of common registry actions and their corresponding YANG module versioning requirements. For detailed examples and explanations of each scenario, refer to the companion document "IANA YANG Module Update Guidance - Summary Document" (iana-guidance-summary.md in this repository).<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<div id="quick-reference-table">
+<section id="appendix-A.1">
+        <h3 id="name-quick-reference-table">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-quick-reference-table" class="section-name selfRef">Quick Reference Table</a>
+        </h3>
+<table class="center" id="table-2">
+          <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Registry Action</th>
+              <th class="text-left" rowspan="1" colspan="1">YANG Change</th>
+              <th class="text-left" rowspan="1" colspan="1">Classification</th>
+              <th class="text-left" rowspan="1" colspan="1">Version</th>
+              <th class="text-left" rowspan="1" colspan="1">NBC Extension Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Add new registration</td>
+              <td class="text-left" rowspan="1" colspan="1">Add enum/identity</td>
+              <td class="text-left" rowspan="1" colspan="1">BC</td>
+              <td class="text-left" rowspan="1" colspan="1">MINOR</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Update reference (obsoleted RFC)</td>
+              <td class="text-left" rowspan="1" colspan="1">Update reference</td>
+              <td class="text-left" rowspan="1" colspan="1">Editorial</td>
+              <td class="text-left" rowspan="1" colspan="1">PATCH</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Add additional reference</td>
+              <td class="text-left" rowspan="1" colspan="1">Update reference</td>
+              <td class="text-left" rowspan="1" colspan="1">Editorial</td>
+              <td class="text-left" rowspan="1" colspan="1">PATCH</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Draft → RFC reference</td>
+              <td class="text-left" rowspan="1" colspan="1">Update reference</td>
+              <td class="text-left" rowspan="1" colspan="1">Editorial</td>
+              <td class="text-left" rowspan="1" colspan="1">PATCH</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Deprecate (keep name)</td>
+              <td class="text-left" rowspan="1" colspan="1">status deprecated</td>
+              <td class="text-left" rowspan="1" colspan="1">BC</td>
+              <td class="text-left" rowspan="1" colspan="1">MINOR</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Obsolete entry</td>
+              <td class="text-left" rowspan="1" colspan="1">status obsolete</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Remove entry completely</td>
+              <td class="text-left" rowspan="1" colspan="1">Remove enum/identity</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Deprecate + remove name</td>
+              <td class="text-left" rowspan="1" colspan="1">Remove enum/identity</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Change value number</td>
+              <td class="text-left" rowspan="1" colspan="1">Change value</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Reuse old value</td>
+              <td class="text-left" rowspan="1" colspan="1">Add with old value</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Update description (clarify)</td>
+              <td class="text-left" rowspan="1" colspan="1">Update description</td>
+              <td class="text-left" rowspan="1" colspan="1">Editorial</td>
+              <td class="text-left" rowspan="1" colspan="1">PATCH</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Update description (change meaning)</td>
+              <td class="text-left" rowspan="1" colspan="1">Update description</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Rename entry</td>
+              <td class="text-left" rowspan="1" colspan="1">Change identifier</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Add footnote</td>
+              <td class="text-left" rowspan="1" colspan="1">Optionally update</td>
+              <td class="text-left" rowspan="1" colspan="1">Editorial</td>
+              <td class="text-left" rowspan="1" colspan="1">PATCH</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Non-YANG field changes</td>
+              <td class="text-left" rowspan="1" colspan="1">No change</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Errata</td>
+              <td class="text-left" rowspan="1" colspan="1">Depends on content</td>
+              <td class="text-left" rowspan="1" colspan="1">Analyze</td>
+              <td class="text-left" rowspan="1" colspan="1">Varies</td>
+              <td class="text-left" rowspan="1" colspan="1">Maybe</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Early alloc expired (left as-is)</td>
+              <td class="text-left" rowspan="1" colspan="1">No change</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">None</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Early alloc expired (removed)</td>
+              <td class="text-left" rowspan="1" colspan="1">Follow removal rules</td>
+              <td class="text-left" rowspan="1" colspan="1">NBC</td>
+              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
+              <td class="text-left" rowspan="1" colspan="1">YES</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Revive expired allocation</td>
+              <td class="text-left" rowspan="1" colspan="1">Add enum/identity</td>
+              <td class="text-left" rowspan="1" colspan="1">BC</td>
+              <td class="text-left" rowspan="1" colspan="1">MINOR</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
+</div>
+<div id="notes-on-the-table">
+<section id="appendix-A.2">
+        <h3 id="name-notes-on-the-table">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-notes-on-the-table" class="section-name selfRef">Notes on the Table</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.2-1.1">
+            <p id="appendix-A.2-1.1.1"><strong>BC</strong> = Backwards-Compatible<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.2">
+            <p id="appendix-A.2-1.2.1"><strong>NBC</strong> = Non-Backwards-Compatible<a href="#appendix-A.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.3">
+            <p id="appendix-A.2-1.3.1"><strong>MAJOR/MINOR/PATCH</strong> refer to the YANG Semver version components<a href="#appendix-A.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.4">
+            <p id="appendix-A.2-1.4.1"><strong>Extension Required YES</strong> means rev:non-backwards-compatible <span class="bcp14">MUST</span> be added<a href="#appendix-A.2-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.5">
+            <p id="appendix-A.2-1.5.1">When <strong>Varies</strong> or <strong>Maybe</strong> is shown, analyze the specific change using the detailed scenario guidance<a href="#appendix-A.2-1.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="appendix-b-example-iana-maintained-modules">
+<section id="appendix-B">
+      <h2 id="name-appendix-b-example-iana-mai">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-appendix-b-example-iana-mai" class="section-name selfRef">Appendix B: Example IANA-Maintained Modules</a>
+      </h2>
+<p id="appendix-B-1">This appendix shows examples of well-structured IANA-maintained YANG modules.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<div id="example-iana-if-type-module-structure">
+<section id="appendix-B.1">
+        <h3 id="name-example-iana-if-type-module">
+<a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-example-iana-if-type-module" class="section-name selfRef">Example: iana-if-type Module Structure</a>
+        </h3>
+<div class="breakable lang-yang sourcecode" id="appendix-B.1-1">
+<pre>
+module iana-if-type {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:iana-if-type";
+  prefix ianaift;
+
+  import ietf-yang-revisions { prefix rev; }
+  import ietf-yang-semver { prefix ysv; }
+
+  organization
+    "Internet Assigned Numbers Authority (IANA)";
+
+  contact
+    "Internet Assigned Numbers Authority
+
+     ICANN
+     12025 Waterfront Drive, Suite 300
+     Los Angeles, CA 90094
+
+     Tel: +1 424 254 5300
+
+     &lt;mailto:iana@iana.org&gt;
+
+     See the Interface Types (ifType) registry:
+     &lt;https://www.iana.org/assignments/smi-numbers&gt;";
+
+  description
+    "This YANG module defines the iana-if-type typedef, which
+     contains YANG definitions for IANA-registered interface types.
+
+     This YANG module is maintained by IANA and reflects the
+     'Interface Types (ifType)' registry.
+
+     Copyright (c) 2025 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Revised BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  // Example revision with new interface type (BC change)
+  revision 2025-11-15 {
+    ysv:version "2.5.0";
+    description
+      "Added new interface type 'wifi6e' per registry update.";
+    reference
+      "RFC XXXX: IANA Guidance for YANG Modules";
+  }
+
+  // Example revision with obsoleted type (NBC change)
+  revision 2025-10-01 {
+    ysv:version "2.0.0";
+    rev:non-backwards-compatible;
+    description
+      "Obsoleted 'arcnet' interface type as support has been removed.";
+    reference
+      "RFC XXXX: IANA Guidance for YANG Modules";
+  }
+
+  // Example earlier revision (BC change)
+  revision 2025-09-01 {
+    ysv:version "1.1.0";
+    description
+      "Added new interface type 'virtualEthernet'.";
+  }
+
+  // Example initial revision
+  revision 2025-01-01 {
+    ysv:version "1.0.0";
+    description
+      "Initial version matching the Interface Types registry
+       as of 2025-01-01.";
+  }
+
+  typedef interface-type {
+    type enumeration {
+      enum other {
+        value 1;
+        description
+          "None of the following types.";
+      }
+      enum ethernet {
+        value 6;
+        description
+          "Ethernet interface, including 10BASE-T, 100BASE-T,
+           and 1000BASE-T variants.";
+        reference
+          "RFC 3635: Definitions of Managed Objects for the
+           Ethernet-like Interface Types";
+      }
+      enum wifi6e {
+        value 289;
+        description
+          "IEEE 802.11ax (Wi-Fi 6E) wireless interface.";
+        reference
+          "IEEE 802.11ax-2021";
+      }
+      enum arcnet {
+        value 35;
+        status obsolete;
+        description
+          "ARCNET interface. This interface type is obsolete
+           and MUST NOT be used. Support was removed 2025-10-01.";
+      }
+    }
+    description
+      "This typedef is used to represent the IANA-registered
+       interface types. It is derived from the 'Interface Types
+       (ifType)' registry.";
+    reference
+      "IANA Interface Types registry:
+       &lt;https://www.iana.org/assignments/smi-numbers&gt;";
+  }
+}
+</pre><a href="#appendix-B.1-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-C">
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-1">The creation of this document was due to initial questions from IANA team members Amanda Baber and Sabrina Tanamal, followed by a productive in-person discussion at IETF 124 between members of the YANG versioning design team, IANA team, NETMOD working group chairs, and the OPS Area Director.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-2">Participants in that meeting included: Amanda Baber, Jason Sterne, Joe Clarke, Kent Watsen, Lou Berger, Mahesh Jethanandani, Per Andersson, Reshad Rahman, Rob Wilton, and Sabrina Tanamal.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
+<p id="appendix-C-3">Special thanks to Joe Clarke for his presentation on YANG versioning tooling at IETF 124, which informed the tooling guidance in this document.<a href="#appendix-C-3" class="pilcrow">¶</a></p>
+<p id="appendix-C-4">The authors also thank the NETMOD working group for their extensive work on YANG versioning specifications that form the foundation of this guidance.<a href="#appendix-C-4" class="pilcrow">¶</a></p>
+<p id="appendix-C-5">The initial substantive revision of this document used to Claude Sonnet 4.5 to create the initial prose and examples, which have been subsequently reviewed by the YANG Versioning team.<a href="#appendix-C-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-B">
+<section id="appendix-D">
       <h2 id="name-authors-address">
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
