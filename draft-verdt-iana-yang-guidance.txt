@@ -4,8 +4,8 @@
 
 NETMOD                                                         R. Wilton
 Internet-Draft                                                     Cisco
-Intended status: Informational                          11 November 2025
-Expires: 15 May 2026
+Intended status: Informational                          13 November 2025
+Expires: 17 May 2026
 
 
                Guidance to IANA for managing YANG modules
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 May 2026.
+   This Internet-Draft will expire on 17 May 2026.
 
 Copyright Notice
 
@@ -221,8 +221,8 @@ Table of Contents
 3.2.  The rev:non-backwards-compatible Extension
 
    The YANG module versioning framework
-   [I-D.ietf-netmod-yang-module-versioning] defines the "rev:non-
-   backwards-compatible" extension statement.  This extension MUST be
+   [I-D.ietf-netmod-yang-module-versioning] defines the rev:non-
+   backwards-compatible extension statement.  This extension MUST be
    added as a substatement of a revision statement whenever that
    revision contains non-backwards-compatible changes relative to the
    previous revision.
@@ -246,7 +246,8 @@ Table of Contents
 
    *  Adding new optional elements
 
-   *  Changing status from "current" to "deprecated"
+   *  Changing status from "current" (note: "current" is implied when no
+      status is present) to "deprecated"
 
    *  Removing schema nodes with status "obsolete"
 
@@ -262,7 +263,8 @@ Table of Contents
 
    *  Removing data nodes (unless already marked obsolete)
 
-   *  Changing status from "current" or "deprecated" to "obsolete"
+   *  Changing status from "current" (note: "current" is implied when no
+      status is present) or "deprecated" to "obsolete"
 
    *  Renaming data nodes or changing their identifiers
 
@@ -300,14 +302,15 @@ Table of Contents
 
 4.1.1.  IANA Actions for Case 1
 
-   When processing a YANG module from an RFC:
+   When processing a YANG module from an Internet Draft:
 
    1.  *Verify Version Presence*: Check that the module includes a
        ysv:version statement in the most recent revision
 
    2.  *Verify NBC Extension*: If the version indicates an NBC change
-       (MAJOR version increment from previous RFC), verify that rev:non-
-       backwards-compatible is present
+       (MAJOR version increment from previous module published in an
+       existing RFC), verify that rev:non-backwards-compatible is
+       present
 
    3.  *Register Module*: Add the module to the YANG Module Names
        registry
@@ -316,7 +319,9 @@ Table of Contents
        website
 
    5.  *Report Issues*: If versioning problems are found, report them to
-       the RFC authors and the NETMOD working group
+       the Internet Draft authors and the NETMOD working group [JMC: Why
+       NETMOD?  If the author used the wrong version, I'd think
+       reporting to them alone is fine.]
 
 4.2.  Case 2: YANG Modules Derived from IANA Registries
 
@@ -551,7 +556,8 @@ Table of Contents
    support has been removed).
 
    *YANG Module Change*: Change the status of the corresponding enum or
-   identity from "deprecated" (or "current") to "obsolete".
+   identity from "deprecated" (or "current" or implied "current" when no
+   status is specified) to "obsolete".
 
    *Classification*: Non-Backwards-Compatible (NBC)
 
@@ -666,7 +672,9 @@ Table of Contents
      pyang --check-update-from old-module.yang new-module.yang
 
    This command will report violations of the backwards-compatible
-   update rules.
+   update rules.  [JMC: My vision is that with a new argument such as --
+   derive-semver-from it will produce a new YANG Semver.  Should we hold
+   off on moving this document forward until the work is done?]
 
 7.1.2.  yanglint
 
@@ -704,7 +712,9 @@ Table of Contents
        errors
 
    3.  *Check for NBC Changes* - Use pyang --check-update-from to
-       compare with previous version
+       compare with previous version [JMC: I think giving them something
+       that lets them derive the Semver for _their_ modules would be
+       useful.]
 
    4.  *Review Tool Output* - Analyze any reported issues
 
@@ -841,7 +851,7 @@ Table of Contents
    modules that are published in RFCs and also YANG modules that are
    derived from IANA registries.
 
-   Incorrect interpretion of this document could cause incorrect
+   Incorrect interpretation of this document could cause incorrect
    handling or versioning of IANA maintained YANG modules.
 
    This document recommends the usage of various tools.  Bugs or attacks
@@ -1010,8 +1020,8 @@ A.2.  Notes on the Table
 
    *  *MAJOR/MINOR/PATCH* refer to the YANG Semver version components
 
-   *  *NBC Extension Required* _Yes_ means _rev:non-backwards-
-      compatible_ MUST be added under the new revision statement.
+   *  *NBC Extension Required* _Yes_ means rev:non-backwards-compatible
+      MUST be added under the new revision statement.
 
    *  When *Varies* or *Maybe* is shown, analyze the specific change
       using the detailed scenario guidance
@@ -1070,7 +1080,7 @@ B.1.  Example: iana-if-type Module Structure
 
      // Example revision with new interface type (BC change)
      revision 2025-11-15 {
-       ysv:version "2.5.0";
+       ysv:version "2.1.0";
        description
          "Added new interface type 'wifi6e' per registry update.";
        reference
