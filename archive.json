@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-13T00:11:15.136488+00:00",
+  "timestamp": "2025-11-16T00:12:03.073510+00:00",
   "repo": "rgwilton/iana-yang-guidance",
   "labels": [
     {
@@ -56,26 +56,42 @@
       "id": "PR_kwDOQTkdsc6zC6ua",
       "title": "Address some nits and add comments.",
       "url": "https://github.com/rgwilton/iana-yang-guidance/pull/1",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "xorrkaz",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I fixed a few formatting and spelling nits.  I left some comments with `[JMC:]`, and I changed the example version from 2.5.0 to 2.1.0 to avoid any IANA confusion stemming from skipping versions.",
       "createdAt": "2025-11-12T18:39:01Z",
-      "updatedAt": "2025-11-12T18:39:02Z",
+      "updatedAt": "2025-11-13T17:16:10Z",
       "baseRepository": "rgwilton/iana-yang-guidance",
       "baseRefName": "main",
       "baseRefOid": "8b1456272021c59bb7ff9ddab10d647fbb51fe90",
       "headRepository": "xorrkaz/iana-yang-guidance",
       "headRefName": "main",
       "headRefOid": "bdc37c33edb137eca211c7789857acbc5e1417df",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-11-13T17:16:09Z",
+      "mergedAt": "2025-11-13T17:16:09Z",
+      "mergedBy": "rgwilton",
+      "mergeCommit": {
+        "oid": "54ac9a5b00c4f295cc44b1c4e80d80b1a0162070"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQTkdsc7OSGhi",
+          "commit": {
+            "abbreviatedOid": "bdc37c3"
+          },
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-11-13T17:16:00Z",
+          "updatedAt": "2025-11-13T17:16:00Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
