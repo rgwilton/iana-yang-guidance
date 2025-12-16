@@ -12,6 +12,7 @@
 /.idea/
 /.metals/
 /.refcache
+/.cursor/
 /.scala-build/
 /.venv/
 /.vscode/
