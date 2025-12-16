@@ -50,8 +50,7 @@ This document provides guidance to the RFC Editor and IANA on managing YANG modu
 --- middle
 
 # Open Issues/Questions:
-1. With the advent of versioning, if we could define a process for applying errata to YANG modules. I.e., asking the RFC Editor to generate an updated version with the errata applied that is then uploaded by IANA.
-1. Need guidance to IANA to list modules both by revision date and version.
+1. Do we need guidance to IANA in this document to list modules both by revision date and version?
 1. This document is informational, is it appropriate to use RFC 2119 language?
 
 # Introduction
@@ -142,7 +141,7 @@ Section 3.1.2 of {{I-D.ietf-netmod-yang-module-versioning}} defines non-backward
 - Restricting constraints (e.g., narrowing ranges, removing enum values)
 - Modifying "description" statements in ways that change semantic meaning or behavior
 
-In addition, section 2.2 of {{I-D.ietf-netmod-yang-semver}} defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, which include:
+In addition, section 4.4 of {{I-D.ietf-netmod-yang-semver}} defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, which include:
 
 - Corrections to comments, descriptions, or references that do not change the semantic meaning
 - Formatting improvements such as whitespace or indentation changes
@@ -313,7 +312,7 @@ IANA-maintained YANG modules typically contain only enumerations (enum) and iden
 - Changing status from "current" to "deprecated"
 - Adding or updating "reference" statements
 - Clarifying "description" statements without changing meaning
-- Removing schema nodes that have status "obsolete" (per Section 3.1.1.9 of {{I-D.ietf-netmod-yang-module-versioning}})
+- Removing schema nodes that have status "obsolete" (per Section 3.1.1 of {{I-D.ietf-netmod-yang-module-versioning}})
 
 **Non-Backwards-Compatible Changes:**
 
