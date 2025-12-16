@@ -1,10 +1,29 @@
-# IANA YANG Module Update Guidance - Summary Document
+# IANA and RFC Editor YANG Module Management Guidance - Summary Document
 
-This document provides comprehensive guidance for IANA staff on managing YANG modules, particularly those derived from IANA registries. It addresses common scenarios and provides clear classification of changes.
+This document provides comprehensive guidance for IANA staff and the RFC Editor on managing YANG modules. It addresses two primary scenarios:
+
+1. **YANG Modules in RFCs**: Managing YANG modules contained in documents approved by the IESG that are being published as RFCs
+2. **IANA-Maintained YANG Modules**: Managing YANG modules derived from IANA registries when those registries are updated
+
+This summary document complements the formal IETF draft "Guidance for Managing YANG Modules in RFCs and IANA Registries" (draft-verdt-iana-yang-guidance).
 
 ## Background
 
-YANG modules are used to model network management data and protocols. IANA maintains several YANG modules that are derived directly from IANA registries (such as interface types, routing types, etc.). When registries are updated, the corresponding YANG modules must also be updated following specific versioning rules.
+YANG modules are used to model network management data and protocols. The IETF publishes YANG modules as part of RFCs, and IANA maintains several YANG modules that are derived directly from IANA registries (such as interface types, routing types, etc.). 
+
+When an RFC containing a YANG module is published, both the RFC Editor and IANA have responsibilities to ensure the module is correctly versioned and published. When IANA registries are updated, the corresponding YANG modules must also be updated following specific versioning rules.
+
+## Document Context and Updates
+
+**Original Creation**: This guidance was created in response to questions from IANA staff (Amanda Baber and Sabrina Tanamal) regarding how to correctly version YANG modules when registries are updated.
+
+**Major Restructuring (December 2025)**: The document was significantly restructured to:
+- Expand the scope from IANA-only guidance to cover both RFC Editor and IANA responsibilities
+- Clarify the two distinct processes: (1) RFC publication workflow and (2) IANA registry update workflow
+- Emphasize that this is informational guidance rather than strict rules
+- Provide more detailed workflow steps for both the RFC Editor and IANA
+- Move detailed tooling guidance to an appendix with explanations of purpose, usage, and interpretation
+- Reorganize scenarios into a comprehensive appendix with detailed examples
 
 ## Key Concepts
 
@@ -733,4 +752,71 @@ This summary is based on:
 ## Revision History
 
 - 2025-11-11: Initial version created based on IANA questions and NETMOD WG guidance
+- 2025-12-10: Major restructuring to expand scope to include RFC Editor, reorganize content into clear workflow sections, and add comprehensive appendices
+
+## Detailed Restructuring Instructions (December 2025)
+
+The following restructuring was performed based on detailed requirements:
+
+### Document Scope Changes
+1. Changed target audience from "IANA only" to "RFC Editor and IANA"
+2. Identified two distinct process steps:
+   - Managing YANG modules in documents approved by IESG for RFC publication
+   - Managing IANA-maintained YANG modules when registries are updated
+
+### Document Structure
+The document was reorganized into:
+
+1. **Abstract**: Concise summary without excessive detail
+2. **Introduction**: 
+   - Describes two scenarios (RFC publication and IANA registry updates)
+   - Emphasizes informational guidance rather than strict rules
+   - References key specifications (module-versioning, semver, filename)
+   - Provides document roadmap
+3. **Conventions and Definitions**: Standard terminology
+4. **Background on YANG Versioning**:
+   - References Section 3.1 of I-D.ietf-netmod-yang-module-versioning for BC rules
+   - Notes refinement of RFC 7950 Section 11
+   - Lists specific rules applicable to IANA-maintained modules (enumerations and identities)
+   - Explains module immutability principle
+5. **Section 4 - YANG Modules in RFCs**:
+   - Core requirements (4 items): Semver version, NBC extension, revision immutability, RFC code markers
+   - Workflow steps: Pre-release versions, RFC Editor processing, finalizing versions, IANA delay, coordinated publication
+   - Guidance on determining correct versions
+   - IANA verification responsibilities
+6. **Section 5 - IANA-Maintained YANG Modules**:
+   - Overview and characteristics
+   - 8-step process: Follow RFC rules, identify change, apply changes, use tooling, update revision, validate, seek review, publish
+   - Simplified decision process for common cases
+   - Reference to detailed scenarios in appendix
+7. **Section 6 - Seeking Expert Guidance**: When and how to contact experts
+8. **Section 7 - Operational Considerations**: 
+   - Purpose of correct versioning
+   - Conservative approach when uncertain
+9. **Section 8 - Security Considerations**: Existing text preserved
+10. **Section 9 - IANA Considerations**: Updated for dual audience
+11. **Appendix A - Tooling**: 
+    - Moved from main body
+    - Added note that tools evolve
+    - Enhanced descriptions: purpose, installation, usage, output interpretation
+    - Detailed workflow with examples
+    - Comprehensive limitations section
+    - Future tool development notes
+12. **Appendix B - Scenarios**: 
+    - Quick reference table
+    - Detailed scenarios with examples (10 key scenarios)
+    - Classification principles
+
+### Key Principles Emphasized
+- Source/trigger of change does NOT determine classification
+- Module revision immutability
+- Pre-release versions for drafts
+- Conservative approach when uncertain
+- Coordination between RFC Editor and IANA
+- Tool-assisted but human-verified versioning
+
+### References and Acknowledgments
+- Updated to reflect collaboration with both RFC Editor and IANA
+- Proper credit to IETF 124 meeting participants
+- Recognition of NETMOD WG specifications
 
