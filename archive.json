@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-27T00:13:13.979342+00:00",
+  "timestamp": "2026-01-29T00:14:23.144647+00:00",
   "repo": "rgwilton/iana-yang-guidance",
   "labels": [
     {
@@ -49,7 +49,48 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 2,
+      "id": "I_kwDOQTkdsc7mH2hT",
+      "title": "Make it clear who has authority for the final check",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/issues/2",
+      "state": "OPEN",
+      "author": "rgwilton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "IANA/RFC Editor runs the tools to check that the version of the doc to be published has the expected version.\n\nIf the tools report that it should be a major version but the approved version was a minor change, then as part of the AUTH48 process then the authors/ADs MUST sign off on releasing as a major version change.  YANG Doctors may be consulted if necessary to ensure that the right version is selected.",
+      "createdAt": "2026-01-27T14:17:10Z",
+      "updatedAt": "2026-01-27T14:43:02Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "From the meeting today:\n \nWe\u2019ll have RFC editor and/or IANA folks run pyang with --check-update-semver.  If the suggested SemVer doesn\u2019t match the one in the draft, then punt back to the AD to sort it out.  (I likely don\u2019t have this quite correct, but it was something along those lines).\n \nWe\u2019ll stick with pyang suggesting a minor bump when there are purely \u201cquestionable\u201d changes (description, must, when, pattern). Maybe a note for Shepard\u2019s checklist that all warnings have to have been chased down with authors?\n \nProposal for the IANA SemVer Guidelines doc: get it to a \u201cusable draft\u201d, and then let IANA actually use it for a few months (on at least a handful of actual updated YANG modules) before we bring it to WG LC.",
+          "createdAt": "2026-01-27T14:43:02Z",
+          "updatedAt": "2026-01-27T14:43:02Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOQTkdsc7mH4ft",
+      "title": "Add better tool examples (including output from Joe).",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/issues/3",
+      "state": "OPEN",
+      "author": "rgwilton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-01-27T14:19:07Z",
+      "updatedAt": "2026-01-27T14:19:07Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
