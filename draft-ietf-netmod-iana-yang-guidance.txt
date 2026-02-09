@@ -4,12 +4,12 @@
 
 NETMOD                                                         R. Wilton
 Internet-Draft                                                     Cisco
-Intended status: Informational                          16 December 2025
-Expires: 19 June 2026
+Intended status: Informational                           9 February 2026
+Expires: 13 August 2026
 
 
      Guidance for Managing YANG Modules in RFCs and IANA Registries
-                 draft-verdt-iana-yang-guidance-latest
+              draft-ietf-netmod-iana-yang-guidance-latest
 
 Abstract
 
@@ -24,7 +24,8 @@ About This Document
    The latest revision of this draft can be found at
    https://rgwilton.github.io/iana-yang-guidance/draft-verdt-iana-yang-
    guidance.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-verdt-iana-yang-guidance/.
+   https://datatracker.ietf.org/doc/draft-ietf-netmod-iana-yang-
+   guidance/.
 
    Discussion of this document takes place on the Network Modelling
    Working Group mailing list (mailto:netmod@ietf.org), which is
@@ -49,11 +50,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 June 2026.
+   This Internet-Draft will expire on 13 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
