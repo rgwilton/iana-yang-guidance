@@ -3,7 +3,7 @@ title: "Guidance for Managing YANG Modules in RFCs and IANA Registries"
 abbrev: "IANA & RFC Editor YANG Guidance"
 category: info
 
-docname: draft-verdt-iana-yang-guidance-latest
+docname: draft-ietf-netmod-iana-yang-guidance-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:

@@ -10,7 +10,7 @@ import uk.org.wilton.ietf.yang.mill.plugin.*
 
 object `package` extends IETF:
   def draft = Task.Source:
-    "draft-verdt-iana-yang-guidance.md"
+    "draft-ietf-netmod-iana-yang-guidance.md"
 
   // All RFCs that we need to extract YANG from.
   def rfcDeps = List(
@@ -19,11 +19,11 @@ object `package` extends IETF:
 
   // All drafts that we need to extract YANG from.
   def draftDeps = Seq(
-     "draft-ietf-netmod-yang-module-versioning-15",
-     "draft-ietf-netmod-yang-semver-24",
-     "draft-ietf-netmod-rfc8407bis-28",
-     "draft-ietf-netmod-yang-module-filename-03",
-     "draft-ietf-netmod-yang-schema-comparison-05"
+    //  "draft-ietf-netmod-yang-module-versioning-15",
+    //  "draft-ietf-netmod-yang-semver-24",
+    //  "draft-ietf-netmod-rfc8407bis-28",
+    //  "draft-ietf-netmod-yang-module-filename-03",
+    //  "draft-ietf-netmod-yang-schema-comparison-05"
   )
 
   // IANA YANG dependencies.
