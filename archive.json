@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-29T00:14:23.144647+00:00",
+  "timestamp": "2026-02-12T00:15:30.600668+00:00",
   "repo": "rgwilton/iana-yang-guidance",
   "labels": [
     {
@@ -87,6 +87,22 @@
       "body": "",
       "createdAt": "2026-01-27T14:19:07Z",
       "updatedAt": "2026-01-27T14:19:07Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOQTkdsc7pwK8f",
+      "title": "Need to check IANA sections in 3 versioning docs",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/issues/4",
+      "state": "OPEN",
+      "author": "rgwilton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Should these IANA sections mostly just reference the IANA guidance draft?  If any text is retained then we must ensure that it is consistent.",
+      "createdAt": "2026-02-10T14:16:22Z",
+      "updatedAt": "2026-02-10T14:16:22Z",
       "closedAt": null,
       "comments": []
     }
