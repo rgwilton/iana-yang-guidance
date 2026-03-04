@@ -31,11 +31,17 @@ author:
     email: "rwilton@cisco.com"
 
 normative:
+  RFC6020:
   RFC7950:
   I-D.ietf-netmod-yang-module-versioning:
   I-D.ietf-netmod-yang-semver:
   I-D.ietf-netmod-rfc8407bis:
   I-D.ietf-netmod-yang-module-filename:
+  IANA-YANG-PARAMETERS:
+    title: "YANG Parameters"
+    target: "https://www.iana.org/assignments/yang-parameters/yang-parameters.xhtml"
+    author:
+      - org: "IANA"
 
 informative:
   I-D.ietf-netmod-yang-schema-comparison:
@@ -52,10 +58,21 @@ This document provides guidance to the RFC Editor and IANA on managing YANG modu
 # Open Issues/Questions:
 1. Do we need guidance to IANA in this document to list modules both by revision date and version?
 1. This document is informational, is it appropriate to use RFC 2119 language?
+1. For the RFC Editor and ADs, do we want to allow the RFC Editor to apply errata to IETF YANG modules.
+1. Should RFC8126-bis have any guidance for IANA maintained YANG modules derived from IANA registries?
+
+# For Reviewers of this document
+
+**RFC Editor - please delete this section before publication**
+
+This draft should be carefully reviewed by:
+ - IANA and RFC Editor to check that they agree with the workflows
+ - OPS ADS & IESG (if needed) that they agree that the IETF should delay publishing YANG modules in approved internet drafts until after the RFC Editor has had the opportunity to review and amend the text.
+ - YANG Doctors and NETMOD to ensure that they are happy with the requirements being placed upon them.
 
 # Introduction
 
-YANG {{RFC7950}} modules are used to model network management data and protocols. The IETF publishes YANG modules as part of RFCs, and the Internet Assigned Numbers Authority (IANA) maintains YANG modules that are derived from IANA registries. Both processes require careful attention to module versioning to ensure that implementations can correctly assess compatibility when modules are updated.
+YANG {{RFC6020}} {{RFC7950}} modules are used to model network management data and protocols. The IETF publishes YANG modules as part of RFCs, and the Internet Assigned Numbers Authority (IANA) maintains YANG modules that are derived from IANA registries. Both processes require careful attention to module versioning and the timing of publication to ensure that implementations can correctly assess module version compatibility when modules are updated.
 
 This document provides informational guidance to both the RFC Editor and IANA for managing YANG modules in two distinct scenarios:
 
@@ -67,12 +84,12 @@ The guidance in this document is informational rather than prescriptive. It desc
 
 > **Note:** In addition to the guidance detailed in this document, there is a broader, ongoing discussion within the IETF community around the processes and responsibilities for managing YANG modules in RFCs. For further information and the latest proposals, see {{I-D.boucadair-veloce-yang}}. The recommendations and operational practices described here may be revised in the future to reflect outcomes from that work.
 
-The procedures and classifications in this document are based on the following IETF specifications:
+The procedures and classifications in this document are drawn from text and general guidance on the following IETF specifications:
 
+- {{I-D.ietf-netmod-rfc8407bis}} - Provides general guidelines for IETF YANG module authors
 - {{I-D.ietf-netmod-yang-module-versioning}} - Defines updated YANG module revision handling, including rules for backwards-compatible and non-backwards-compatible changes
 - {{I-D.ietf-netmod-yang-semver}} - Defines YANG Semantic Versioning (YANG Semver) for YANG modules
 - {{I-D.ietf-netmod-yang-module-filename}} - Defines filename conventions for YANG modules versioned using YANG Semver
-- {{I-D.ietf-netmod-rfc8407bis}} - Provides general guidelines for IETF YANG module authors
 
 
 # Conventions and Definitions {#sec-conventions}
@@ -94,7 +111,7 @@ This document uses the following terminology from {{I-D.ietf-netmod-yang-semver}
 : YANG Semantic Versioning - a version identifier in the format *MAJOR.MINOR.PATCH_COMPAT* that indicates the compatibility level of a YANG module, as defined in {{I-D.ietf-netmod-yang-semver}}.
 
 **Editorial Change**
-: A change to a YANG module that does not affect the semantic meaning or functionality of the module. Editorial changes only require incrementing the PATCH version number.
+: A change to a YANG module that does not affect the semantic meaning or functionality of the module. Editorial changes only require incrementing the PATCH version number, as described in section 4.4 of {{I-D.ietf-netmod-yang-semver}}.
 
 In addition, this document defines:
 
@@ -107,17 +124,20 @@ In addition, this document defines:
 
 YANG Semantic Versioning (YANG Semver), defined in {{I-D.ietf-netmod-yang-semver}}, uses a version identifier in the format MAJOR.MINOR.PATCH (with an optional _COMPAT suffix for branched development):
 
-- **MAJOR** version increments indicate non-backwards-compatible (NBC) changes
-- **MINOR** version increments indicate backwards-compatible (BC) feature additions
+- **MAJOR** version increments indicate non-backwards-compatible (NBC) changes, with *MINOR* and *PATCH* fields reset to 0
+- **MINOR** version increments indicate backwards-compatible (BC) feature additions, with the *PATCH* field reset to 0
 - **PATCH** version increments indicate editorial or documentation-only changes
-- **_COMPAT** is used for branched development trees and is not applicable to modules published by the RFC Editor in RFCs that are expected to follow a linear development, (**TODO, but may be useful/needed if we allow verified errata against YANG modules**) or maintained by IANA.
+- **_COMPAT** is used for branched development trees and is not applicable to modules published by the IETF or maintained by IANA.
 
-For example, if a published IETF YANG module is at version 1.2.3:
-- A non-backwards-compatible change would update it to 2.0.0
-- A backwards-compatible feature addition would update it to 1.3.0
-- An editorial change would update it to 1.2.4
+If an update to a YANG module contains a mix of changes, then the version number is updated as per the most impactful change.  E.g., if a change included both backwards-compatible feature additions and editorial changes then the *MINOR* version field is incremented and the *PATCH* version field is set to 0, e.g., as per the second example below.  If in doubt as to which category a particular change fits into, it is always better to err on the side of caution and choose the more significant version change.
 
-Pre-release versions (versions with MAJOR = 0 or with a pre-release suffix such as "-draft-verdt-iana-yang-guidance") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.
+For example, if a published IETF YANG module is at version *1.2.3*:
+
+- An editorial only change would update it to *1.2.4*
+- A backwards-compatible feature addition would update it to *1.3.0*
+- A non-backwards-compatible change would update it to *2.0.0*.
+
+Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-draft-verdt-iana-yang-guidance") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA YANG modules should always be at version "1.0.0" or later, and should never include a pre-release suffix.  The initial published version should be "1.0.0".
 
 ## Backwards Compatibility Rules
 
@@ -127,7 +147,7 @@ Section 3.1.1 of {{I-D.ietf-netmod-yang-module-versioning}} defines backwards-co
 
 - Adding new schema nodes (e.g., new enum values, identities, leafs, containers)
 - Adding new optional features or extensions
-- Changing the status of a schema node from "current" to "deprecated"
+- Changing the status of a schema node from "current" to "deprecated" (e.g., by adding a ```status: "deprecated"``` statement)
 - Adding or updating "description" and "reference" statements (provided the semantic meaning is unchanged)
 - Expanding constraints (e.g., widening ranges, adding enum values)
 
@@ -177,9 +197,9 @@ A fundamental principle of YANG module versioning is that once a module revision
 
 This immutability principle has important implications:
 
-- Modules in Internet-Drafts SHOULD use pre-release versions (e.g., 0.1.0 or 2.0.0-draft) to indicate that the content may still change
-- Once a document is approved by the IESG, the module version MUST be updated to a release version (e.g., 1.0.0, or 2.0.0) before publication as an RFC.
-- IANA-maintained modules MUST publish a new revision any time the registry changes require module updates
+- Modules in Internet-Drafts MUST use pre-release versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the content may still change.
+- Once a document is approved by the IESG and has been processed by the RFC editor, (**TODO - Is IANA involved too?**) then the module version MUST be updated to the correct release version (e.g., 1.0.0, or 2.0.0) before publication in an RFC or made available in the IANA YANG Module Names registry {{IANA-YANG-PARAMETERS}}.
+- IANA-maintained modules MUST publish a new YANG module revision any time IANA registry changes require YANG module updates.
 
 # YANG Modules in Documents Being Published as RFCs {#sec-rfc-workflow}
 
@@ -193,7 +213,7 @@ All YANG modules published by the RFC Editor or maintained by IANA MUST meet the
 
 2. **NBC Extension for NBC Changes**: If the module contains non-backwards-compatible changes relative to the previously published version, the revision statement MUST include the `rev:non-backwards-compatible` extension.
 
-3. **Revision Immutability**: A published YANG module with a specific revision date and version number is immutable. Its content MUST NOT change without also changing the revision date and version number. For this reason, modules in Internet-Drafts SHOULD use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-draft) to indicate that content may still change before final publication.
+3. **Revision Immutability**: A published YANG module with a specific revision date and version number is immutable. Its content MUST NOT change without also changing the revision date and version number. For this reason, modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-draft) to indicate that content may still change before final publication.
 
 4. **RFC Code Markers**: YANG modules in RFCs MUST be properly marked with `<CODE BEGINS>` and `<CODE ENDS>` markers (or equivalent in the source format) to enable automated extraction. The markers MUST include the filename following the conventions in {{I-D.ietf-netmod-yang-module-filename}}.
 
@@ -548,17 +568,16 @@ This document gives instructions to IANA on how to handle YANG modules that are 
 
 Incorrect interpretion of this document could cause incorrect handling or versioning of IANA maintained YANG modules.
 
-This document recommends the usage of various tools.  Bugs or attacks on these tools could cause the tools to give incorrect or misleading guidance.  In all cases, secondary evaluation of output of the tools should be performed to confirm that they are giving the anticipated results.  The *YANG Doctors* team can also be contacted for further advice, if required.
+This document recommends the usage of various tools.  Bugs or attacks on these tools could cause the tools to give incorrect or misleading guidance.  In all cases, secondary evaluation of output of the tools should be performed to confirm that they are giving the anticipated results.  The *YANG Doctors* or *Operations and Management Area Directors* can also be contacted for further advice, if required.
 
 
 # IANA Considerations
 
 This document provides operational guidance to IANA and the RFC Editor for managing YANG modules. It does not require IANA to create or modify any registries, nor does it define any new registration procedures.
 
-The guidance in this document is intended to clarify and standardize how IANA processes YANG modules in the "YANG Module Names" registry (<https://www.iana.org/assignments/yang-parameters/>) and how IANA maintains YANG modules derived from IANA registries.
+The guidance in this document is intended to clarify and standardize how IANA processes YANG modules in the "YANG Module Names" registry ({{IANA-YANG-PARAMETERS}}) and how IANA maintains YANG modules derived from IANA registries.
 
 IANA should follow the procedures described in {{sec-rfc-workflow}} when processing YANG modules from RFCs and the procedures described in {{sec-iana-modules}} when updating IANA-maintained YANG modules.
-
 
 --- back
 
@@ -740,41 +759,48 @@ The NETMOD working group continues to develop improved tooling for YANG module m
 
 As new tools become available, the NETMOD working group and YANG Doctors will provide guidance on their usage. The RFC Editor and IANA will be informed of tool updates that affect the workflows described in this document.
 
-# Summary of Registry Action Scenarios {#appendix-scenarios}
+# Summary of IANA Registry Action Scenarios {#appendix-scenarios}
 
-This appendix provides a comprehensive reference of common scenarios encountered when updating YANG modules, particularly IANA-maintained modules. Each scenario describes the registry action, the corresponding YANG module change, the classification (NBC/BC/Editorial), the version change required, and whether the `rev:non-backwards-compatible` extension must be added.
+This appendix provides a comprehensive reference of common scenarios encountered when updating IANA-maintained YANG module derived from IANA registries.  Each scenario describes the registry action, the corresponding YANG module change, the classification (NBC/BC/Editorial), the version change required, and whether the `rev:non-backwards-compatible` extension must be added.
 
 ## Quick Reference Table
+
+
+
+The assumption is that the YANG module uses the registry entry name, numeric identifier, description, status, and any reference fields as part of the YANG entries.  If additional fields from the registry are used in the YANG module (e.g., perhaps the YANG description is constucted from multiple registry fields) then any changes to those fields will require a new version of the YANG module to be published and an appropriate new version number, chosen based on the actual change to the YANG module.
+
+**Important Principle**: The source or trigger of a change (errata, new RFC, registry update, expert review, etc.) does NOT determine whether it is NBC, BC, or Editorial. What matters is the resultant change made to the YANG module content.
 
 | Registry Action | YANG Change | Classification | Version | NBC Ext |
 |:----------------|:------------|:---------------|:--------|:--------|
 | Add new registration | Add enum/identity | BC | MINOR | No |
+| Update reference (Draft → RFC) | Update reference | Editorial | PATCH | No |
 | Update reference (obsoleted RFC) | Update reference | Editorial | PATCH | No |
 | Add additional reference | Update reference | Editorial | PATCH | No |
-| Draft → RFC reference | Update reference | Editorial | PATCH | No |
+| Update description (clarify) | Update description | Editorial | PATCH | No |
+| Update description (change meaning) | Update description | NBC | MAJOR | Yes |
 | Deprecate (keep name) | status deprecated | BC | MINOR | No |
 | Obsolete entry | status obsolete | NBC | MAJOR | Yes |
+| Rename entry | Change identifier | NBC | MAJOR | Yes |
 | Remove entry completely | Remove enum/identity | NBC | MAJOR | Yes |
 | Deprecate + remove name | Remove enum/identity | NBC | MAJOR | Yes |
 | Change value number | Change value | NBC | MAJOR | Yes |
 | Reuse old value | Add with old value | NBC | MAJOR | Yes |
-| Update description (clarify) | Update description | Editorial | PATCH | No |
-| Update description (change meaning) | Update description | NBC | MAJOR | Yes |
-| Rename entry | Change identifier | NBC | MAJOR | Yes |
 | Add footnote | Optionally update | Editorial | PATCH | No |
-| Non-YANG field changes | No change | N/A | None | No |
+| Non-YANG field changes | No change (see prose above) | N/A | None | No |
 | Errata | Depends on content | Analyze | Varies | Maybe |
 | Early alloc expired (left as-is) | No change | N/A | None | No |
 | Early alloc expired (removed) | Follow removal rules | NBC | MAJOR | Yes |
 | Revive expired allocation | Add enum/identity | BC | MINOR | No |
 
 **Key**:
+
 - **BC** = Backwards-Compatible; **NBC** = Non-Backwards-Compatible
 - **MAJOR/MINOR/PATCH** refer to the YANG Semver version components
 - **NBC Ext** = Whether `rev:non-backwards-compatible` extension is required
 - **Varies** or **Maybe** indicates the specific change must be analyzed using the detailed scenarios below
 
-## Detailed Scenarios
+## Detailed Common Scenarios
 
 ### Scenario 1: Adding a New Registry Entry
 
@@ -790,8 +816,14 @@ This appendix provides a comprehensive reference of common scenarios encountered
 
 **Example**:
 
+Previous version:
+
 ~~~~ yang
-// Previous version 1.0.0
+revision 2025-11-01 {
+  ysv:version "1.0.0";
+  description "Initial revision.";
+}
+
 typedef interface-type {
   type enumeration {
     enum ethernet {
@@ -800,11 +832,20 @@ typedef interface-type {
     }
   }
 }
+~~~~
 
+New version after addition of 'wifi' enum type:
+
+~~~~ yang
 // New version 1.1.0
 revision 2025-11-15 {
   ysv:version "1.1.0";
-  description "Added wifi interface type";
+  description "Added 'wifi' (71).";
+}
+
+revision 2025-11-01 {
+  ysv:version "1.0.0";
+  description "Initial revision.";
 }
 
 typedef interface-type {
@@ -820,6 +861,7 @@ typedef interface-type {
   }
 }
 ~~~~
+
 
 ### Scenario 2: Updating References
 
@@ -1020,7 +1062,7 @@ enum removedtype {
 
 **Classification**: Analyze the actual change, not the source (errata vs. new RFC does not determine classification).
 
-**Version Change**: Follow the rules based on the actual change type.
+**Version Change**: Follow the rules based on the actual change being made to the IANA registry entry.
 
 **NBC Extension Required**: May be required depending on the change.
 
@@ -1029,21 +1071,18 @@ enum removedtype {
 - Errata adds missing enum → BC / MINOR
 - Errata corrects wrong value assignment → NBC / MAJOR
 
-## Notes on Classification
-
-**Important Principle**: The source or trigger of a change (errata, new RFC, registry update, expert review, etc.) does NOT determine whether it is NBC, BC, or Editorial. What matters is the actual change made to the YANG module content.
 
 # Example IANA-Maintained Module {#appendix-example}
 
 This appendix shows an example of a well-structured IANA-maintained YANG module, demonstrating proper use of versioning, revision statements, and the NBC extension.
 
-## Example: iana-if-type Module Structure
+## Example: example-iana-if-type Module Structure
 
 ~~~~ yang
-module iana-if-type {
+module example-iana-if-type {
   yang-version 1.1;
-  namespace "urn:ietf:params:xml:ns:yang:iana-if-type";
-  prefix ianaift;
+  namespace "urn:ietf:params:xml:ns:yang:example-iana-if-type";
+  prefix ex-ianaift;
 
   import ietf-yang-revisions { prefix rev; }
   import ietf-yang-semver { prefix ysv; }
@@ -1066,13 +1105,14 @@ module iana-if-type {
      <https://www.iana.org/assignments/smi-numbers>";
 
   description
-    "This YANG module defines the iana-if-type typedef, which
-     contains YANG definitions for IANA-registered interface types.
+    "This example YANG module defines the iana-if-type typedef,
+     which contains YANG definitions for IANA-registered
+     interface types.
 
      This YANG module is maintained by IANA and reflects the
      'Interface Types (ifType)' registry.
 
-     Copyright (c) 2025 IETF Trust and the persons identified as
+     Copyright (c) 2026 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -1082,14 +1122,14 @@ module iana-if-type {
      Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
 
-     This version of this YANG module is part of RFC XXXX; see
-     the RFC itself for full legal notices.";
+     The initial version of this YANG module is part of RFC XXXX;
+     see the RFC itself for full legal notices.";
 
   // Example revision with new interface type (BC change)
   revision 2025-11-15 {
-    ysv:version "2.5.0";
+    ysv:version "2.1.0";
     description
-      "Added new interface type 'wifi6e' per registry update.";
+      "Added 'wifi6e'.";
     reference
       "RFC XXXX: IANA Guidance for YANG Modules";
   }
@@ -1099,7 +1139,7 @@ module iana-if-type {
     ysv:version "2.0.0";
     rev:non-backwards-compatible;
     description
-      "Obsoleted 'arcnet' interface type as support has been removed.";
+      "Obsoleted 'arcnet'.";
     reference
       "RFC XXXX: IANA Guidance for YANG Modules";
   }
@@ -1108,55 +1148,62 @@ module iana-if-type {
   revision 2025-09-01 {
     ysv:version "1.1.0";
     description
-      "Added new interface type 'virtualEthernet'.";
+      "Added 'virtualEthernet'.";
   }
 
   // Example initial revision
   revision 2025-01-01 {
     ysv:version "1.0.0";
     description
-      "Initial version matching the Interface Types registry
-       as of 2025-01-01.";
+      "Initial version.";
   }
 
-  typedef interface-type {
-    type enumeration {
-      enum other {
-        value 1;
-        description
-          "None of the following types.";
-      }
-      enum ethernet {
-        value 6;
-        description
-          "Ethernet interface, including 10BASE-T, 100BASE-T,
-           and 1000BASE-T variants.";
-        reference
-          "RFC 3635: Definitions of Managed Objects for the
-           Ethernet-like Interface Types";
-      }
-      enum wifi6e {
-        value 289;
-        description
-          "IEEE 802.11ax (Wi-Fi 6E) wireless interface.";
-        reference
-          "IEEE 802.11ax-2021";
-      }
-      enum arcnet {
-        value 35;
-        status obsolete;
-        description
-          "ARCNET interface. This interface type is obsolete
-           and MUST NOT be used. Support was removed 2025-10-01.";
-      }
-    }
+  identity interface-type {
     description
-      "This typedef is used to represent the IANA-registered
-       interface types. It is derived from the 'Interface Types
-       (ifType)' registry.";
+      "Base identity for IANA-registered interface types. It is
+       derived from the 'Interface Types (ifType)' registry.";
     reference
       "IANA Interface Types registry:
        <https://www.iana.org/assignments/smi-numbers>";
+  }
+
+  identity other {
+    base interface-type;
+    description
+      "None of the following types.";
+  }
+
+  identity ethernet {
+    base interface-type;
+    description
+      "Ethernet interface, including 10BASE-T, 100BASE-T, and
+       1000BASE-T variants.";
+    reference
+      "RFC 3635: Definitions of Managed Objects for the
+       Ethernet-like Interface Types";
+  }
+
+  identity wifi6e {
+    base interface-type;
+    description
+      "IEEE 802.11ax (Wi-Fi 6E) wireless interface.";
+    reference
+      "IEEE 802.11ax-2021";
+  }
+
+  identity arcnet {
+    base interface-type;
+    status obsolete;
+    description
+      "ARCNET interface.";
+  }
+
+  typedef interface-type-ref {
+    type identityref {
+      base interface-type;
+    }
+    description
+      "Reference to an IANA-registered interface type identity.";
   }
 }
 ~~~~
