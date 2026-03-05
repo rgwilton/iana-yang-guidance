@@ -378,7 +378,7 @@ IANA registries and YANG modules use the term *deprecated* differently:
 
 - In YANG modules, `status deprecated` means the definition is still supported (including for new deployments) but it is expected to be obsoleted (or removed) in a future module version.
 
-To avoid confusion, when an IANA registry entry is marked deprecated, the corresponding enum or identity description SHOULD include indicate that the base IANA registry entry is deprecated and therefore the entry SHOULD NOT be used. I.e., the following sentence SHOULD be added to the end of the enum/identity description: ```This value is deprecated in the base IANA registry and hence its use is NOT RECOMMENDED.```
+To avoid confusion, when an IANA registry entry is marked deprecated, the corresponding enum or identity description SHOULD include indicate that the base IANA registry entry is deprecated and therefore the entry SHOULD NOT be used. I.e., the following sentence SHOULD be added to the end of the enum/identity description: ```This value is deprecated in the base IANA registry which means that its use is NOT RECOMMENDED.```
 
 ## Process for Updating IANA-Maintained YANG Modules
 
@@ -775,19 +775,19 @@ The assumption is that the YANG module uses the registry entry name, numeric ide
 | Change or remove reference | Update reference | Editorial | PATCH | No |
 | Update description (clarify) | Update description | Editorial | PATCH | No |
 | Update description (change meaning) | Update description | NBC | MAJOR | Yes |
-| Deprecate (keep name) | status deprecated | BC | MINOR | No |
+| Deprecate entry (keep name) | status deprecated | BC | MINOR | No |
 | Obsolete entry | status obsolete | NBC | MAJOR | Yes |
 | Rename entry | Change identifier | NBC | MAJOR | Yes |
 | Remove entry completely | Remove enum/identity | NBC | MAJOR | Yes |
-| Deprecate + remove name | Remove enum/identity | NBC | MAJOR | Yes |
 | Change value number | Change value | NBC | MAJOR | Yes |
-| Reuse old value | Add with old value | NBC | MAJOR | Yes |
-| Add footnote | Optionally update | Editorial | PATCH | No |
-| Non-YANG field changes | No change (see prose above) | N/A | None | No |
+| Reuse old value (previously removed) | Same as adding new entry| BC | Minor | No |
+| Add footnote | Optionally update description | Editorial | PATCH | No |
+| Non-YANG field changes | Depends on how the module is updated | Analyze | Varies | Maybe |
 | Errata | Depends on content | Analyze | Varies | Maybe |
 | Early alloc expired (left as-is) | No change | N/A | None | No |
 | Early alloc expired (removed) | Follow removal rules | NBC | MAJOR | Yes |
-| Revive expired allocation | Add enum/identity | BC | MINOR | No |
+| Revive expired (removed) allocation | Add enum/identity | BC | MINOR | No |
+{: title="Registry Action → YANG Module Update Reference Table"}
 
 **Key**:
 
@@ -797,6 +797,8 @@ The assumption is that the YANG module uses the registry entry name, numeric ide
 - **Varies** or **Maybe** indicates the specific change must be analyzed using the detailed scenarios below
 
 ## Detailed Common Scenarios
+
+Note: The following scenarios only contain snippets of YANG to illustrate the change being made and are not intended to represent complete example modules, or be able to compile or validate.
 
 ### Scenario 1: Adding a New Registry Entry
 
@@ -883,19 +885,24 @@ revision 2025-11-01 {
   description "Added 'foo' (42).";
 }
 
-enum foo {
-  value 42;
-  description "Foo interface type.";
-  reference "RFC 1234";
+typedef interface-type {
+  type enumeration {
+    ...
+    enum foo {
+      value 42;
+      description "Foo interface type.";
+      reference "RFC 1234";
+    }
+  }
 }
 ~~~~
 
-New version, *2.3.1*, after the reference for 'foo' is updated to RFC 5678:
+New version (*2.3.1*) after the reference for 'foo' is updated to RFC 5678:
 
 ~~~~ yang
 revision 2025-11-15 {
   ysv:version "2.3.1";
-  description "Updated reference for RFC obsolescence";
+  description "Updated reference for 'foo' (42).";
 }
 
 revision 2025-11-01 {
@@ -903,10 +910,15 @@ revision 2025-11-01 {
   description "Added 'foo' (42).";
 }
 
-enum foo {
-  value 42;
-  description "Foo interface type";
-  reference "RFC 5678 (obsoletes RFC 1234)";
+typedef interface-type {
+  type enumeration {
+    ...
+    enum foo {
+      value 42;
+      description "Foo interface type.";
+      reference "RFC 5678 (obsoletes RFC 1234)";
+    }
+  }
 }
 ~~~~
 
@@ -918,40 +930,58 @@ enum foo {
 
 **Classification**: Backwards-Compatible (BC)
 
-**Version Change**: Increment MINOR version (e.g., 1.0.0 → 1.1.0)
+**Version Change**: Increment MINOR version (e.g., 2.3.1 → 2.4.0)
 
 **NBC Extension Required**: No
 
-**Rationale**: Changing status to deprecated is explicitly allowed as BC per Section 3.1.1.8 of {{I-D.ietf-netmod-yang-module-versioning}}.
+**Rationale**: Changing status to deprecated is backwards-compatible but the description must also be updated to highlight the difference in meaning between IANA registries and YANG modules.
 
 **Example**:
 
-Previous version:
+Previous version, *2.3.1*:
 
 ~~~~ yang
-// Before: oldtype is current (version 1.0.0)
-enum oldtype {
-  value 99;
-  status current;
-  description "Old interface type";
+revision 2025-11-15 {
+  ysv:version "2.3.1";
+  description "Updated reference 'foo' (42).";
 }
+
+typedef interface-type {
+  type enumeration {
+    ...
+    enum oldtype {
+      value 99;
+      description "Old interface type";
+    }
+  }
+}
+
 ~~~~
 
-New version after deprecation:
+New version (*2.4.0*) after deprecation:
 
 ~~~~ yang
-// After: oldtype marked deprecated (version 1.1.0)
-revision 2025-11-15 {
-  ysv:version "1.1.0";
-  description "Deprecated oldtype interface";
+revision 2025-11-23 {
+  ysv:version "2.4.0";
+  description "Deprecated 'oldtype' (99).";
 }
 
-enum oldtype {
-  value 99;
-  status deprecated;
-  description
-    "Old interface type. This value is deprecated and
-     SHOULD NOT be used in new implementations.";
+revision 2025-11-15 {
+  ysv:version "2.3.1";
+  description "Updated reference 'foo' (42).";
+}
+
+typedef interface-type {
+  type enumeration {
+    ...
+    enum oldtype {
+      value 99;
+      status deprecated;
+      description
+        "Old interface type. This value is deprecated in the base IANA
+        registry which means that its use is NOT RECOMMENDED.";
+    }
+  }
 }
 ~~~~
 
@@ -963,42 +993,61 @@ enum oldtype {
 
 **Classification**: Non-Backwards-Compatible (NBC)
 
-**Version Change**: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)
+**Version Change**: Increment MAJOR version (e.g., 2.4.0 → 3.0.0)
 
 **NBC Extension Required**: Yes
 
-**Rationale**: Changing status to obsolete indicates the value MUST NOT be used, breaking compatibility.
+**Rationale**: Changing status to obsolete indicates the value MUST NOT be used, breaking compatibility.  Note, the description comment about deprecation can also be removed.
 
 **Example**:
 
-Previous version:
+Previous version (*2.4.0*):
 
 ~~~~ yang
-// Before: removedtype is deprecated (version 1.0.0)
-enum removedtype {
-  value 98;
-  status deprecated;
-  description "Type being removed";
+revision 2025-11-23 {
+  ysv:version "2.4.0";
+  description "Deprecated 'oldtype' (99).";
+}
+
+typedef interface-type {
+  type enumeration {
+    ...
+    enum oldtype {
+      value 99;
+      status deprecated;
+      description
+        "Old interface type. This value is deprecated in the base IANA
+        registry which means that its use is NOT RECOMMENDED.";
+    }
+  }
 }
 ~~~~
 
-New version after obsoletion:
+New version (*3.0.0*) after obsoletion:
 
 ~~~~ yang
-// After: removedtype marked obsolete (version 2.0.0)
-revision 2025-11-15 {
-  ysv:version "2.0.0";
+revision 2025-11-30 {
+  ysv:version "3.0.0";
   rev:non-backwards-compatible;
   description
     "Obsoleted removedtype interface. Support has been removed.";
 }
 
-enum removedtype {
-  value 98;
-  status obsolete;
-  description
-    "Obsolete interface type. This value MUST NOT be used.
-     Support was removed as of 2025-11-15.";
+revision 2025-11-23 {
+  ysv:version "2.4.0";
+  description "Deprecated 'oldtype' (99).";
+}
+
+typedef interface-type {
+  type enumeration {
+    ...
+    enum oldtype {
+      value 99;
+      status obsolete;
+      description
+        "Old interface type.";
+    }
+  }
 }
 ~~~~
 
@@ -1010,13 +1059,45 @@ enum removedtype {
 
 **Classification**: Non-Backwards-Compatible (NBC)
 
-**Version Change**: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)
+**Version Change**: Increment MAJOR version (e.g., 2.2.0 → 3.0.0)
 
 **NBC Extension Required**: Yes
 
 **Rationale**: Removing a schema node is NBC per Section 3.1.2.1 of {{I-D.ietf-netmod-yang-module-versioning}}.
 
-**Note**: This is strongly discouraged. Prefer marking as "obsolete" instead.
+**Example**:
+
+Previous version (*2.2.0*):
+
+~~~~ yang
+revision 2026-02-01 {
+  ysv:version "2.2.0";
+  description "Added legacy-wireless identity.";
+}
+
+identity interface-type {
+  description "Base identity for interface types.";
+}
+
+identity legacy-wireless {
+  base interface-type;
+  description "Legacy wireless interface.";
+}
+~~~~
+
+New version (*3.0.0*) after removal:
+
+~~~~ yang
+revision 2026-03-15 {
+  ysv:version "3.0.0";
+  rev:non-backwards-compatible;
+  description "Removed 'legacy-wireless' identity.";
+}
+
+identity interface-type {
+  description "Base identity for interface types.";
+}
+~~~~
 
 ### Scenario 6: Renaming a Registry Entry
 
@@ -1026,11 +1107,52 @@ enum removedtype {
 
 **Classification**: Non-Backwards-Compatible (NBC)
 
-**Version Change**: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)
+**Version Change**: Increment MAJOR version (e.g., 3.1.0 → 4.0.0)
 
 **NBC Extension Required**: Yes
 
 **Rationale**: Renaming breaks programmatic references to the identifier.
+
+**Example**:
+
+Previous version (*3.1.0*):
+
+~~~~ yang
+// Before: old-gre name used (version 3.1.0)
+revision 2026-04-01 {
+  ysv:version "3.1.0";
+  description "Added old-gre identity.";
+}
+
+identity tunnel-type {
+  description "Base identity for tunnel types.";
+}
+
+identity old-gre {
+  base tunnel-type;
+  description "GRE tunnel (legacy name).";
+}
+~~~~
+
+New version (*4.0.0*) after rename:
+
+~~~~ yang
+// After: renamed to gre (version 4.0.0)
+revision 2026-05-01 {
+  ysv:version "4.0.0";
+  rev:non-backwards-compatible;
+  description "Renamed old-gre to gre.";
+}
+
+identity tunnel-type {
+  description "Base identity for tunnel types.";
+}
+
+identity gre {
+  base tunnel-type;
+  description "GRE tunnel.";
+}
+~~~~
 
 ### Scenario 7: Changing a Value Number
 
@@ -1040,13 +1162,50 @@ enum removedtype {
 
 **Classification**: Non-Backwards-Compatible (NBC)
 
-**Version Change**: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)
+**Version Change**: Increment MAJOR version (e.g., 2.3.0 → 3.0.0)
 
 **NBC Extension Required**: Yes
 
 **Rationale**: Changing values breaks compatibility for implementations using those values.
 
-**Note**: This is rare and strongly discouraged.
+**Example**:
+
+Previous version (*2.3.0*):
+
+~~~~ yang
+revision 2026-01-10 {
+  ysv:version "2.3.0";
+  description "Added fastether identity.";
+}
+
+typedef interface-type {
+  type enumeration {
+    enum fastether {
+      value 210;
+      description "Fast Ethernet interface.";
+    }
+  }
+}
+~~~~
+
+New version (*3.0.0*) after value change:
+
+~~~~ yang
+revision 2026-02-20 {
+  ysv:version "3.0.0";
+  rev:non-backwards-compatible;
+  description "Changed fastether value to 215.";
+}
+
+typedef interface-type {
+  type enumeration {
+    enum fastether {
+      value 215;
+      description "Fast Ethernet interface.";
+    }
+  }
+}
+~~~~
 
 ### Scenario 8: Updating Description (Clarification)
 
@@ -1056,11 +1215,46 @@ enum removedtype {
 
 **Classification**: Editorial
 
-**Version Change**: Increment PATCH version (e.g., 1.0.0 → 1.0.1)
+**Version Change**: Increment PATCH version (e.g., 2.1.3 → 2.1.4)
 
 **NBC Extension Required**: No
 
-**Example**: Changing "Ethernet interface" to "Ethernet interface, including 10BASE-T, 100BASE-T, and 1000BASE-T variants" where those variants were always included.
+**Example**:
+
+Previous version (*2.1.3*):
+
+~~~~ yang
+revision 2026-02-05 {
+  ysv:version "2.1.3";
+  description "Clarified description for 'foo'.";
+}
+
+identity ethernet {
+  base interface-type;
+  description "Ethernet interface.";
+}
+~~~~
+
+New version (*2.1.4*) after clarification:
+
+~~~~ yang
+revision 2026-02-12 {
+  ysv:version "2.1.4";
+  description "Clarified description for 'ethernet'.";
+}
+
+revision 2026-02-05 {
+  ysv:version "2.1.3";
+  description "Clarified description for 'foo'.";
+}
+
+identity ethernet {
+  base interface-type;
+  description
+    "Ethernet interface, including 10BASE-T, 100BASE-T, and
+     1000BASE-T variants.";
+}
+~~~~
 
 ### Scenario 9: Updating Description (Semantic Change)
 
@@ -1070,11 +1264,40 @@ enum removedtype {
 
 **Classification**: Non-Backwards-Compatible (NBC)
 
-**Version Change**: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)
+**Version Change**: Increment MAJOR version (e.g., 2.2.0 → 3.0.0)
 
 **NBC Extension Required**: Yes
 
-**Example**: Changing "supports IPv4 only" to "supports IPv4 and IPv6" changes the expected behavior.
+**Example**:
+
+Previous version (*2.2.0*):
+
+~~~~ yang
+revision 2026-03-01 {
+  ysv:version "2.2.0";
+  description "Defined ip identity.";
+}
+
+identity ip {
+  base interface-type;
+  description "Interface supports IPv4.";
+}
+~~~~
+
+New version (*3.0.0*) after semantic change:
+
+~~~~ yang
+revision 2026-04-01 {
+  ysv:version "3.0.0";
+  rev:non-backwards-compatible;
+  description "Changed description for 'ip' identity";
+}
+
+identity ipv {
+  base interface-type;
+  description "Interface supports IPv4 and IPv6.";
+}
+~~~~
 
 ### Scenario 10: Handling Errata
 
@@ -1152,8 +1375,6 @@ module example-iana-if-type {
     ysv:version "2.1.0";
     description
       "Added 'wifi6e'.";
-    reference
-      "RFC XXXX: IANA Guidance for YANG Modules";
   }
 
   // Example revision with obsoleted type (NBC change)
@@ -1162,8 +1383,6 @@ module example-iana-if-type {
     rev:non-backwards-compatible;
     description
       "Obsoleted 'arcnet'.";
-    reference
-      "RFC XXXX: IANA Guidance for YANG Modules";
   }
 
   // Example earlier revision (BC change)
