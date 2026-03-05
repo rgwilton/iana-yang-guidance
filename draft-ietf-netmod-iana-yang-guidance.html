@@ -1988,7 +1988,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
               <p id="section-7.3.1-2.2.1">In YANG modules, <code>status deprecated</code> means the definition is still supported (including for new deployments) but it is expected to be obsoleted (or removed) in a future module version.<a href="#section-7.3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-7.3.1-3">To avoid confusion, when an IANA registry entry is marked deprecated, the corresponding enum or identity description SHOULD include indicate that the base IANA registry entry is deprecated and therefore the entry SHOULD NOT be used. I.e., the following sentence SHOULD be added to the end of the enum/identity description: <code>This value is deprecated in the base IANA registry and hence its use is NOT RECOMMENDED.</code><a href="#section-7.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.3.1-3">To avoid confusion, when an IANA registry entry is marked deprecated, the corresponding enum or identity description SHOULD include indicate that the base IANA registry entry is deprecated and therefore the entry SHOULD NOT be used. I.e., the following sentence SHOULD be added to the end of the enum/identity description: <code>This value is deprecated in the base IANA registry which means that its use is NOT RECOMMENDED.</code><a href="#section-7.3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2714,8 +2714,11 @@ pyang --ietf module-name.yang
         </h3>
 <p id="appendix-B.1-1">The assumption is that the YANG module uses the registry entry name, numeric identifier, description, status, and any reference fields as part of the YANG entries.  If additional fields from the registry are used in the YANG module (e.g., perhaps the YANG description is constucted from multiple registry fields) then any changes to those fields will require a new version of the YANG module to be published and an appropriate new version number, chosen based on the actual change to the YANG module.<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.1-2"><strong>Important Principle</strong>: The source or trigger of a change (errata, new RFC, registry update, expert review, etc.) does NOT determine whether it is NBC, BC, or Editorial. What matters is the resultant change made to the YANG module content.<a href="#appendix-B.1-2" class="pilcrow">¶</a></p>
-<table class="center" id="table-1">
-          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<span id="name-registry-action-yang-module"></span><table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-registry-action-yang-module" class="selfRef">Registry Action → YANG Module Update Reference Table</a>
+          </caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Registry Action</th>
@@ -2776,7 +2779,7 @@ pyang --ietf module-name.yang
               <td class="text-left" rowspan="1" colspan="1">Yes</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Deprecate (keep name)</td>
+              <td class="text-left" rowspan="1" colspan="1">Deprecate entry (keep name)</td>
               <td class="text-left" rowspan="1" colspan="1">status deprecated</td>
               <td class="text-left" rowspan="1" colspan="1">BC</td>
               <td class="text-left" rowspan="1" colspan="1">MINOR</td>
@@ -2804,13 +2807,6 @@ pyang --ietf module-name.yang
               <td class="text-left" rowspan="1" colspan="1">Yes</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Deprecate + remove name</td>
-              <td class="text-left" rowspan="1" colspan="1">Remove enum/identity</td>
-              <td class="text-left" rowspan="1" colspan="1">NBC</td>
-              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes</td>
-            </tr>
-            <tr>
               <td class="text-left" rowspan="1" colspan="1">Change value number</td>
               <td class="text-left" rowspan="1" colspan="1">Change value</td>
               <td class="text-left" rowspan="1" colspan="1">NBC</td>
@@ -2818,25 +2814,25 @@ pyang --ietf module-name.yang
               <td class="text-left" rowspan="1" colspan="1">Yes</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Reuse old value</td>
-              <td class="text-left" rowspan="1" colspan="1">Add with old value</td>
-              <td class="text-left" rowspan="1" colspan="1">NBC</td>
-              <td class="text-left" rowspan="1" colspan="1">MAJOR</td>
-              <td class="text-left" rowspan="1" colspan="1">Yes</td>
+              <td class="text-left" rowspan="1" colspan="1">Reuse old value (previously removed)</td>
+              <td class="text-left" rowspan="1" colspan="1">Same as adding new entry</td>
+              <td class="text-left" rowspan="1" colspan="1">BC</td>
+              <td class="text-left" rowspan="1" colspan="1">Minor</td>
+              <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Add footnote</td>
-              <td class="text-left" rowspan="1" colspan="1">Optionally update</td>
+              <td class="text-left" rowspan="1" colspan="1">Optionally update description</td>
               <td class="text-left" rowspan="1" colspan="1">Editorial</td>
               <td class="text-left" rowspan="1" colspan="1">PATCH</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Non-YANG field changes</td>
-              <td class="text-left" rowspan="1" colspan="1">No change (see prose above)</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-              <td class="text-left" rowspan="1" colspan="1">None</td>
-              <td class="text-left" rowspan="1" colspan="1">No</td>
+              <td class="text-left" rowspan="1" colspan="1">Depends on how the module is updated</td>
+              <td class="text-left" rowspan="1" colspan="1">Analyze</td>
+              <td class="text-left" rowspan="1" colspan="1">Varies</td>
+              <td class="text-left" rowspan="1" colspan="1">Maybe</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Errata</td>
@@ -2860,7 +2856,7 @@ pyang --ietf module-name.yang
               <td class="text-left" rowspan="1" colspan="1">Yes</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">Revive expired allocation</td>
+              <td class="text-left" rowspan="1" colspan="1">Revive expired (removed) allocation</td>
               <td class="text-left" rowspan="1" colspan="1">Add enum/identity</td>
               <td class="text-left" rowspan="1" colspan="1">BC</td>
               <td class="text-left" rowspan="1" colspan="1">MINOR</td>
@@ -2890,6 +2886,7 @@ pyang --ietf module-name.yang
         <h3 id="name-detailed-common-scenarios">
 <a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-detailed-common-scenarios" class="section-name selfRef">Detailed Common Scenarios</a>
         </h3>
+<p id="appendix-B.2-1">Note: The following scenarios only contain snippets of YANG to illustrate the change being made and are not intended to represent complete example modules, or be able to compile or validate.<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
 <div id="scenario-1-adding-a-new-registry-entry">
 <section id="appendix-B.2.1">
           <h4 id="name-scenario-1-adding-a-new-reg">
@@ -2969,19 +2966,24 @@ revision 2025-11-01 {
   description "Added 'foo' (42).";
 }
 
-enum foo {
-  value 42;
-  description "Foo interface type.";
-  reference "RFC 1234";
+typedef interface-type {
+  type enumeration {
+    ...
+    enum foo {
+      value 42;
+      description "Foo interface type.";
+      reference "RFC 1234";
+    }
+  }
 }
 </pre><a href="#appendix-B.2.2-9" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.2.2-10">New version, <em>2.3.1</em>, after the reference for 'foo' is updated to RFC 5678:<a href="#appendix-B.2.2-10" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.2-10">New version (<em>2.3.1</em>) after the reference for 'foo' is updated to RFC 5678:<a href="#appendix-B.2.2-10" class="pilcrow">¶</a></p>
 <div class="lang-yang sourcecode" id="appendix-B.2.2-11">
 <pre>
 revision 2025-11-15 {
   ysv:version "2.3.1";
-  description "Updated reference for RFC obsolescence";
+  description "Updated reference for 'foo' (42).";
 }
 
 revision 2025-11-01 {
@@ -2989,10 +2991,15 @@ revision 2025-11-01 {
   description "Added 'foo' (42).";
 }
 
-enum foo {
-  value 42;
-  description "Foo interface type";
-  reference "RFC 5678 (obsoletes RFC 1234)";
+typedef interface-type {
+  type enumeration {
+    ...
+    enum foo {
+      value 42;
+      description "Foo interface type.";
+      reference "RFC 5678 (obsoletes RFC 1234)";
+    }
+  }
 }
 </pre><a href="#appendix-B.2.2-11" class="pilcrow">¶</a>
 </div>
@@ -3006,36 +3013,54 @@ enum foo {
 <p id="appendix-B.2.3-1"><strong>Registry Action</strong>: A registry entry is marked as deprecated (name and description remain visible).<a href="#appendix-B.2.3-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.3-2"><strong>YANG Module Change</strong>: Change status from "current" to "deprecated".<a href="#appendix-B.2.3-2" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.3-3"><strong>Classification</strong>: Backwards-Compatible (BC)<a href="#appendix-B.2.3-3" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.3-4"><strong>Version Change</strong>: Increment MINOR version (e.g., 1.0.0 → 1.1.0)<a href="#appendix-B.2.3-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.3-4"><strong>Version Change</strong>: Increment MINOR version (e.g., 2.3.1 → 2.4.0)<a href="#appendix-B.2.3-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.3-5"><strong>NBC Extension Required</strong>: No<a href="#appendix-B.2.3-5" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.3-6"><strong>Rationale</strong>: Changing status to deprecated is explicitly allowed as BC per Section 3.1.1.8 of <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>.<a href="#appendix-B.2.3-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.3-6"><strong>Rationale</strong>: Changing status to deprecated is backwards-compatible but the description must also be updated to highlight the difference in meaning between IANA registries and YANG modules.<a href="#appendix-B.2.3-6" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.3-7"><strong>Example</strong>:<a href="#appendix-B.2.3-7" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.3-8">Previous version:<a href="#appendix-B.2.3-8" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.3-8">Previous version, <em>2.3.1</em>:<a href="#appendix-B.2.3-8" class="pilcrow">¶</a></p>
 <div class="lang-yang sourcecode" id="appendix-B.2.3-9">
 <pre>
-// Before: oldtype is current (version 1.0.0)
-enum oldtype {
-  value 99;
-  status current;
-  description "Old interface type";
-}
-</pre><a href="#appendix-B.2.3-9" class="pilcrow">¶</a>
-</div>
-<p id="appendix-B.2.3-10">New version after deprecation:<a href="#appendix-B.2.3-10" class="pilcrow">¶</a></p>
-<div class="lang-yang sourcecode" id="appendix-B.2.3-11">
-<pre>
-// After: oldtype marked deprecated (version 1.1.0)
 revision 2025-11-15 {
-  ysv:version "1.1.0";
-  description "Deprecated oldtype interface";
+  ysv:version "2.3.1";
+  description "Updated reference 'foo' (42).";
 }
 
-enum oldtype {
-  value 99;
-  status deprecated;
-  description
-    "Old interface type. This value is deprecated and
-     SHOULD NOT be used in new implementations.";
+typedef interface-type {
+  type enumeration {
+    ...
+    enum oldtype {
+      value 99;
+      description "Old interface type";
+    }
+  }
+}
+
+</pre><a href="#appendix-B.2.3-9" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2.3-10">New version (<em>2.4.0</em>) after deprecation:<a href="#appendix-B.2.3-10" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.3-11">
+<pre>
+revision 2025-11-23 {
+  ysv:version "2.4.0";
+  description "Deprecated 'oldtype' (99).";
+}
+
+revision 2025-11-15 {
+  ysv:version "2.3.1";
+  description "Updated reference 'foo' (42).";
+}
+
+typedef interface-type {
+  type enumeration {
+    ...
+    enum oldtype {
+      value 99;
+      status deprecated;
+      description
+        "Old interface type. This value is deprecated in the base IANA
+        registry which means that its use is NOT RECOMMENDED.";
+    }
+  }
 }
 </pre><a href="#appendix-B.2.3-11" class="pilcrow">¶</a>
 </div>
@@ -3049,38 +3074,57 @@ enum oldtype {
 <p id="appendix-B.2.4-1"><strong>Registry Action</strong>: A registry entry is marked as obsolete.<a href="#appendix-B.2.4-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.4-2"><strong>YANG Module Change</strong>: Change status from "deprecated" (or "current") to "obsolete".<a href="#appendix-B.2.4-2" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.4-3"><strong>Classification</strong>: Non-Backwards-Compatible (NBC)<a href="#appendix-B.2.4-3" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.4-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)<a href="#appendix-B.2.4-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.4-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 2.4.0 → 3.0.0)<a href="#appendix-B.2.4-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.4-5"><strong>NBC Extension Required</strong>: Yes<a href="#appendix-B.2.4-5" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.4-6"><strong>Rationale</strong>: Changing status to obsolete indicates the value MUST NOT be used, breaking compatibility.<a href="#appendix-B.2.4-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.4-6"><strong>Rationale</strong>: Changing status to obsolete indicates the value MUST NOT be used, breaking compatibility.  Note, the description comment about deprecation can also be removed.<a href="#appendix-B.2.4-6" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.4-7"><strong>Example</strong>:<a href="#appendix-B.2.4-7" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.4-8">Previous version:<a href="#appendix-B.2.4-8" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.4-8">Previous version (<em>2.4.0</em>):<a href="#appendix-B.2.4-8" class="pilcrow">¶</a></p>
 <div class="lang-yang sourcecode" id="appendix-B.2.4-9">
 <pre>
-// Before: removedtype is deprecated (version 1.0.0)
-enum removedtype {
-  value 98;
-  status deprecated;
-  description "Type being removed";
+revision 2025-11-23 {
+  ysv:version "2.4.0";
+  description "Deprecated 'oldtype' (99).";
+}
+
+typedef interface-type {
+  type enumeration {
+    ...
+    enum oldtype {
+      value 99;
+      status deprecated;
+      description
+        "Old interface type. This value is deprecated in the base IANA
+        registry which means that its use is NOT RECOMMENDED.";
+    }
+  }
 }
 </pre><a href="#appendix-B.2.4-9" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.2.4-10">New version after obsoletion:<a href="#appendix-B.2.4-10" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.4-10">New version (<em>3.0.0</em>) after obsoletion:<a href="#appendix-B.2.4-10" class="pilcrow">¶</a></p>
 <div class="lang-yang sourcecode" id="appendix-B.2.4-11">
 <pre>
-// After: removedtype marked obsolete (version 2.0.0)
-revision 2025-11-15 {
-  ysv:version "2.0.0";
+revision 2025-11-30 {
+  ysv:version "3.0.0";
   rev:non-backwards-compatible;
   description
     "Obsoleted removedtype interface. Support has been removed.";
 }
 
-enum removedtype {
-  value 98;
-  status obsolete;
-  description
-    "Obsolete interface type. This value MUST NOT be used.
-     Support was removed as of 2025-11-15.";
+revision 2025-11-23 {
+  ysv:version "2.4.0";
+  description "Deprecated 'oldtype' (99).";
+}
+
+typedef interface-type {
+  type enumeration {
+    ...
+    enum oldtype {
+      value 99;
+      status obsolete;
+      description
+        "Old interface type.";
+    }
+  }
 }
 </pre><a href="#appendix-B.2.4-11" class="pilcrow">¶</a>
 </div>
@@ -3094,10 +3138,42 @@ enum removedtype {
 <p id="appendix-B.2.5-1"><strong>Registry Action</strong>: A registry entry is removed with no trace.<a href="#appendix-B.2.5-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.5-2"><strong>YANG Module Change</strong>: Remove the enum or identity from the module.<a href="#appendix-B.2.5-2" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.5-3"><strong>Classification</strong>: Non-Backwards-Compatible (NBC)<a href="#appendix-B.2.5-3" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.5-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)<a href="#appendix-B.2.5-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.5-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 2.2.0 → 3.0.0)<a href="#appendix-B.2.5-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.5-5"><strong>NBC Extension Required</strong>: Yes<a href="#appendix-B.2.5-5" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.5-6"><strong>Rationale</strong>: Removing a schema node is NBC per Section 3.1.2.1 of <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>.<a href="#appendix-B.2.5-6" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.5-7"><strong>Note</strong>: This is strongly discouraged. Prefer marking as "obsolete" instead.<a href="#appendix-B.2.5-7" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.5-7"><strong>Example</strong>:<a href="#appendix-B.2.5-7" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.5-8">Previous version (<em>2.2.0</em>):<a href="#appendix-B.2.5-8" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.5-9">
+<pre>
+revision 2026-02-01 {
+  ysv:version "2.2.0";
+  description "Added legacy-wireless identity.";
+}
+
+identity interface-type {
+  description "Base identity for interface types.";
+}
+
+identity legacy-wireless {
+  base interface-type;
+  description "Legacy wireless interface.";
+}
+</pre><a href="#appendix-B.2.5-9" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2.5-10">New version (<em>3.0.0</em>) after removal:<a href="#appendix-B.2.5-10" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.5-11">
+<pre>
+revision 2026-03-15 {
+  ysv:version "3.0.0";
+  rev:non-backwards-compatible;
+  description "Removed 'legacy-wireless' identity.";
+}
+
+identity interface-type {
+  description "Base identity for interface types.";
+}
+</pre><a href="#appendix-B.2.5-11" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="scenario-6-renaming-a-registry-entry">
@@ -3108,9 +3184,49 @@ enum removedtype {
 <p id="appendix-B.2.6-1"><strong>Registry Action</strong>: The name of a registry entry is changed.<a href="#appendix-B.2.6-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.6-2"><strong>YANG Module Change</strong>: Change the enum or identity identifier.<a href="#appendix-B.2.6-2" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.6-3"><strong>Classification</strong>: Non-Backwards-Compatible (NBC)<a href="#appendix-B.2.6-3" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.6-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)<a href="#appendix-B.2.6-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.6-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 3.1.0 → 4.0.0)<a href="#appendix-B.2.6-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.6-5"><strong>NBC Extension Required</strong>: Yes<a href="#appendix-B.2.6-5" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.6-6"><strong>Rationale</strong>: Renaming breaks programmatic references to the identifier.<a href="#appendix-B.2.6-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.6-7"><strong>Example</strong>:<a href="#appendix-B.2.6-7" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.6-8">Previous version (<em>3.1.0</em>):<a href="#appendix-B.2.6-8" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.6-9">
+<pre>
+// Before: old-gre name used (version 3.1.0)
+revision 2026-04-01 {
+  ysv:version "3.1.0";
+  description "Added old-gre identity.";
+}
+
+identity tunnel-type {
+  description "Base identity for tunnel types.";
+}
+
+identity old-gre {
+  base tunnel-type;
+  description "GRE tunnel (legacy name).";
+}
+</pre><a href="#appendix-B.2.6-9" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2.6-10">New version (<em>4.0.0</em>) after rename:<a href="#appendix-B.2.6-10" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.6-11">
+<pre>
+// After: renamed to gre (version 4.0.0)
+revision 2026-05-01 {
+  ysv:version "4.0.0";
+  rev:non-backwards-compatible;
+  description "Renamed old-gre to gre.";
+}
+
+identity tunnel-type {
+  description "Base identity for tunnel types.";
+}
+
+identity gre {
+  base tunnel-type;
+  description "GRE tunnel.";
+}
+</pre><a href="#appendix-B.2.6-11" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="scenario-7-changing-a-value-number">
@@ -3121,10 +3237,47 @@ enum removedtype {
 <p id="appendix-B.2.7-1"><strong>Registry Action</strong>: The numeric value assigned to a registry entry is changed.<a href="#appendix-B.2.7-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.7-2"><strong>YANG Module Change</strong>: Change the value assigned to an enum.<a href="#appendix-B.2.7-2" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.7-3"><strong>Classification</strong>: Non-Backwards-Compatible (NBC)<a href="#appendix-B.2.7-3" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.7-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)<a href="#appendix-B.2.7-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.7-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 2.3.0 → 3.0.0)<a href="#appendix-B.2.7-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.7-5"><strong>NBC Extension Required</strong>: Yes<a href="#appendix-B.2.7-5" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.7-6"><strong>Rationale</strong>: Changing values breaks compatibility for implementations using those values.<a href="#appendix-B.2.7-6" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.7-7"><strong>Note</strong>: This is rare and strongly discouraged.<a href="#appendix-B.2.7-7" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.7-7"><strong>Example</strong>:<a href="#appendix-B.2.7-7" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.7-8">Previous version (<em>2.3.0</em>):<a href="#appendix-B.2.7-8" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.7-9">
+<pre>
+revision 2026-01-10 {
+  ysv:version "2.3.0";
+  description "Added fastether identity.";
+}
+
+typedef interface-type {
+  type enumeration {
+    enum fastether {
+      value 210;
+      description "Fast Ethernet interface.";
+    }
+  }
+}
+</pre><a href="#appendix-B.2.7-9" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2.7-10">New version (<em>3.0.0</em>) after value change:<a href="#appendix-B.2.7-10" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.7-11">
+<pre>
+revision 2026-02-20 {
+  ysv:version "3.0.0";
+  rev:non-backwards-compatible;
+  description "Changed fastether value to 215.";
+}
+
+typedef interface-type {
+  type enumeration {
+    enum fastether {
+      value 215;
+      description "Fast Ethernet interface.";
+    }
+  }
+}
+</pre><a href="#appendix-B.2.7-11" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="scenario-8-updating-description-clarification">
@@ -3135,9 +3288,44 @@ enum removedtype {
 <p id="appendix-B.2.8-1"><strong>Registry Action</strong>: Description is updated to clarify existing behavior without changing meaning.<a href="#appendix-B.2.8-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.8-2"><strong>YANG Module Change</strong>: Update the description statement.<a href="#appendix-B.2.8-2" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.8-3"><strong>Classification</strong>: Editorial<a href="#appendix-B.2.8-3" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.8-4"><strong>Version Change</strong>: Increment PATCH version (e.g., 1.0.0 → 1.0.1)<a href="#appendix-B.2.8-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.8-4"><strong>Version Change</strong>: Increment PATCH version (e.g., 2.1.3 → 2.1.4)<a href="#appendix-B.2.8-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.8-5"><strong>NBC Extension Required</strong>: No<a href="#appendix-B.2.8-5" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.8-6"><strong>Example</strong>: Changing "Ethernet interface" to "Ethernet interface, including 10BASE-T, 100BASE-T, and 1000BASE-T variants" where those variants were always included.<a href="#appendix-B.2.8-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.8-6"><strong>Example</strong>:<a href="#appendix-B.2.8-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.8-7">Previous version (<em>2.1.3</em>):<a href="#appendix-B.2.8-7" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.8-8">
+<pre>
+revision 2026-02-05 {
+  ysv:version "2.1.3";
+  description "Clarified description for 'foo'.";
+}
+
+identity ethernet {
+  base interface-type;
+  description "Ethernet interface.";
+}
+</pre><a href="#appendix-B.2.8-8" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2.8-9">New version (<em>2.1.4</em>) after clarification:<a href="#appendix-B.2.8-9" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.8-10">
+<pre>
+revision 2026-02-12 {
+  ysv:version "2.1.4";
+  description "Clarified description for 'ethernet'.";
+}
+
+revision 2026-02-05 {
+  ysv:version "2.1.3";
+  description "Clarified description for 'foo'.";
+}
+
+identity ethernet {
+  base interface-type;
+  description
+    "Ethernet interface, including 10BASE-T, 100BASE-T, and
+     1000BASE-T variants.";
+}
+</pre><a href="#appendix-B.2.8-10" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="scenario-9-updating-description-semantic-change">
@@ -3148,9 +3336,38 @@ enum removedtype {
 <p id="appendix-B.2.9-1"><strong>Registry Action</strong>: Description is updated in a way that changes the semantic meaning or behavior.<a href="#appendix-B.2.9-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.9-2"><strong>YANG Module Change</strong>: Update the description statement.<a href="#appendix-B.2.9-2" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.9-3"><strong>Classification</strong>: Non-Backwards-Compatible (NBC)<a href="#appendix-B.2.9-3" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.9-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 1.0.0 → 2.0.0)<a href="#appendix-B.2.9-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.9-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 2.2.0 → 3.0.0)<a href="#appendix-B.2.9-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.9-5"><strong>NBC Extension Required</strong>: Yes<a href="#appendix-B.2.9-5" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.9-6"><strong>Example</strong>: Changing "supports IPv4 only" to "supports IPv4 and IPv6" changes the expected behavior.<a href="#appendix-B.2.9-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.9-6"><strong>Example</strong>:<a href="#appendix-B.2.9-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.9-7">Previous version (<em>2.2.0</em>):<a href="#appendix-B.2.9-7" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.9-8">
+<pre>
+revision 2026-03-01 {
+  ysv:version "2.2.0";
+  description "Defined ip identity.";
+}
+
+identity ip {
+  base interface-type;
+  description "Interface supports IPv4.";
+}
+</pre><a href="#appendix-B.2.9-8" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.2.9-9">New version (<em>3.0.0</em>) after semantic change:<a href="#appendix-B.2.9-9" class="pilcrow">¶</a></p>
+<div class="lang-yang sourcecode" id="appendix-B.2.9-10">
+<pre>
+revision 2026-04-01 {
+  ysv:version "3.0.0";
+  rev:non-backwards-compatible;
+  description "Changed description for 'ip' identity";
+}
+
+identity ipv {
+  base interface-type;
+  description "Interface supports IPv4 and IPv6.";
+}
+</pre><a href="#appendix-B.2.9-10" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="scenario-10-handling-errata">
@@ -3237,8 +3454,6 @@ module example-iana-if-type {
     ysv:version "2.1.0";
     description
       "Added 'wifi6e'.";
-    reference
-      "RFC XXXX: IANA Guidance for YANG Modules";
   }
 
   // Example revision with obsoleted type (NBC change)
@@ -3247,8 +3462,6 @@ module example-iana-if-type {
     rev:non-backwards-compatible;
     description
       "Obsoleted 'arcnet'.";
-    reference
-      "RFC XXXX: IANA Guidance for YANG Modules";
   }
 
   // Example earlier revision (BC change)
