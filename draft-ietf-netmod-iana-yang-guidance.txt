@@ -4,8 +4,8 @@
 
 NETMOD                                                         R. Wilton
 Internet-Draft                                                     Cisco
-Intended status: Informational                              5 March 2026
-Expires: 6 September 2026
+Intended status: Informational                              6 March 2026
+Expires: 7 September 2026
 
 
      Guidance for Managing YANG Modules in RFCs and IANA Registries
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 September 2026.
+   This Internet-Draft will expire on 7 September 2026.
 
 Copyright Notice
 
@@ -120,7 +120,6 @@ Table of Contents
        A.1.3.  YANG Catalog Tools
      A.2.  Recommended Workflow
      A.3.  Tool Limitations
-     A.4.  Future Tool Development
    Appendix B.  Summary of IANA Registry Action Scenarios
      B.1.  Quick Reference Table
      B.2.  Detailed Common Scenarios
@@ -134,8 +133,6 @@ Table of Contents
        B.2.8.  Scenario 8: Updating Description (Clarification)
        B.2.9.  Scenario 9: Updating Description (Semantic Change)
        B.2.10. Scenario 10: Handling Errata
-   Appendix C.  Example IANA-Maintained Module
-     C.1.  Example: example-iana-if-type Module Structure
    Acknowledgments
    Author's Address
 
@@ -158,13 +155,17 @@ Table of Contents
 
    *RFC Editor - please delete this section before publication*
 
-   This draft should be carefully reviewed by: - IANA and RFC Editor to
-   check that they agree with the workflows - OPS ADS & IESG (if needed)
-   that they agree that the IETF should delay publishing YANG modules in
-   approved internet drafts until after the RFC Editor has had the
-   opportunity to review and amend the text.  - YANG Doctors and NETMOD
-   to ensure that they are happy with the requirements being placed upon
-   them.
+   This draft should be carefully reviewed by:
+
+   *  IANA and RFC Editor to check that they agree with the workflows
+
+   *  OPS ADS & IESG (if needed) that they agree that the IETF should
+      delay publishing YANG modules in approved internet drafts until
+      after the RFC Editor has had the opportunity to review and amend
+      the text.
+
+   *  YANG Doctors and NETMOD to ensure that they are happy with the
+      requirements being placed upon them.
 
 3.  Introduction
 
@@ -1120,15 +1121,21 @@ A.1.1.  pyang
 
    *Installation*: pyang is available via PyPI (pip install pyang) or
    from https://github.com/mbj4668/pyang (https://github.com/mbj4668/
-   pyang)
+   pyang).  It is recommended to periodically check and update the
+   version to pick up bugfixes and new functionality (which could
+   include stricter checks).
 
-   *Basic Syntax Validation*:
+   *Basic YANG Syntax Validation*:
 
-   pyang --ietf module-name.yang
+   pyang --ietf ietf-module-name.yang
+
+   or
+
+   pyang --strict iana-module-name.yang
 
    This command validates the module syntax and checks compliance with
    IETF-specific conventions.  Output will show any errors or warnings.
-   A module SHOULD have no errors and SHOULD minimize warnings before
+   IETF and IANA modules SHOULD have no errors or warnings before
    publication.
 
    *Checking for NBC Changes*:
@@ -1175,25 +1182,14 @@ A.1.2.  yanglint
    *Installation*: yanglint is part of libyang, available from
    https://github.com/CESNET/libyang (https://github.com/CESNET/libyang)
 
-   *Basic Syntax Validation*:
-
-   yanglint module-name.yang
-
-   This command validates the module syntax.  No output indicates
-   successful validation; errors will be displayed if found.
-
-   *Validating with Dependencies*:
+   *Syntax Validation*:
 
    yanglint -p /path/to/yang/modules module-name.yang
 
    The -p option specifies a directory containing imported modules.
 
-   *Interpreting Output*:
-
-   *  No output: Module is syntactically valid
-
-   *  Error messages: Module has syntax errors that must be corrected
-      before publication
+   This command validates the module syntax.  No output indicates
+   successful validation; errors will be displayed if found.
 
 A.1.3.  YANG Catalog Tools
 
@@ -1279,61 +1275,35 @@ A.2.  Recommended Workflow
 A.3.  Tool Limitations
 
    While tools are valuable for YANG module validation and versioning,
-   they have important limitations:
+   they have a couple of limitations relevant to their usage here:
 
-   *Limitation 1: Cannot Always Distinguish Editorial from BC Changes*
+   *Limitation 1: Cannot Always Distinguish Editorial from BC/NBC
+   Changes*
 
-   Tools cannot determine whether a description change is purely
-   editorial (clarifying existing meaning) or backwards-compatible
-   (adding new information).  Human judgment is required to make this
+   Current tools cannot determine whether a description change is purely
+   editorial (clarifying existing meaning), backwards-incompatible
+   (changing meaning).  Human or AI judgment is required to make this
    distinction.
 
    Example: Changing "Ethernet interface" to "Ethernet interface,
-   including 10BASE-T and 100BASE-T" could be editorial (if those
-   variants were always included) or BC (if documenting newly supported
-   variants).
+   includes all Ethernet interface speeds" could be editorial (if those
+   variants were always included).  But changing an "ip" type from a
+   desc
 
-   *Limitation 2: Cannot Detect Semantic Changes in Descriptions*
+   or NBC (if changing the definition to include new Ethernet types that
+   were not previously supported).
 
-   If a description change alters the intended behavior or meaning of a
-   schema node, it may be an NBC change, but tools cannot detect this
-   automatically.
-
-   Example: Changing "includes IPv4 only" to "includes IPv4 and IPv6"
-   changes the semantic meaning and may be NBC, but tools will not flag
-   this.
-
-   *Limitation 3: Cannot Assess Practical Impact*
-
-   Tools can identify that an NBC change has occurred but cannot assess
-   how many implementations are affected or what the practical migration
-   cost will be.
-
-   *Limitation 4: May Produce False Positives or False Negatives*
+   *Limitation 2: May Produce False Positives or False Negatives*
 
    Tool implementations may have bugs or may not cover all edge cases in
-   the YANG versioning rules.  Always review tool output critically and
-   seek additional review (Section 8) when uncertainty remains.
+   the YANG versioning rules.  Generally, in any ambiguous cases, the
+   tools are being designed to either explicitly flag this or choose the
+   more impactful option.  It is assumed to be better for clients to
+   potentially flag an NBC change that is not really there than to
+   mistakenly flag an NBC change as only being a BC change.
 
-A.4.  Future Tool Development
-
-   The NETMOD working group continues to develop improved tooling for
-   YANG module management.  Anticipated future capabilities include:
-
-   *  Automated registry-to-YANG conversion tools
-
-   *  Enhanced NBC change detection optimized for IANA-maintained
-      modules
-
-   *  Automated version recommendation based on detected changes
-
-   *  Better detection of semantic changes in descriptions and
-      constraints
-
-   As new tools become available, the NETMOD working group and YANG
-   Doctors will provide guidance on their usage.  The RFC Editor and
-   IANA will be informed of tool updates that affect the workflows
-   described in this document.
+   Hence the recommendation is to always review tool output critically
+   and seek additional review (Section 8) when uncertainty remains.
 
 Appendix B.  Summary of IANA Registry Action Scenarios
 
@@ -1495,7 +1465,6 @@ B.2.1.  Scenario 1: Adding a New Registry Entry
      ysv:version "1.1.0";
      description "Added 'wifi' (71).";
    }
-
    revision 2025-11-01 {
      ysv:version "1.0.0";
      description "Initial revision.";
@@ -1557,7 +1526,6 @@ B.2.2.  Scenario 2: Updating References
      ysv:version "2.3.1";
      description "Updated reference for 'foo' (42).";
    }
-
    revision 2025-11-01 {
      ysv:version "2.3.0";
      description "Added 'foo' (42).";
@@ -1616,7 +1584,6 @@ B.2.3.  Scenario 3: Deprecating a Registry Entry
      ysv:version "2.4.0";
      description "Deprecated 'oldtype' (99).";
    }
-
    revision 2025-11-15 {
      ysv:version "2.3.1";
      description "Updated reference 'foo' (42).";
@@ -1682,7 +1649,6 @@ B.2.4.  Scenario 4: Obsoleting a Registry Entry
      description
        "Obsoleted removedtype interface. Support has been removed.";
    }
-
    revision 2025-11-23 {
      ysv:version "2.4.0";
      description "Deprecated 'oldtype' (99).";
@@ -1740,6 +1706,10 @@ B.2.5.  Scenario 5: Removing a Registry Entry Completely
      rev:non-backwards-compatible;
      description "Removed 'legacy-wireless' identity.";
    }
+   revision 2026-02-01 {
+     ysv:version "2.2.0";
+     description "Added legacy-wireless identity.";
+   }
 
    identity interface-type {
      description "Base identity for interface types.";
@@ -1764,7 +1734,6 @@ B.2.6.  Scenario 6: Renaming a Registry Entry
 
    Previous version (_3.1.0_):
 
-   // Before: old-gre name used (version 3.1.0)
    revision 2026-04-01 {
      ysv:version "3.1.0";
      description "Added old-gre identity.";
@@ -1781,11 +1750,14 @@ B.2.6.  Scenario 6: Renaming a Registry Entry
 
    New version (_4.0.0_) after rename:
 
-   // After: renamed to gre (version 4.0.0)
    revision 2026-05-01 {
      ysv:version "4.0.0";
      rev:non-backwards-compatible;
      description "Renamed old-gre to gre.";
+   }
+   revision 2026-04-01 {
+     ysv:version "3.1.0";
+     description "Added old-gre identity.";
    }
 
    identity tunnel-type {
@@ -1819,7 +1791,7 @@ B.2.7.  Scenario 7: Changing a Value Number
 
    revision 2026-01-10 {
      ysv:version "2.3.0";
-     description "Added fastether identity.";
+     description "Added multiple identiies.";
    }
 
    typedef interface-type {
@@ -1827,6 +1799,10 @@ B.2.7.  Scenario 7: Changing a Value Number
        enum fastether {
          value 210;
          description "Fast Ethernet interface.";
+       }
+       enum atm {
+         value 211;
+         description "ATM making a surprising comeback";
        }
      }
    }
@@ -1837,6 +1813,10 @@ B.2.7.  Scenario 7: Changing a Value Number
      ysv:version "3.0.0";
      rev:non-backwards-compatible;
      description "Changed fastether value to 215.";
+   }
+   revision 2026-01-10 {
+     ysv:version "2.3.0";
+     description "Added multiple identiies.";
    }
 
    typedef interface-type {
@@ -1881,7 +1861,6 @@ B.2.8.  Scenario 8: Updating Description (Clarification)
      ysv:version "2.1.4";
      description "Clarified description for 'ethernet'.";
    }
-
    revision 2026-02-05 {
      ysv:version "2.1.3";
      description "Clarified description for 'foo'.";
@@ -1928,6 +1907,10 @@ B.2.9.  Scenario 9: Updating Description (Semantic Change)
      rev:non-backwards-compatible;
      description "Changed description for 'ip' identity";
    }
+   revision 2026-03-01 {
+     ysv:version "2.2.0";
+     description "Defined ip identity.";
+   }
 
    identity ipv {
      base interface-type;
@@ -1949,141 +1932,13 @@ B.2.10.  Scenario 10: Handling Errata
 
    *NBC Extension Required*: May be required depending on the change.
 
-   *Examples*: - Errata fixes typo in description → Editorial / PATCH -
-   Errata adds missing enum → BC / MINOR - Errata corrects wrong value
-   assignment → NBC / MAJOR
+   *Examples*:
 
-Appendix C.  Example IANA-Maintained Module
+   *  Errata fixes typo in description → Editorial / PATCH
 
-   This appendix shows an example of a well-structured IANA-maintained
-   YANG module, demonstrating proper use of versioning, revision
-   statements, and the NBC extension.
+   *  Errata adds missing enum → BC / MINOR
 
-C.1.  Example: example-iana-if-type Module Structure
-
-   module example-iana-if-type {
-     yang-version 1.1;
-     namespace "urn:ietf:params:xml:ns:yang:example-iana-if-type";
-     prefix ex-ianaift;
-
-     import ietf-yang-revisions { prefix rev; }
-     import ietf-yang-semver { prefix ysv; }
-
-     organization
-       "Internet Assigned Numbers Authority (IANA)";
-
-     contact
-       "Internet Assigned Numbers Authority
-
-        ICANN
-        12025 Waterfront Drive, Suite 300
-        Los Angeles, CA 90094
-
-        Tel: +1 424 254 5300
-
-        <mailto:iana@iana.org>
-
-        See the Interface Types (ifType) registry:
-        <https://www.iana.org/assignments/smi-numbers>";
-
-     description
-       "This example YANG module defines the iana-if-type typedef,
-        which contains YANG definitions for IANA-registered
-        interface types.
-
-        This YANG module is maintained by IANA and reflects the
-        'Interface Types (ifType)' registry.
-
-        Copyright (c) 2026 IETF Trust and the persons identified as
-        authors of the code.  All rights reserved.
-
-        Redistribution and use in source and binary forms, with or
-        without modification, is permitted pursuant to, and subject
-        to the license terms contained in, the Revised BSD License
-        set forth in Section 4.c of the IETF Trust's Legal Provisions
-        Relating to IETF Documents
-        (https://trustee.ietf.org/license-info).
-
-        The initial version of this YANG module is part of RFC XXXX;
-        see the RFC itself for full legal notices.";
-
-     // Example revision with new interface type (BC change)
-     revision 2025-11-15 {
-       ysv:version "2.1.0";
-       description
-         "Added 'wifi6e'.";
-     }
-
-     // Example revision with obsoleted type (NBC change)
-     revision 2025-10-01 {
-       ysv:version "2.0.0";
-       rev:non-backwards-compatible;
-       description
-         "Obsoleted 'arcnet'.";
-     }
-
-     // Example earlier revision (BC change)
-     revision 2025-09-01 {
-       ysv:version "1.1.0";
-       description
-         "Added 'virtualEthernet'.";
-     }
-
-     // Example initial revision
-     revision 2025-01-01 {
-       ysv:version "1.0.0";
-       description
-         "Initial version.";
-     }
-
-     identity interface-type {
-       description
-         "Base identity for IANA-registered interface types. It is
-          derived from the 'Interface Types (ifType)' registry.";
-       reference
-         "IANA Interface Types registry:
-          <https://www.iana.org/assignments/smi-numbers>";
-     }
-
-     identity other {
-       base interface-type;
-       description
-         "None of the following types.";
-     }
-
-     identity ethernet {
-       base interface-type;
-       description
-         "Ethernet interface, including 10BASE-T, 100BASE-T, and
-          1000BASE-T variants.";
-       reference
-         "RFC 3635: Definitions of Managed Objects for the
-          Ethernet-like Interface Types";
-     }
-
-     identity wifi6e {
-       base interface-type;
-       description
-         "IEEE 802.11ax (Wi-Fi 6E) wireless interface.";
-       reference
-         "IEEE 802.11ax-2021";
-     }
-
-     identity arcnet {
-       base interface-type;
-       status obsolete;
-       description
-         "ARCNET interface.";
-     }
-
-     typedef interface-type-ref {
-       type identityref {
-         base interface-type;
-       }
-       description
-         "Reference to an IANA-registered interface type identity.";
-     }
-   }
+   *  Errata corrects wrong value assignment → NBC / MAJOR
 
 Acknowledgments
 
