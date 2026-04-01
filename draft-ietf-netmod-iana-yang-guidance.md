@@ -325,8 +325,7 @@ IANA-maintained YANG modules typically contain only enumerations (enum) and iden
 
 **Editorial Changes:**
 
-- Clarifying "description" statements without changing meaning
-- Adding or updating "reference" statements
+- Clarifying "description" or "reference" statements without changing meaning
 - Fixing typographical errors in description text
 - Updating contact information
 - Formatting improvements
@@ -337,13 +336,17 @@ IANA-maintained YANG modules typically contain only enumerations (enum) and iden
 - Changing status from "current" to "deprecated"
 - Removing schema nodes that already have status "obsolete"
 
+**Possible-NBC Changes Requiring Review:**
+
+- Updating "description" or "reference" statements where it is unclear whether the semantic meaning has changed
+
 **Non-Backwards-Compatible Changes:**
 
 - Removing an enum value or identity (unless status is "obsolete")
 - Changing status to from "current" or "deprecated" to "obsolete"
 - Renaming an enum or identity
 - Changing the numeric value assigned to an enum
-- Modifying "description" statements in a way that changes the semantic meaning
+- Modifying "description" or "reference" statements in a way that changes the semantic meaning
 
 **Important**: If multiple updates to the registry are made at the same time resulting in a single update to the IANA maintained YANG module then the new module version number is decided by the impact of the most significant change.
 
@@ -411,7 +414,7 @@ In most cases, the classification will be straightforward. However, if any of th
 
 - The change classification is unclear
 - The tool output is unexpected or contradictory
-- Description changes, where it is not obvious if they change semantic meaning
+- Description or reference changes, where it is not obvious if they change semantic meaning
 - Any situation not covered by the guidance above, or examples in {{appendix-scenarios}}
 
 ### Step 7: Publish the Updated Module
@@ -573,7 +576,7 @@ pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p <dep-module-dire
 
 #### Suggesting proposed next version when updating a YANG module {#pyang-next-version}
 
-Pyang can be used to compare the changes between two YANG module versions and either validate that a suitable next version number has been used, or to suggest what the appropriate next version should be, or if further manual checks should be performed, e.g., for changes to description statements.
+Pyang can be used to compare the changes between two YANG module versions and either validate that a suitable next version number has been used, or to suggest what the appropriate next version should be, or if further manual checks should be performed, e.g., for changes to description or reference statements.
 
 If the new module version already includes a version statement for the latest revision then pyang can perform a limited set of policy checks against the declared version.  In the current implementation, this is not a full exact-match validation for every possible declared version.  Instead, the tool reports specific cases where the declared version is inconsistent with detected known NBC changes or with certain possible-NBC outcomes.  Otherwise, if the latest revision does not contain a version statement then it will suggest the new version that should be used.
 
@@ -589,10 +592,13 @@ pyang --check-update-semver --check-update-from module-name@old-version.yang mod
 
 The command output:
 
-- will suggested the next YANG Semver, based on the changes.
+- may print an `ASSUMED-OLD-YANG-SEMVER` line if the previous revision does not contain a `ysv:version` statement.
+- prints the suggested next YANG Semver, when the tool can determine one, based on the changes.
+- may report `SUGGESTED-NEXT-YANG-SEMVER: unavailable (...)` when the previous version is in a pre-release form that the current implementation cannot automatically advance.
 - indicate whether the ```rev:non-backwards-compatible``` annotation is needed.
 - highlight any non-backwards-compatible changes, which are reported as errors.
-- indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurrred and hence if the change is not-backwards-compatible rather than editorial.
+- indicate if there are changes to any statements, e.g., description or reference, that require further analysis to decide whether a semantic change has occurred and hence if the change is non-backwards-compatible rather than editorial.
+- may emit additional semver policy diagnostics if a declared new `ysv:version` is inconsistent with the tool's semver policy checks.
 
 **Example Tool Output 1**:
 
@@ -682,7 +688,7 @@ While tools are valuable for YANG module validation and versioning, they have a 
 
 **Limitation 1: Cannot Always Distinguish Editorial from BC/NBC Changes**
 
-Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning), backwards-incompatible (changing meaning). Human or AI judgment is required to make this distinction.
+Current tools cannot determine whether a description or reference change is purely editorial (clarifying existing meaning), backwards-incompatible (changing meaning), or otherwise semantically significant. Human or AI judgment is required to make this distinction.
 
 Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a description saying "IPv4 address or IPv6 address" to just "IPv4 address" would be regarded as an NBC change because the scope of the type has clearly changed and may impact users of that type.
 
@@ -706,10 +712,10 @@ The assumption is that the YANG module uses the registry entry name, numeric ide
 | Registry Action | YANG Change | Classification | Version | NBC Ext |
 |:----------------|:------------|:---------------|:--------|:--------|
 | Add new registration | Add enum/identity | BC | MINOR | No |
-| Update reference (Draft → RFC) | Update reference | Editorial | PATCH | No |
-| Update reference (obsoleted RFC) | Update reference | Editorial | PATCH | No |
-| Add additional reference | Update reference | Editorial | PATCH | No |
-| Change or remove reference | Update reference | Editorial | PATCH | No |
+| Update reference (Draft → RFC) | Update reference | Analyze | Varies | Maybe |
+| Update reference (obsoleted RFC) | Update reference | Analyze | Varies | Maybe |
+| Add additional reference | Update reference | Analyze | Varies | Maybe |
+| Change or remove reference | Update reference | Analyze | Varies | Maybe |
 | Update description (clarify) | Update description | Editorial | PATCH | No |
 | Update description (change meaning) | Update description | NBC | MAJOR | Yes |
 | Deprecate entry (keep name) | status deprecated | BC | MINOR | No |
@@ -803,13 +809,13 @@ typedef interface-type {
 
 **YANG Module Change**: Update the "reference" statement.
 
-**Classification**: Editorial
+**Classification**: Analyze
 
-**Version Change**: Increment PATCH version (e.g., 2.3.0 → 2.3.1)
+**Version Change**: Usually PATCH for clearly editorial updates, but review is required because the current tooling reports reference changes as possible NBC changes.
 
-**NBC Extension Required**: No
+**NBC Extension Required**: Maybe
 
-**Rationale**: Reference statements may be added or updated without affecting compatibility of existing implementations.
+**Rationale**: Many reference statement updates are editorial, for example replacing a draft reference with a published RFC.  However, the current pyang implementation reports reference changes as possible semantic changes requiring review, in the same way as description changes.
 
 **Example**:
 
