@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-12T00:15:30.600668+00:00",
+  "timestamp": "2026-04-02T00:17:37.228138+00:00",
   "repo": "rgwilton/iana-yang-guidance",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDOQTkdsc7mH2hT",
       "title": "Make it clear who has authority for the final check",
       "url": "https://github.com/rgwilton/iana-yang-guidance/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "rgwilton",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "IANA/RFC Editor runs the tools to check that the version of the doc to be published has the expected version.\n\nIf the tools report that it should be a major version but the approved version was a minor change, then as part of the AUTH48 process then the authors/ADs MUST sign off on releasing as a major version change.  YANG Doctors may be consulted if necessary to ensure that the right version is selected.",
       "createdAt": "2026-01-27T14:17:10Z",
-      "updatedAt": "2026-01-27T14:43:02Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-01T10:54:53Z",
+      "closedAt": "2026-04-01T10:54:53Z",
       "comments": [
         {
           "author": "rgwilton",
@@ -71,6 +71,13 @@
           "body": "From the meeting today:\n \nWe\u2019ll have RFC editor and/or IANA folks run pyang with --check-update-semver.  If the suggested SemVer doesn\u2019t match the one in the draft, then punt back to the AD to sort it out.  (I likely don\u2019t have this quite correct, but it was something along those lines).\n \nWe\u2019ll stick with pyang suggesting a minor bump when there are purely \u201cquestionable\u201d changes (description, must, when, pattern). Maybe a note for Shepard\u2019s checklist that all warnings have to have been chased down with authors?\n \nProposal for the IANA SemVer Guidelines doc: get it to a \u201cusable draft\u201d, and then let IANA actually use it for a few months (on at least a handful of actual updated YANG modules) before we bring it to WG LC.",
           "createdAt": "2026-01-27T14:43:02Z",
           "updatedAt": "2026-01-27T14:43:02Z"
+        },
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "Already addressed in the latest document",
+          "createdAt": "2026-04-01T10:54:53Z",
+          "updatedAt": "2026-04-01T10:54:53Z"
         }
       ]
     },
@@ -79,32 +86,48 @@
       "id": "I_kwDOQTkdsc7mH4ft",
       "title": "Add better tool examples (including output from Joe).",
       "url": "https://github.com/rgwilton/iana-yang-guidance/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "rgwilton",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-27T14:19:07Z",
-      "updatedAt": "2026-01-27T14:19:07Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-04-01T10:55:13Z",
+      "closedAt": "2026-04-01T10:55:13Z",
+      "comments": [
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "Hopefully addressed addressed in the latest version.",
+          "createdAt": "2026-04-01T10:55:13Z",
+          "updatedAt": "2026-04-01T10:55:13Z"
+        }
+      ]
     },
     {
       "number": 4,
       "id": "I_kwDOQTkdsc7pwK8f",
       "title": "Need to check IANA sections in 3 versioning docs",
       "url": "https://github.com/rgwilton/iana-yang-guidance/issues/4",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "rgwilton",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Should these IANA sections mostly just reference the IANA guidance draft?  If any text is retained then we must ensure that it is consistent.",
       "createdAt": "2026-02-10T14:16:22Z",
-      "updatedAt": "2026-02-10T14:16:22Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-04-01T10:54:22Z",
+      "closedAt": "2026-04-01T10:54:22Z",
+      "comments": [
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "Module versioning draft needs a few paragraphs of non-normative text to be deleted, no changes to the other drafts are required. ",
+          "createdAt": "2026-04-01T10:54:19Z",
+          "updatedAt": "2026-04-01T10:54:19Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -149,6 +172,100 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOQTkdsc7POG9l",
+      "title": "Resolve issues and some markups from Joe",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/pull/5",
+      "state": "MERGED",
+      "author": "rgwilton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@xorrkaz\r\n\r\nThis includes addressing your comments, which I have tweaked slightly, and will also put into an email.\r\n\r\nResultant diff: https://author-tools.ietf.org/api/iddiff?url_1=https://rgwilton.github.io/iana-yang-guidance/draft-ietf-netmod-iana-yang-guidance.txt&url_2=https://rgwilton.github.io/iana-yang-guidance/post-ietf-125/draft-ietf-netmod-iana-yang-guidance.txt",
+      "createdAt": "2026-04-01T10:57:11Z",
+      "updatedAt": "2026-04-01T14:56:25Z",
+      "baseRepository": "rgwilton/iana-yang-guidance",
+      "baseRefName": "main",
+      "baseRefOid": "45235449a416eb1001eb6f89610fbcad71995b61",
+      "headRepository": "rgwilton/iana-yang-guidance",
+      "headRefName": "post-ietf-125",
+      "headRefOid": "7f3ca9498d3b94730b200a9499a731d9e81de1bb",
+      "closedAt": "2026-04-01T14:56:25Z",
+      "mergedAt": "2026-04-01T14:56:25Z",
+      "mergedBy": "rgwilton",
+      "mergeCommit": {
+        "oid": "5faa87d7497b7ee9fd24d0f64eab84984770afac"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQTkdsc7xFLx5",
+          "commit": {
+            "abbreviatedOid": "7f3ca94"
+          },
+          "author": "xorrkaz",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "Since I reviewed -01, there are differences you had already incorporated.  The changes here look okay, but I have others I would make to the doc as a whole.  Merge this, and I'll send you a PR.",
+          "createdAt": "2026-04-01T14:34:52Z",
+          "updatedAt": "2026-04-01T14:34:52Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOQTkdsc7PSzL1",
+      "title": "Minor edit suggestions",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/pull/6",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "* update reference\r\n* Added terminology from 9907 for consistency.\r\n* make sure the guidance applies to normative modules (per 9907 terminology) not any random/example modules in an RFC.\r\n\r\nand fixing nits.\r\n\r\nHaving frozen requirements (MUST) for pyang, etc. may not be appropriate in an RFC.\r\n\r\nThere is some guidance that is duplicate existing ones (e.g., RFC editor to make only editorial change, IANA to update a module, etc.). Better to refer to existing practice to avoid that we define new process, but simply leveraging existing.",
+      "createdAt": "2026-04-01T15:17:36Z",
+      "updatedAt": "2026-04-01T15:17:36Z",
+      "baseRepository": "rgwilton/iana-yang-guidance",
+      "baseRefName": "main",
+      "baseRefOid": "5faa87d7497b7ee9fd24d0f64eab84984770afac",
+      "headRepository": "boucadair/iana-yang-guidance",
+      "headRefName": "patch-1",
+      "headRefOid": "d19b6cbc6f588db1daad5fc9e8936735a447cca6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOQTkdsc7PUiu0",
+      "title": "Additional changes based on the pyang approach.",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/pull/7",
+      "state": "OPEN",
+      "author": "xorrkaz",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "* reference and description are treated similarly\r\n* I updated certain Editorial types to Analyze.  This may be overkill, but I wanted to match how pyang treats these diffs",
+      "createdAt": "2026-04-01T16:59:41Z",
+      "updatedAt": "2026-04-01T16:59:41Z",
+      "baseRepository": "rgwilton/iana-yang-guidance",
+      "baseRefName": "main",
+      "baseRefOid": "5faa87d7497b7ee9fd24d0f64eab84984770afac",
+      "headRepository": "xorrkaz/iana-yang-guidance",
+      "headRefName": "more-changes-based-on-pyang-code",
+      "headRefOid": "09fd0908417f3b48eca212e5e3c6d8bd5a7bae54",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
