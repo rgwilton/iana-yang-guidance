@@ -382,7 +382,7 @@ Determine exactly what changed in the registry:
 - Was an entry removed?
 - Were multiple changes made simultaneously?
 
-### Step 3: Apply Equivalen Changes to the YANG Module
+### Step 3: Apply Equivalent Changes to the YANG Module
 
 Update the YANG module to reflect the registry changes. For IANA-maintained modules, this typically involves:
 
@@ -617,7 +617,7 @@ iana-ssh-mac-algs@2026-03-06.yang:62: error: the value for enum 'hmac-sha2-512',
 
 **Example Tool Output 3**:
 
-This example output is for a change to a description or reference statement.  The tool output suggests a version change from 1.0.0 → 1.0.1, which is correct if there is no change in semantics.  It also highlights that it may be necessary to consult with the authors to determine if a semantic change has occurred, if that is not obvious.  If after reviewing, the conclusion is that a semantic change has occurred, then the version change should be from 1.0.0 → 2.0.0 and the ```rev:non-backwards-compatible``` statement should be added.
+This example output is for a change to a description statement.  The tool output suggests a version change from 1.0.0 → 1.0.1, which is correct if there is no change in semantics.  It also highlights that it may be necessary to consult with the authors to determine if a semantic change has occurred, if that is not obvious.  If after reviewing, the conclusion is that a semantic change has occurred, then the version change should be from 1.0.0 → 2.0.0 and the ```rev:non-backwards-compatible``` statement should be added.
 
 ~~~~ text
 SUGGESTED-NEXT-YANG-SEMVER: 1.0.1
