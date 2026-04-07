@@ -145,7 +145,7 @@ YANG Semantic Versioning (YANG Semver), defined in {{I-D.ietf-netmod-yang-semver
 - **PATCH** version increments indicate editorial or documentation-only changes
 - **_COMPAT** is used for branched development trees and is not applicable to modules published by the IETF or maintained by IANA.
 
-If an update to a YANG module contains a mix of changes, then the version number is updated as per the most impactful change.  E.g., if a change included both backwards-compatible feature additions and editorial changes then the *MINOR* version field is incremented and the *PATCH* version field is set to 0, e.g., as per the second example below.  If in doubt as to which category a particular change fits into, it is always better to err on the side of caution and choose the more significant version change.
+If an update to a YANG module contains a mix of changes, then the version number is updated as per the most impactful change.  For example, if a change included both backwards-compatible feature additions and editorial changes then the *MINOR* version field is incremented and the *PATCH* version field is set to 0, e.g., as per the second example below.  If in doubt as to which category a particular change fits into, it is always better to err on the side of caution and choose the more significant version change.
 
 For example, if a published IETF YANG module is at version *1.2.3*:
 
@@ -163,7 +163,7 @@ Section 3.1.1 of {{I-D.ietf-netmod-yang-module-versioning}} defines backwards-co
 
 - Adding new schema nodes (e.g., new enum values, identities, leafs, containers)
 - Adding or updating "description" and "reference" statements (provided the semantic meaning is unchanged)
-- Changing the status of a schema node from "current" to "deprecated" (e.g., by adding a ```status: "deprecated"``` statement)
+- Changing the status of a schema node from "current" to "deprecated" (e.g., by adding a `status deprecated;` statement)
 
 Section 3.1.2 of {{I-D.ietf-netmod-yang-module-versioning}} defines non-backwards-compatible changes, examples include:
 
@@ -253,7 +253,7 @@ These editorial changes are appropriate and expected. The RFC Editor SHOULD:
 - Ensure that only editorial changes (as defined in {{sec-background}}) are made without author consultation
 - For modules that have previously been published, e.g., updated YANG modules in -bis documents:
   - If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the `rev:non-backwards-compatible` extension is required.
-- Ensure that final module is correctly formatted (e.g., by running {{pyang-formatting}})
+- Ensure that the final module is correctly formatted (e.g., by running {{pyang-formatting}})
 
 ### Step 3: Finalizing the Module Version
 
@@ -267,7 +267,7 @@ Before publication, the module version MUST be updated from the pre-release vers
 
 ### Step 4: Validate the Module
 
-YANG modules are expected to be provided to the RFC Editor for publication already passing validation (pyang and yanglint).  However, it is possible that mistakes could be introduced when editing the YANG modules so validation should be re-run to ensure that IETF does not publish invalid YANG modules.
+YANG modules are expected to be provided to the RFC Editor for publication already passing validation (pyang and yanglint).  However, it is possible that mistakes could be introduced when editing the YANG modules, so validation should be re-run to ensure that IETF does not publish invalid YANG modules.
 
 After all updates are completed, or as updates are made, and after any formatting, then validation tools MUST be run
 over the resultant module to ensure that there are no warnings or errors.  pyang validation ({{pyang-validation}}) MUST be performed, and it is RECOMMENDED that *yanglint* ({{yang-lint-validation}}) validation is also performed.
@@ -340,7 +340,7 @@ IANA-maintained YANG modules typically contain only enumerations (enum) and iden
 **Non-Backwards-Compatible Changes:**
 
 - Removing an enum value or identity (unless status is "obsolete")
-- Changing status to from "current" or "deprecated" to "obsolete"
+- Changing status from "current" or "deprecated" to "obsolete"
 - Renaming an enum or identity
 - Changing the numeric value assigned to an enum
 - Modifying "description" statements in a way that changes the semantic meaning
@@ -382,7 +382,7 @@ Determine exactly what changed in the registry:
 - Was an entry removed?
 - Were multiple changes made simultaneously?
 
-### Step 3: Apply Equivalen Changes to the YANG Module
+### Step 3: Apply Equivalent Changes to the YANG Module
 
 Update the YANG module to reflect the registry changes. For IANA-maintained modules, this typically involves:
 
@@ -391,7 +391,7 @@ Update the YANG module to reflect the registry changes. For IANA-maintained modu
 - Changing status statements for deprecated or obsoleted entries
 - Removing entries only if they are obsolete or if the defining RFC specifies removal
 - Add a revision statement (using the current date) describing the change, and a reference, if appropriate.
-- *(Optional) include a version statement with the anticipated new version and an ```rev:non-backwards-compatible``` statement if it is a backwards-incompatible change.*
+- *(Optional) include a version statement with the anticipated new version and a `rev:non-backwards-compatible` statement if it is a non-backwards-compatible change.*
 - *(Optional) Use tooling to format the YANG module, as described in {{pyang-formatting}}.*
 
 ### Step 4: Use Pyang Tooling to Check/Recommend Next Version
@@ -399,7 +399,7 @@ Update the YANG module to reflect the registry changes. For IANA-maintained modu
 Use the tools described in {{pyang-next-version}} to recommend or check (if provided in step 3) the next module version.  Be aware of the tooling limitations, as per {{tool-limitations}}, and sanity check that the version recommended by the tooling is what is expected based on the changes.
 
 - Add or update the version statement with the correct version
-- Add rev:non-backwards-compatible` extension if NBC changes have occurred
+- Add `rev:non-backwards-compatible` extension if NBC changes have occurred
 
 ### Step 5: Validate the Module
 
@@ -517,7 +517,7 @@ This conservative approach ensures that consumers are appropriately warned about
 
 This document gives instructions to IANA on how to handle YANG modules that are published in RFCs and also YANG modules that are derived from IANA registries.
 
-Incorrect interpretion of this document could cause incorrect handling or versioning of IANA maintained YANG modules.
+Incorrect interpretation of this document could cause incorrect handling or versioning of IANA-maintained YANG modules.
 
 This document recommends the usage of various tools.  Bugs or attacks on these tools could cause the tools to give incorrect or misleading guidance.  In all cases, secondary evaluation of output of the tools should be performed to confirm that they are giving the anticipated results.  The *YANG Doctors* or *Operations and Management Area Directors* can also be contacted for further advice, if required.
 
@@ -589,10 +589,10 @@ pyang --check-update-semver --check-update-from module-name@old-version.yang mod
 
 The command output:
 
-- will suggested the next YANG Semver, based on the changes.
-- indicate whether the ```rev:non-backwards-compatible``` annotation is needed.
-- highlight any non-backwards-compatible changes, which are reported as errors.
-- indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurrred and hence if the change is not-backwards-compatible rather than editorial.
+- will suggest the next YANG Semver, based on the changes.
+- will indicate whether the `rev:non-backwards-compatible` extension statement is needed.
+- will highlight any non-backwards-compatible changes, which are reported as errors.
+- will indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurred and hence if the change is non-backwards-compatible rather than editorial.
 
 **Example Tool Output 1**:
 
@@ -682,7 +682,7 @@ While tools are valuable for YANG module validation and versioning, they have a 
 
 **Limitation 1: Cannot Always Distinguish Editorial from BC/NBC Changes**
 
-Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning), backwards-incompatible (changing meaning). Human or AI judgment is required to make this distinction.
+Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning) or non-backwards-compatible (changing meaning). Human or AI judgment is required to make this distinction.
 
 Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a description saying "IPv4 address or IPv6 address" to just "IPv4 address" would be regarded as an NBC change because the scope of the type has clearly changed and may impact users of that type.
 
@@ -1132,7 +1132,7 @@ typedef interface-type {
     }
     enum atm {
       value 211;
-      description "ATM making a surprising comeback";
+      description "ATM interface.";
     }
   }
 }
@@ -1156,6 +1156,10 @@ typedef interface-type {
     enum fastether {
       value 215;
       description "Fast Ethernet interface.";
+    }
+    enum atm {
+      value 211;
+      description "ATM interface.";
     }
   }
 }
