@@ -575,7 +575,7 @@ pyang --ietf --strict --max-line-length=69 -Werror -p <dep-module-directory> iet
 
 #### Consistent formatting of YANG modules {#pyang-formatting}
 
-Pyang can be used to reformat a YANG file, particularly fixing line length issues and correcting any indentation mistakes.  Some complex expressions, e.g., ```must```, ```when``` and path statements may not be automatically split to the correct line length and may need to be done manually.  Running the basic syntax validation command on the output file will indicate whether any further manual line folding is required.
+Pyang can be used to reformat a YANG file, particularly fixing line length issues and correcting any indentation mistakes.  Some complex expressions, e.g., ```must```, ```when``` and path statements may not be automatically split to the correct line length and may need to be done manually.  Running the basic syntax validation command on the output file indicates whether any further manual line folding is required.
 
 ~~~~ shell
 pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p <dep-module-directory> -o <output-file> <treeOpts> ietf-module-name.yang
@@ -599,13 +599,12 @@ pyang --check-update-semver --check-update-from module-name@old-version.yang mod
 
 The command output:
 
-
 - prints the suggested next YANG Semver, when the tool can determine one, based on the changes.  It may print:
   - `ASSUMED-OLD-YANG-SEMVER` line if the previous revision does not contain a `ysv:version` statement.
   - `SUGGESTED-NEXT-YANG-SEMVER: unavailable (...)`, if the previous version is in a pre-release form that the current implementation cannot automatically advance.
-- will indicate whether the `rev:non-backwards-compatible` extension statement is needed.
-- will highlight any non-backwards-compatible changes, which are reported as errors.
-- will indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurred and hence if the change is non-backwards-compatible rather than editorial.
+- indicates whether the `rev:non-backwards-compatible` extension statement is needed.
+- highlights any non-backwards-compatible changes, which are reported as errors.
+- indicates if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurred and hence if the change is non-backwards-compatible rather than editorial.
 - may emit additional semver policy diagnostics if a declared new `ysv:version` is inconsistent with the tool's semver policy checks.
 
 **Example Tool Output 1**:
