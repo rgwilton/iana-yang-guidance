@@ -36,7 +36,7 @@ normative:
   RFC8340:
   I-D.ietf-netmod-yang-module-versioning:
   I-D.ietf-netmod-yang-semver:
-  I-D.ietf-netmod-rfc8407bis:
+  RFC9907:
   I-D.ietf-netmod-yang-module-filename:
   IANA-YANG-PARAMETERS:
     title: "YANG Parameters"
@@ -45,6 +45,8 @@ normative:
       - org: "IANA"
 
 informative:
+  RFC8526:
+  RFC8791:
   I-D.ietf-netmod-yang-schema-comparison:
   I-D.boucadair-veloce-yang:
   iana-iftype-registry:
@@ -83,16 +85,16 @@ This document provides guidance to the RFC Editor and IANA on managing YANG modu
 This draft should be carefully reviewed by:
 
 - IANA and RFC Editor to check that they agree with the workflows
-- OPS ADS & IESG (if needed) that they agree that the IETF should delay publishing YANG modules in approved internet drafts until after the RFC Editor has had the opportunity to review and amend the text.
+- OPS ADs & IESG (if needed) that they agree that the IETF should delay publishing YANG modules in approved internet drafts until after the RFC Editor has had the opportunity to review and amend the text.
 - YANG Doctors and NETMOD to ensure that they are happy with the requirements being placed upon them.
 
 # Introduction
 
-YANG {{RFC6020}} {{RFC7950}} modules are used to model network management data and protocols. The IETF publishes YANG modules as part of RFCs, and the Internet Assigned Numbers Authority (IANA) maintains YANG modules that are derived from IANA registries. Both processes require careful attention to module versioning and the timing of publication to ensure that implementations can correctly assess module version compatibility when modules are updated.
+YANG {{RFC6020}} {{RFC7950}} modules are used to model network management data, protocol RPCs {{RFC8526}}, and even abstract data structures {{RFC8791}}. The IETF publishes YANG modules as part of RFCs, and the Internet Assigned Numbers Authority (IANA) maintains YANG modules that are derived from IANA registries (a.k.a. IANA-maintained YANG modules {{RFC9907}}). Both processes require careful attention to module versioning and the timing of publication to ensure that implementations can correctly assess module version compatibility when modules are updated.
 
 This document provides informational guidance to both the RFC Editor and IANA for managing YANG modules in two distinct scenarios:
 
-1. **Managing YANG Modules in RFCs**: When documents containing YANG modules are approved by the IESG and processed for publication as RFCs, both the RFC Editor and IANA have responsibilities to ensure that modules are correctly versioned and published.
+1. **Managing YANG Modules in RFCs**: When documents containing normative YANG modules are approved by the IESG and processed for publication as RFCs, both the RFC Editor and IANA have responsibilities to ensure that modules are correctly versioned and published.
 
 2. **Managing IANA-Maintained YANG Modules**: When IANA registries are updated, any YANG modules derived from those registries must be updated accordingly with proper versioning.
 
@@ -102,10 +104,10 @@ This document describes recommended practices and procedures that reflect curren
 
 The procedures and classifications in this document are drawn from text and general guidance on the following IETF specifications:
 
-- {{I-D.ietf-netmod-rfc8407bis}} - Provides general guidelines for IETF YANG module authors
-- {{I-D.ietf-netmod-yang-module-versioning}} - Defines updated YANG module revision handling, including rules for backwards-compatible and non-backwards-compatible changes
-- {{I-D.ietf-netmod-yang-semver}} - Defines YANG Semantic Versioning (YANG Semver) for YANG modules
-- {{I-D.ietf-netmod-yang-module-filename}} - Defines filename conventions for YANG modules versioned using YANG Semver
+- {{RFC9907}} - Provides general guidelines for IETF YANG module authors. It also includes guidance for IANA.
+- {{I-D.ietf-netmod-yang-module-versioning}} - Defines updated YANG module revision handling, including rules for backwards-compatible and non-backwards-compatible changes.
+- {{I-D.ietf-netmod-yang-semver}} - Defines YANG Semantic Versioning (YANG Semver) for YANG modules.
+- {{I-D.ietf-netmod-yang-module-filename}} - Defines filename conventions for YANG modules versioned using YANG Semver.
 
 
 # Conventions and Definitions {#sec-conventions}
@@ -115,10 +117,10 @@ The procedures and classifications in this document are drawn from text and gene
 This document uses the following terminology from {{I-D.ietf-netmod-yang-module-versioning}}:
 
 **Backwards-Compatible (BC) Change**
-: A change to a YANG module that conforms to the backwards-compatible update rules defined in section 3.1.1 of {{I-D.ietf-netmod-yang-module-versioning}}. BC changes require incrementing the MINOR version number.
+: A change to a YANG module that conforms to the backwards-compatible update rules defined in {{Section 3.1.1 of I-D.ietf-netmod-yang-module-versioning}}. BC changes require incrementing the MINOR version number.
 
 **Non-Backwards-Compatible (NBC) Change**
-: A change to a YANG module that does not conform to the backwards-compatible update rules defined in section 3.1.2 of {{I-D.ietf-netmod-yang-module-versioning}}. NBC changes require incrementing the MAJOR version number and adding the rev:non-backwards-compatible extension statement within the revision statement in the YANG module.
+: A change to a YANG module that does not conform to the backwards-compatible update rules defined in {{Section 3.1.2 of I-D.ietf-netmod-yang-module-versioning}}. NBC changes require incrementing the MAJOR version number and adding the `rev:non-backwards-compatible` extension statement within the `revision` statement in the YANG module.
 
 
 This document uses the following terminology from {{I-D.ietf-netmod-yang-semver}}:
@@ -129,43 +131,47 @@ This document uses the following terminology from {{I-D.ietf-netmod-yang-semver}
 **Editorial Change**
 : A change to a YANG module that does not affect the semantic meaning or functionality of the module. Editorial changes only require incrementing the PATCH version number, as described in section 4.4 of {{I-D.ietf-netmod-yang-semver}}.
 
-In addition, this document defines:
+In addition, this document uses this terms from {{RFC9907}}:
 
-**IANA-Maintained Module**
-: A YANG module maintained by IANA, typically derived from one or more IANA registries. These modules have names starting with "iana-" (e.g., iana-if-type, iana-routing-types).
+**IANA-maintained module**
+: A YANG module that is maintained by IANA and has an IANA registry associated with it (e.g., "iana-tunnel-type" {{?RFC8675}} or "iana-pseudowire-types" {{?RFC9291}}).
+: Once an IANA-maintained YANG module is initialized, new values are not directly added to the module. These values are instead added to the companion registry, a new version of the IANA-maintained is generated based on the changes made to the registry.
+
+**IETF module**
+: A YANG module that is published by the IETF and that is not maintained by IANA.
 
 # Background on YANG Versioning {#sec-background}
 
 ## YANG Semantic Versioning
 
-YANG Semantic Versioning (YANG Semver), defined in {{I-D.ietf-netmod-yang-semver}}, uses a version identifier in the format MAJOR.MINOR.PATCH (with an optional _COMPAT suffix for branched development):
+YANG Semantic Versioning (YANG Semver) {{I-D.ietf-netmod-yang-semver}} uses a version identifier in the format MAJOR.MINOR.PATCH (with an optional _COMPAT suffix for branched development):
 
-- **MAJOR** version increments indicate non-backwards-compatible (NBC) changes, with *MINOR* and *PATCH* fields reset to 0
-- **MINOR** version increments indicate backwards-compatible (BC) feature additions, with the *PATCH* field reset to 0
-- **PATCH** version increments indicate editorial or documentation-only changes
-- **_COMPAT** is used for branched development trees and is not applicable to modules published by the IETF or maintained by IANA.
+- **MAJOR** version increments indicate non-backwards-compatible (NBC) changes, with *MINOR* and *PATCH* fields reset to 0.
+- **MINOR** version increments indicate backwards-compatible (BC) additions, with the *PATCH* field reset to 0.
+- **PATCH** version increments indicate editorial or documentation-only changes.
+- **_COMPAT** is used for branched development trees and is not applicable to normative modules published by the IETF or IANA-maintained modules.
 
 If an update to a YANG module contains a mix of changes, then the version number is updated as per the most impactful change.  For example, if a change included both backwards-compatible feature additions and editorial changes then the *MINOR* version field is incremented and the *PATCH* version field is set to 0, e.g., as per the second example below.  If in doubt as to which category a particular change fits into, it is always better to err on the side of caution and choose the more significant version change.
 
 For example, if a published IETF YANG module is at version *1.2.3*:
 
 - An editorial only change would update it to *1.2.4*
-- A backwards-compatible feature addition would update it to *1.3.0*
+- A backwards-compatible addition would update it to *1.3.0*
 - A non-backwards-compatible change would update it to *2.0.0*.
 
-Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-04") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA YANG modules should always be at version "1.0.0" or later, and should never include a pre-release suffix.  The initial published version should be "1.0.0".
+Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-04") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA-maintained YANG modules should always be at version "1.0.0" or later, and should never include a pre-release suffix.  The initial published version should be "1.0.0".
 
 ## Backwards Compatibility Rules
 
-The rules that determine whether a change to a YANG module is backwards-compatible or non-backwards-compatible are defined in Section 3.1 of {{I-D.ietf-netmod-yang-module-versioning}}. These rules refine and extend the update rules specified in Section 11 of {{RFC7950}}.
+The rules that determine whether a change to a YANG module is backwards-compatible or non-backwards-compatible are defined in {{Section 3.1 of I-D.ietf-netmod-yang-module-versioning}}. These rules refine and extend the update rules specified in {{Section 11 of RFC7950}}.
 
-Section 3.1.1 of {{I-D.ietf-netmod-yang-module-versioning}} defines backwards-compatible changes, examples include:
+{{Section 3.1.1 of I-D.ietf-netmod-yang-module-versioning}} defines backwards-compatible changes; examples include:
 
 - Adding new schema nodes (e.g., new enum values, identities, leafs, containers)
 - Adding or updating "description" and "reference" statements (provided the semantic meaning is unchanged)
 - Changing the status of a schema node from "current" to "deprecated" (e.g., by adding a `status deprecated;` statement)
 
-Section 3.1.2 of {{I-D.ietf-netmod-yang-module-versioning}} defines non-backwards-compatible changes, examples include:
+{{Section 3.1.2 of I-D.ietf-netmod-yang-module-versioning}} defines non-backwards-compatible changes; examples include:
 
 - Removing schema nodes (unless they already have status "obsolete")
 - Changing the status of a schema node from "current" or "deprecated" to "obsolete"
@@ -174,7 +180,7 @@ Section 3.1.2 of {{I-D.ietf-netmod-yang-module-versioning}} defines non-backward
 - Changing numeric values assigned to enumerations
 - Modifying "description" statements in ways that change semantic meaning or behavior
 
-In addition, section 4.4 of {{I-D.ietf-netmod-yang-semver}} defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, examples include:
+In addition,  {{Section 4.4 of I-D.ietf-netmod-yang-semver}} defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, such as:
 
 - Corrections to comments, descriptions, or references that do not change the semantic meaning
 - Formatting improvements such as whitespace or indentation changes
@@ -209,8 +215,8 @@ A fundamental principle of YANG module versioning is that once a module revision
 This immutability principle has important implications:
 
 - Modules in Internet-Drafts MUST use pre-release versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the content may still change.
-- Once a document is approved by the IESG and has been processed by the RFC editor, then the module version MUST be updated to the correct release version (e.g., 1.0.0, or 2.0.0) before publication in an RFC or made available in the IANA YANG Module Names registry {{IANA-YANG-PARAMETERS}}.
-- IANA-maintained modules MUST publish a new YANG module revision any time IANA registry changes require YANG module updates.
+- Once a document is approved by the IESG and has been processed by the RFC Editor, then the module version MUST be updated to the correct release version (e.g., 1.0.0 or 2.0.0) before publication in an RFC or made available in the IANA YANG Module Names registry {{IANA-YANG-PARAMETERS}}.
+- IANA-maintained YANG modules MUST publish a new YANG module revision any time IANA registry changes require YANG module updates.
 
 # YANG Modules in Documents Being Published as RFCs {#sec-rfc-workflow}
 
@@ -218,17 +224,17 @@ This section describes the workflow and responsibilities for managing YANG modul
 
 ## Core Requirements
 
-All YANG modules published by the RFC Editor or maintained by IANA MUST meet the following requirements:
+All new normative YANG modules published by the RFC Editor or maintained by IANA MUST meet the following requirements:
 
-1. **YANG Semver Version**: Every module MUST include a semantic version number using the `ysv:version` statement in its most recent revision. The version MUST be correct relative to any previous version of the same module published either by the RFC editor or on the IANA website.
+1. **YANG Semver Version**: Every normative module MUST include a semantic version number using the `ysv:version` statement in its most recent revision. The version MUST be correct relative to any previous version of the same module published either by the RFC editor or on the IANA website.
 
-2. **NBC Extension for NBC Changes**: If the module contains non-backwards-compatible changes relative to the previously published version, the revision statement MUST include the `rev:non-backwards-compatible` extension.
+2. **NBC Extension for NBC Changes**: If the normative module contains non-backwards-compatible changes relative to the previously published version, the revision statement MUST include the `rev:non-backwards-compatible` extension.
 
-   In current tooling, general enforcement of this rule is performed by update comparison checks such as the `--check-update-from` option to ```pyang```. Please also note, the ```pyang``` checks provided by the `--ietf` option only provide a narrower validation based on revision-to-revision YANG Semver major-version changes.
+   In current tooling, general enforcement of this rule is performed by update comparison checks such as the `--check-update-from` option to `pyang`. Please also note, the `pyang` checks provided by the `--ietf` option only provide a narrower validation based on revision-to-revision YANG Semver major-version changes.
 
 3. **Revision Immutability**: A published YANG module with a specific revision date and version number is immutable. Its content MUST NOT change without also changing the revision date and version number. For this reason, modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-05, where the -05 is the Internet Draft number where the YANG module was updated) to indicate that content may still change before final publication.
 
-4. **RFC Code Markers**: YANG modules in RFCs MUST be properly marked with `<CODE BEGINS>` and `<CODE ENDS>` markers (or equivalent in the source format) to enable automated extraction. The markers MUST include the filename following the conventions in {{I-D.ietf-netmod-yang-module-filename}}.
+4. **RFC Code Markers**: Normative YANG modules in RFCs MUST be properly marked with `<CODE BEGINS>` and `<CODE ENDS>` markers (or equivalent in the source format) to enable automated extraction per {{Section 3.2 of RFC9907}}. The markers MUST include the filename following the conventions in {{I-D.ietf-netmod-yang-module-filename}}.
 
 ## Workflow Steps
 
@@ -236,7 +242,7 @@ The following steps describe the coordinated process between the RFC Editor and 
 
 ### Step 1: IESG Approval with Pre-Release Version
 
-When a document is approved by the IESG, any YANG modules it contains typically have pre-release version numbers (e.g., 0.4.0, 1.1.0-03, 2.0.0-07). These pre-release versions indicate that the module content may still be subject to editorial changes during RFC Editor processing.
+When a document is approved by the IESG, any normative YANG modules it contains typically have pre-release version numbers (e.g., 0.4.0, 1.1.0-03, or 2.0.0-07). These pre-release versions indicate that the module content may still be subject to editorial changes during RFC Editor processing.
 
 ### Step 2: RFC Editor Processing
 
@@ -247,30 +253,31 @@ During RFC Editor processing, the RFC Editor may make editorial changes to the Y
 - Correcting typographical errors
 - Standardizing formatting and style
 
-These editorial changes are appropriate and expected. The RFC Editor SHOULD:
+These editorial changes are appropriate and expected. Consistent with the editing practices when preparing edited RFCs, the RFC Editor SHOULD:
 
-- Coordinate with document authors regarding any substantive changes
-- Ensure that only editorial changes (as defined in {{sec-background}}) are made without author consultation
+- Coordinate with document authors regarding any substantive changes.
+- Ensure that only editorial changes (as defined in {{sec-background}}) are made without author consultation.
 - For modules that have previously been published, e.g., updated YANG modules in -bis documents:
   - If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the `rev:non-backwards-compatible` extension is required.
-- Ensure that the final module is correctly formatted (e.g., by running {{pyang-formatting}})
+- Ensure that the final module is correctly formatted (e.g., by running {{pyang-formatting}}).
+
 
 ### Step 3: Finalizing the Module Version
 
 Before publication, the module version MUST be updated from the pre-release version to a release version. The RFC Editor, in coordination with the document authors:
 
-- Updates the revision date to reflect the date of the final revision
-- Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-\<draft-num\> → 1.1.0)
+- Updates the revision date to reflect the date of the final revision.
+- Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-\<draft-num\> → 1.1.0).
 - For modules that have previously been published, e.g., updated YANG modules in -bis documents:
-  - Uses pyang ({{pyang-next-version}}) to compare the candidate module against the previously published version and obtain a recommended next YANG Semver, subject to the tool limitations described in {{pyang-next-version}} and {{tool-limitations}}.  Tooling is not infallible, so if the suggested version from the tooling is unexpected then please reach out for additional guidance, as per {{sec-additional-guidance}}.
-  - Checks, and if necessary adds, the `rev:non-backwards-compatible` extension if NBC changes have occurred since the previous publication
+  - Uses `pyang` ({{pyang-next-version}}) to compare the candidate module against the previously published version and obtain a recommended next YANG Semver, subject to the tool limitations described in {{pyang-next-version}} and {{tool-limitations}}.
+ Tooling is not infallible, so if the suggested version from the tooling is unexpected then please reach out for additional guidance, as per {{sec-additional-guidance}}.
+  - Checks, and if necessary adds, the `rev:non-backwards-compatible` extension if NBC changes have occurred since the previous publication.
 
 ### Step 4: Validate the Module
 
-YANG modules are expected to be provided to the RFC Editor for publication already passing validation (pyang and yanglint).  However, it is possible that mistakes could be introduced when editing the YANG modules, so validation should be re-run to ensure that IETF does not publish invalid YANG modules.
+Normative YANG modules are expected to be provided to the RFC Editor for publication already passing validation (`pyang` and `yanglint`).  However, it is possible that mistakes could be introduced when editing a YANG module so validation should be re-run to ensure that IETF does not publish invalid YANG modules.
 
-After all updates are completed, or as updates are made, and after any formatting, then validation tools MUST be run
-over the resultant module to ensure that there are no warnings or errors.  pyang validation ({{pyang-validation}}) MUST be performed, and it is RECOMMENDED that *yanglint* ({{yang-lint-validation}}) validation is also performed.
+After all updates are completed, or as updates are made, and after any formatting, then validation tools MUST be run over the resultant module to ensure that there are no warnings or errors. `pyang` validation ({{pyang-validation}}) MUST be performed, and it is RECOMMENDED that `yanglint` ({{yang-lint-validation}}) validation is also performed.
 
 If the tools return any warnings or errors then the authors should help fix them, potentially seeking additional guidance if required, as per {{sec-additional-guidance}}.
 
@@ -278,7 +285,7 @@ If further changes are made, then for previously published modules, the step 3 v
 
 ### Step 5: IANA Delay of Publication
 
-IANA SHOULD delay publishing the YANG module to the IANA YANG Parameters registry until the RFC Editor has completed editing the module. This coordination ensures that:
+IANA SHOULD delay publishing a normative YANG module to the IANA YANG Parameters registry until the RFC Editor has completed editing the module. This coordination ensures that:
 
 - The IANA-published version matches the RFC-published version exactly
 - No discrepancies exist between the two authoritative sources
@@ -403,7 +410,7 @@ Use the tools described in {{pyang-next-version}} to recommend or check (if prov
 
 ### Step 5: Validate the Module
 
-Use validation tools, as per {{pyang-validation}}, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the *pyang* tool is sufficient but *yanglint* ({{yang-lint-validation}}) may be used as an alternative.
+Use validation tools, as per {{pyang-validation}}, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the `pyang` tool is sufficient but `yanglint`({{yang-lint-validation}}) may be used as an alternative.
 
 ### Step 6: Seek additional help if Needed
 
@@ -419,7 +426,7 @@ In most cases, the classification will be straightforward. However, if any of th
 Once the module is validated and the version is confirmed:
 
 - Publish the updated module to the IANA website
-- Publish the module using two URLs, one using the version and one using the revision date: ```<module-name>#<version>.yang``` and ```<module-name>@<revision-date>.yang```, as per {{I-D.ietf-netmod-yang-module-filename}}.
+- Publish the module using two URLs, one using the version and one using the revision date: `<module-name>#<version>.yang` and `<module-name>@<revision-date>.yang`, as per {{I-D.ietf-netmod-yang-module-filename}}.
 - Update any relevant registries or indexes
 - Ensure the new version is discoverable and accessible
 
@@ -443,7 +450,7 @@ The RFC Editor and IANA should contact the YANG Doctors in the following situati
 
 ## How to Seek Guidance
 
-Email the YANG Doctors mailing list and the Operations and Management Area Directors (OPS ADS):
+Email the YANG Doctors mailing list and the Operations and Management Area Directors (OPS ADs):
 
 - **Email**: yang-doctors@ietf.org & ops-ads@ietf.org
 - **Purpose**: Technical review and guidance on YANG module versioning.
@@ -458,14 +465,15 @@ When emailing, please include:
 - Any relevant tool output
 - An indication if an urgent reply is required.
 
-The expectation is that the YANG Doctors should reply to the request within the time frame given above, but if a reply isn't forthcoming then please escalate via the OPS ADS.
+The expectation is that the YANG Doctors should reply to the request within the time frame given above, but if a reply isn't forthcoming then please escalate via the OPS ADs.
 
 ## Example Request
 
 ~~~~ text
+<BEGIN TEMPLATE TEXT>
+
 Subject: YANG Versioning Question - iana-if-type Update
-~~~~
-~~~~ text
+
 Dear YANG Doctors,
 
 I need guidance on classifying a change to the iana-if-type module.
@@ -492,6 +500,8 @@ Current module version: 1.5.0
 Proposed version: 1.5.1 (if Editorial) or 1.6.0 (if BC)
 
 Thank you for your guidance.
+
+<END TEMPLATE TEXT>
 ~~~~
 
 # Operational Considerations {#sec-operational}
@@ -540,7 +550,7 @@ This appendix describes tooling available to assist the RFC Editor and IANA in v
 
 ### pyang
 
-**Purpose**: pyang is a comprehensive YANG validator and converter tool that can validate syntax, check for backwards-compatible violations, and generate documentation.
+**Purpose**: `pyang` is a comprehensive YANG validator and converter tool that can validate syntax, check for backwards-compatible violations, and generate documentation.
 
 **Primary Use Cases**:
 
@@ -549,11 +559,11 @@ This appendix describes tooling available to assist the RFC Editor and IANA in v
 1. Suggesting proposed next version when updating a YANG module
 1. Generating tree diagrams for documentation
 
-**Installation**: pyang is available via PyPI (`pip install pyang`) or from <https://github.com/mbj4668/pyang>.  It is recommended to periodically check and update the version to pick up bugfixes and new functionality (which could include stricter checks).
+**Installation**: `pyang` is available via PyPI (`pip install pyang`) or from <https://github.com/mbj4668/pyang>.  It is recommended to periodically check and update the version to pick up bugfixes and new functionality (which could include stricter checks).
 
 **Note to RFC Editor and reviewers, some of the tooling enhancements documented here are not yet been merged into the master pyang repository, so depending on publication timing we need to add further references.**
 
-To ensure that pyang correctly processes the YANG files, then the correct versions of any YANG module dependencies must also be used, this is often the latest version of the published YANG modules, but if a draft contains a set of YANG modules, or if there are set of drafts with YANG modules being published together then all the YANG modules in those drafts MUST be extracted together and validated.  These dependent YANG modules can either be stored in the same directory as the YANG module being validated/checked, or they can be stored in a separate directory and passed using the ```-p``` argument to provide a path to the directory.
+To ensure that `pyang` correctly processes the YANG files, then the correct versions of any YANG module dependencies must also be used, this is often the latest version of the published YANG modules, but if a draft contains a set of YANG modules, or if there are set of drafts with YANG modules being published together then all the YANG modules in those drafts MUST be extracted together and validated.  These dependent YANG modules can either be stored in the same directory as the YANG module being validated/checked, or they can be stored in a separate directory and passed using the ```-p``` argument to provide a path to the directory.
 
 #### Basic YANG Syntax Validation {#pyang-validation}
 
@@ -575,7 +585,7 @@ pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p <dep-module-dire
 
 Pyang can be used to compare the changes between two YANG module versions and either validate that a suitable next version number has been used, or to suggest what the appropriate next version should be, or if further manual checks should be performed, e.g., for changes to description statements.
 
-If the new module version already includes a version statement for the latest revision then pyang can perform a limited set of policy checks against the declared version.  In the current implementation, this is not a full exact-match validation for every possible declared version.  Instead, the tool reports specific cases where the declared version is inconsistent with detected known NBC changes or with certain possible-NBC outcomes.  Otherwise, if the latest revision does not contain a version statement then it will suggest the new version that should be used.
+If the new module version already includes a version statement for the latest revision then `pyang` can perform a limited set of policy checks against the declared version.  In the current implementation, this is not a full exact-match validation for every possible declared version.  Instead, the tool reports specific cases where the declared version is inconsistent with detected known NBC changes or with certain possible-NBC outcomes.  Otherwise, if the latest revision does not contain a version statement then it will suggest the new version that should be used.
 
 If the previous revision being compared does not contain a `ysv:version` statement, then the tool assumes an old version of 1.0.0 and reports that assumption explicitly in its output.
 
@@ -621,7 +631,7 @@ iana-ssh-mac-algs@2026-03-06.yang:62: error: the value for enum 'hmac-sha2-512',
 
 **Example Tool Output 3**:
 
-This example output is for a change to a description statement.  The tool output suggests a version change from 1.0.0 → 1.0.1, which is correct if there is no change in semantics.  It also highlights that it may be necessary to consult with the authors to determine if a semantic change has occurred, if that is not obvious.  If after reviewing, the conclusion is that a semantic change has occurred, then the version change should be from 1.0.0 → 2.0.0 and the ```rev:non-backwards-compatible``` statement should be added.
+This example output is for a change to a description statement.  The tool output suggests a version change from 1.0.0 → 1.0.1, which is correct if there is no change in semantics.  It also highlights that it may be necessary to consult with the authors to determine if a semantic change has occurred, if that is not obvious.  If after reviewing, the conclusion is that a semantic change has occurred, then the version change should be from 1.0.0 → 2.0.0 and the `rev:non-backwards-compatible` statement should be added.
 
 ~~~~ text
 SUGGESTED-NEXT-YANG-SEMVER: 1.0.1
@@ -632,7 +642,7 @@ iana-ssh-mac-algs@2025-03-17.yang:138: warning: the description change may have 
 
 #### Generating tree diagrams for documentation {#pyang-tree}
 
-Pyang can be used to generate tree diagram output that conforms to {{RFC8340}}.  The command below generates the tree diagram for `ietf-module-name.yang`, limited to a line length of 69 characters and writes it into the specified ```output-file```.  The ```tree-options``` is based on the options in pyang that are prefixed with ```--tree``` and can be seen by running ```pyang --help```.  Common options may include printing out grouping (```--tree-print-groupings```) or printing out structures (```--tree-print-structures```).
+Pyang can be used to generate tree diagram output that conforms to {{RFC8340}}.  The command below generates the tree diagram for `ietf-module-name.yang`, limited to a line length of 69 characters and writes it into the specified `output-file`.  The `tree-options` is based on the options in `pyang` that are prefixed with `--tree` and can be seen by running `pyang --help`.  Common options may include printing out grouping (`--tree-print-groupings`) or printing out structures (`--tree-print-structures`).
 
 ~~~~ shell
 pyang -f tree --tree-line-length=69 -Werror -p <dep-module-directory> -o <output-file> <tree-options> ietf-module-name.yang
@@ -640,7 +650,7 @@ pyang -f tree --tree-line-length=69 -Werror -p <dep-module-directory> -o <output
 
 ### yanglint {#yang-lint-validation}
 
-**Purpose**: yanglint is a YANG validator and data manipulation tool from the libyang project, useful for validating modules and instance data.
+**Purpose**: `yanglint` is a YANG validator and data manipulation tool from the libyang project, useful for validating modules and instance data.
 
 **Primary Use Cases**:
 
@@ -648,7 +658,7 @@ pyang -f tree --tree-line-length=69 -Werror -p <dep-module-directory> -o <output
 - Checking cross-module dependencies
 - Validating instance data against YANG schemas
 
-**Installation**: yanglint is part of libyang, available from <https://github.com/CESNET/libyang>
+**Installation**: `yanglint` is part of libyang, available from <https://github.com/CESNET/libyang>
 
 **Syntax Validation**:
 
