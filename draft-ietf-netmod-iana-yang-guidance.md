@@ -589,10 +589,14 @@ pyang --check-update-semver --check-update-from module-name@old-version.yang mod
 
 The command output:
 
-- will suggest the next YANG Semver, based on the changes.
+
+- prints the suggested next YANG Semver, when the tool can determine one, based on the changes.  It may print:
+  - `ASSUMED-OLD-YANG-SEMVER` line if the previous revision does not contain a `ysv:version` statement.
+  - `SUGGESTED-NEXT-YANG-SEMVER: unavailable (...)`, if the previous version is in a pre-release form that the current implementation cannot automatically advance.
 - will indicate whether the `rev:non-backwards-compatible` extension statement is needed.
 - will highlight any non-backwards-compatible changes, which are reported as errors.
 - will indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurred and hence if the change is non-backwards-compatible rather than editorial.
+- may emit additional semver policy diagnostics if a declared new `ysv:version` is inconsistent with the tool's semver policy checks.
 
 **Example Tool Output 1**:
 
@@ -682,7 +686,7 @@ While tools are valuable for YANG module validation and versioning, they have a 
 
 **Limitation 1: Cannot Always Distinguish Editorial from BC/NBC Changes**
 
-Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning) or non-backwards-compatible (changing meaning). Human or AI judgment is required to make this distinction.
+Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning) or non-backwards-compatible (changing meaning in semantically significant way). Human or AI judgment is required to make this distinction.
 
 Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a description saying "IPv4 address or IPv6 address" to just "IPv4 address" would be regarded as an NBC change because the scope of the type has clearly changed and may impact users of that type.
 
