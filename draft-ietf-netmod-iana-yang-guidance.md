@@ -1289,6 +1289,8 @@ Special thanks to Joe Clarke for his presentation on YANG versioning tooling at 
 
 The authors thank the RFC Editor and IANA teams for their collaboration in refining the operational procedures described in this document.
 
+The authors would like to thank those providing comments on the draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mohamed Boucadair, Reshad Rahman, Sabrina Tanamal, and Sandy Ginoza.
+
 The authors also thank the NETMOD working group for their extensive work on YANG versioning specifications that form the foundation of this guidance, including the module versioning framework, semantic versioning, and associated tooling.
 
 The initial substantive revision of this document used Claude Sonnet 4.5 to create prose and examples, which have been subsequently reviewed and refined by the YANG Versioning design team and the NETMOD working group.
