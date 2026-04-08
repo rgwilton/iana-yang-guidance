@@ -4,8 +4,8 @@
 
 NETMOD                                                         R. Wilton
 Internet-Draft                                                     Cisco
-Intended status: Informational                              7 April 2026
-Expires: 9 October 2026
+Intended status: Informational                              8 April 2026
+Expires: 10 October 2026
 
 
      Guidance for Managing YANG Modules in RFCs and IANA Registries
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 October 2026.
+   This Internet-Draft will expire on 10 October 2026.
 
 Copyright Notice
 
@@ -269,13 +269,13 @@ Table of Contents
       applicable to modules published by the IETF or maintained by IANA.
 
    If an update to a YANG module contains a mix of changes, then the
-   version number is updated as per the most impactful change.  E.g., if
-   a change included both backwards-compatible feature additions and
-   editorial changes then the _MINOR_ version field is incremented and
-   the _PATCH_ version field is set to 0, e.g., as per the second
-   example below.  If in doubt as to which category a particular change
-   fits into, it is always better to err on the side of caution and
-   choose the more significant version change.
+   version number is updated as per the most impactful change.  For
+   example, if a change included both backwards-compatible feature
+   additions and editorial changes then the _MINOR_ version field is
+   incremented and the _PATCH_ version field is set to 0, e.g., as per
+   the second example below.  If in doubt as to which category a
+   particular change fits into, it is always better to err on the side
+   of caution and choose the more significant version change.
 
    For example, if a published IETF YANG module is at version _1.2.3_:
 
@@ -312,7 +312,7 @@ Table of Contents
       (provided the semantic meaning is unchanged)
 
    *  Changing the status of a schema node from "current" to
-      "deprecated" (e.g., by adding a status: "deprecated" statement)
+      "deprecated" (e.g., by adding a status deprecated; statement)
 
    Section 3.1.2 of [I-D.ietf-netmod-yang-module-versioning] defines
    non-backwards-compatible changes, examples include:
@@ -488,8 +488,8 @@ Table of Contents
          authors to determine the correct version number and whether the
          rev:non-backwards-compatible extension is required.
 
-   *  Ensure that final module is correctly formatted (e.g., by running
-      Appendix A.1.1.2)
+   *  Ensure that the final module is correctly formatted (e.g., by
+      running Appendix A.1.1.2)
 
 5.2.3.  Step 3: Finalizing the Module Version
 
@@ -523,7 +523,7 @@ Table of Contents
    YANG modules are expected to be provided to the RFC Editor for
    publication already passing validation (pyang and yanglint).
    However, it is possible that mistakes could be introduced when
-   editing the YANG modules so validation should be re-run to ensure
+   editing the YANG modules, so validation should be re-run to ensure
    that IETF does not publish invalid YANG modules.
 
    After all updates are completed, or as updates are made, and after
@@ -650,7 +650,7 @@ Table of Contents
 
    *  Removing an enum value or identity (unless status is "obsolete")
 
-   *  Changing status to from "current" or "deprecated" to "obsolete"
+   *  Changing status from "current" or "deprecated" to "obsolete"
 
    *  Renaming an enum or identity
 
@@ -738,8 +738,8 @@ Table of Contents
       change, and a reference, if appropriate.
 
    *  _(Optional) include a version statement with the anticipated new
-      version and an rev:non-backwards-compatible statement if it is a
-      backwards-incompatible change._
+      version and a rev:non-backwards-compatible statement if it is a
+      non-backwards-compatible change._
 
    *  _(Optional) Use tooling to format the YANG module, as described in
       Appendix A.1.1.2._
@@ -753,7 +753,7 @@ Table of Contents
 
    *  Add or update the version statement with the correct version
 
-   *  Add rev:non-backwards-compatible` extension if NBC changes have
+   *  Add rev:non-backwards-compatible extension if NBC changes have
       occurred
 
 6.4.5.  Step 5: Validate the Module
@@ -933,8 +933,8 @@ Table of Contents
    modules that are published in RFCs and also YANG modules that are
    derived from IANA registries.
 
-   Incorrect interpretion of this document could cause incorrect
-   handling or versioning of IANA maintained YANG modules.
+   Incorrect interpretation of this document could cause incorrect
+   handling or versioning of IANA-maintained YANG modules.
 
    This document recommends the usage of various tools.  Bugs or attacks
    on these tools could cause the tools to give incorrect or misleading
@@ -1158,17 +1158,17 @@ A.1.1.3.  Suggesting proposed next version when updating a YANG module
 
    The command output:
 
-   *  will suggested the next YANG Semver, based on the changes.
+   *  will suggest the next YANG Semver, based on the changes.
 
-   *  indicate whether the rev:non-backwards-compatible annotation is
-      needed.
+   *  will indicate whether the rev:non-backwards-compatible extension
+      statement is needed.
 
-   *  highlight any non-backwards-compatible changes, which are reported
-      as errors.
+   *  will highlight any non-backwards-compatible changes, which are
+      reported as errors.
 
-   *  indicate if there are changes to any statements, e.g.,
+   *  will indicate if there are changes to any statements, e.g.,
       description, that require further analysis to decide whether a
-      semantic change has occurrred and hence if the change is not-
+      semantic change has occurred and hence if the change is non-
       backwards-compatible rather than editorial.
 
    *Example Tool Output 1*:
@@ -1288,7 +1288,7 @@ A.2.  Tool Limitations
    Changes*
 
    Current tools cannot determine whether a description change is purely
-   editorial (clarifying existing meaning), backwards-incompatible
+   editorial (clarifying existing meaning) or non-backwards-compatible
    (changing meaning).  Human or AI judgment is required to make this
    distinction.
 
@@ -1815,7 +1815,7 @@ B.2.7.  Scenario 7: Changing a Value Number
        }
        enum atm {
          value 211;
-         description "ATM making a surprising comeback";
+         description "ATM interface.";
        }
      }
    }
@@ -1837,6 +1837,10 @@ B.2.7.  Scenario 7: Changing a Value Number
        enum fastether {
          value 215;
          description "Fast Ethernet interface.";
+       }
+       enum atm {
+         value 211;
+         description "ATM interface.";
        }
      }
    }
