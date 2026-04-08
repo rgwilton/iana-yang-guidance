@@ -171,8 +171,7 @@ Table of Contents
        updated, any YANG modules derived from those registries must be
        updated accordingly with proper versioning.
 
-   The guidance in this document is informational rather than
-   prescriptive.  It describes recommended practices and procedures that
+   This document describes recommended practices and procedures that
    reflect current consensus within the NETMOD working group and the
    IETF operations and management community.  While following this
    guidance will help ensure consistent and correct handling of YANG
@@ -1158,7 +1157,15 @@ A.1.1.3.  Suggesting proposed next version when updating a YANG module
 
    The command output:
 
-   *  will suggest the next YANG Semver, based on the changes.
+   *  prints the suggested next YANG Semver, when the tool can determine
+      one, based on the changes.  It may print:
+
+      -  ASSUMED-OLD-YANG-SEMVER line if the previous revision does not
+         contain a ysv:version statement.
+
+      -  SUGGESTED-NEXT-YANG-SEMVER: unavailable (...), if the previous
+         version is in a pre-release form that the current
+         implementation cannot automatically advance.
 
    *  will indicate whether the rev:non-backwards-compatible extension
       statement is needed.
@@ -1170,6 +1177,9 @@ A.1.1.3.  Suggesting proposed next version when updating a YANG module
       description, that require further analysis to decide whether a
       semantic change has occurred and hence if the change is non-
       backwards-compatible rather than editorial.
+
+   *  may emit additional semver policy diagnostics if a declared new
+      ysv:version is inconsistent with the tool's semver policy checks.
 
    *Example Tool Output 1*:
 
@@ -1289,8 +1299,8 @@ A.2.  Tool Limitations
 
    Current tools cannot determine whether a description change is purely
    editorial (clarifying existing meaning) or non-backwards-compatible
-   (changing meaning).  Human or AI judgment is required to make this
-   distinction.
+   (changing meaning in semantically significant way).  Human or AI
+   judgment is required to make this distinction.
 
    Example: Changing "Ethernet interface" to "Ethernet interface,
    includes all Ethernet interface speeds" could be editorial (if those
@@ -1977,6 +1987,10 @@ Acknowledgments
    The authors thank the RFC Editor and IANA teams for their
    collaboration in refining the operational procedures described in
    this document.
+
+   The authors would like to thank those providing comments on the
+   draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mohamed
+   Boucadair, Reshad Rahman, Sabrina Tanamal, and Sandy Ginoza.
 
    The authors also thank the NETMOD working group for their extensive
    work on YANG versioning specifications that form the foundation of

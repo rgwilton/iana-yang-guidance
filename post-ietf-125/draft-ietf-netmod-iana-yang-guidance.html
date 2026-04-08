@@ -1398,7 +1398,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <p id="section-2-3.2.1"><strong>Managing IANA-Maintained YANG Modules</strong>: When IANA registries are updated, any YANG modules derived from those registries must be updated accordingly with proper versioning.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
-<p id="section-2-4">The guidance in this document is informational rather than prescriptive. It describes recommended practices and procedures that reflect current consensus within the NETMOD working group and the IETF operations and management community. While following this guidance will help ensure consistent and correct handling of YANG modules, specific situations may require consultation with the YANG Doctors (as described in <a href="#sec-additional-guidance" class="auto internal xref">Section 7</a>).<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-4">This document describes recommended practices and procedures that reflect current consensus within the NETMOD working group and the IETF operations and management community. While following this guidance will help ensure consistent and correct handling of YANG modules, specific situations may require consultation with the YANG Doctors (as described in <a href="#sec-additional-guidance" class="auto internal xref">Section 7</a>).<a href="#section-2-4" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-2-5.1">
           <p id="section-2-5.1.1"><strong>Note:</strong> In addition to the guidance detailed in this document, there is a broader, ongoing discussion within the IETF community around the processes and responsibilities for managing YANG modules in RFCs. For further information and the latest proposals, see <span>[<a href="#I-D.boucadair-veloce-yang" class="cite xref">I-D.boucadair-veloce-yang</a>]</span>. The recommendations and operational practices described here may be revised in the future to reflect outcomes from that work.<a href="#section-2-5.1.1" class="pilcrow">¶</a></p>
@@ -2409,7 +2409,15 @@ pyang --check-update-semver --check-update-from module-name@old-version.yang mod
 <p id="appendix-A.1.1.3-7">The command output:<a href="#appendix-A.1.1.3-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-A.1.1.3-8.1">
-                <p id="appendix-A.1.1.3-8.1.1">will suggest the next YANG Semver, based on the changes.<a href="#appendix-A.1.1.3-8.1.1" class="pilcrow">¶</a></p>
+                <p id="appendix-A.1.1.3-8.1.1">prints the suggested next YANG Semver, when the tool can determine one, based on the changes.  It may print:<a href="#appendix-A.1.1.3-8.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A.1.1.3-8.1.2.1">
+                    <p id="appendix-A.1.1.3-8.1.2.1.1"><code>ASSUMED-OLD-YANG-SEMVER</code> line if the previous revision does not contain a <code>ysv:version</code> statement.<a href="#appendix-A.1.1.3-8.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="appendix-A.1.1.3-8.1.2.2">
+                    <p id="appendix-A.1.1.3-8.1.2.2.1"><code>SUGGESTED-NEXT-YANG-SEMVER: unavailable (...)</code>, if the previous version is in a pre-release form that the current implementation cannot automatically advance.<a href="#appendix-A.1.1.3-8.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
 </li>
               <li class="normal" id="appendix-A.1.1.3-8.2">
                 <p id="appendix-A.1.1.3-8.2.1">will indicate whether the <code>rev:non-backwards-compatible</code> extension statement is needed.<a href="#appendix-A.1.1.3-8.2.1" class="pilcrow">¶</a></p>
@@ -2419,6 +2427,9 @@ pyang --check-update-semver --check-update-from module-name@old-version.yang mod
 </li>
               <li class="normal" id="appendix-A.1.1.3-8.4">
                 <p id="appendix-A.1.1.3-8.4.1">will indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurred and hence if the change is non-backwards-compatible rather than editorial.<a href="#appendix-A.1.1.3-8.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.1.1.3-8.5">
+                <p id="appendix-A.1.1.3-8.5.1">may emit additional semver policy diagnostics if a declared new <code>ysv:version</code> is inconsistent with the tool's semver policy checks.<a href="#appendix-A.1.1.3-8.5.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="appendix-A.1.1.3-9"><strong>Example Tool Output 1</strong>:<a href="#appendix-A.1.1.3-9" class="pilcrow">¶</a></p>
@@ -2532,7 +2543,7 @@ yanglint -p /path/to/yang/modules module-name.yang
         </h3>
 <p id="appendix-A.2-1">While tools are valuable for YANG module validation and versioning, they have a couple of limitations relevant to their usage here:<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.2-2"><strong>Limitation 1: Cannot Always Distinguish Editorial from BC/NBC Changes</strong><a href="#appendix-A.2-2" class="pilcrow">¶</a></p>
-<p id="appendix-A.2-3">Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning) or non-backwards-compatible (changing meaning). Human or AI judgment is required to make this distinction.<a href="#appendix-A.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-3">Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning) or non-backwards-compatible (changing meaning in semantically significant way). Human or AI judgment is required to make this distinction.<a href="#appendix-A.2-3" class="pilcrow">¶</a></p>
 <p id="appendix-A.2-4">Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a description saying "IPv4 address or IPv6 address" to just "IPv4 address" would be regarded as an NBC change because the scope of the type has clearly changed and may impact users of that type.<a href="#appendix-A.2-4" class="pilcrow">¶</a></p>
 <p id="appendix-A.2-5"><strong>Limitation 2: May Produce False Positives or False Negatives</strong><a href="#appendix-A.2-5" class="pilcrow">¶</a></p>
 <p id="appendix-A.2-6">Tool implementations may have bugs or may not cover all edge cases in the YANG versioning rules.  Generally, in any ambiguous cases, the tools are being designed to either explicitly flag this or choose the more impactful option.  It is assumed to be better for clients to potentially flag an NBC change that is not really there than to mistakenly flag an NBC change as only being a BC change.<a href="#appendix-A.2-6" class="pilcrow">¶</a></p>
@@ -3271,8 +3282,9 @@ identity ip {
 <p id="appendix-C-2">Participants in that meeting included: Amanda Baber, Jason Sterne, Joe Clarke, Kent Watsen, Lou Berger, Mahesh Jethanandani, Per Andersson, Reshad Rahman, Rob Wilton, and Sabrina Tanamal.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <p id="appendix-C-3">Special thanks to Joe Clarke for his presentation on YANG versioning tooling at IETF 124, which informed the tooling guidance in <a href="#appendix-tooling" class="auto internal xref">Appendix A</a>.<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 <p id="appendix-C-4">The authors thank the RFC Editor and IANA teams for their collaboration in refining the operational procedures described in this document.<a href="#appendix-C-4" class="pilcrow">¶</a></p>
-<p id="appendix-C-5">The authors also thank the NETMOD working group for their extensive work on YANG versioning specifications that form the foundation of this guidance, including the module versioning framework, semantic versioning, and associated tooling.<a href="#appendix-C-5" class="pilcrow">¶</a></p>
-<p id="appendix-C-6">The initial substantive revision of this document used Claude Sonnet 4.5 to create prose and examples, which have been subsequently reviewed and refined by the YANG Versioning design team and the NETMOD working group.<a href="#appendix-C-6" class="pilcrow">¶</a></p>
+<p id="appendix-C-5">The authors would like to thank those providing comments on the draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mohamed Boucadair, Reshad Rahman, Sabrina Tanamal, and Sandy Ginoza.<a href="#appendix-C-5" class="pilcrow">¶</a></p>
+<p id="appendix-C-6">The authors also thank the NETMOD working group for their extensive work on YANG versioning specifications that form the foundation of this guidance, including the module versioning framework, semantic versioning, and associated tooling.<a href="#appendix-C-6" class="pilcrow">¶</a></p>
+<p id="appendix-C-7">The initial substantive revision of this document used Claude Sonnet 4.5 to create prose and examples, which have been subsequently reviewed and refined by the YANG Versioning design team and the NETMOD working group.<a href="#appendix-C-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
