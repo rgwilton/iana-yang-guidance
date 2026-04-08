@@ -2410,7 +2410,7 @@ pyang --ietf --strict --max-line-length=69 -Werror -p &lt;dep-module-directory&g
             <h5 id="name-consistent-formatting-of-ya">
 <a href="#appendix-A.1.1.2" class="section-number selfRef">A.1.1.2. </a><a href="#name-consistent-formatting-of-ya" class="section-name selfRef">Consistent formatting of YANG modules</a>
             </h5>
-<p id="appendix-A.1.1.2-1">Pyang can be used to reformat a YANG file, particularly fixing line length issues and correcting any indentation mistakes.  Some complex expressions, e.g., <code>must</code>, <code>when</code> and path statements may not be automatically split to the correct line length and may need to be done manually.  Running the basic syntax validation command on the output file will indicate whether any further manual line folding is required.<a href="#appendix-A.1.1.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-1">Pyang can be used to reformat a YANG file, particularly fixing line length issues and correcting any indentation mistakes.  Some complex expressions, e.g., <code>must</code>, <code>when</code> and path statements may not be automatically split to the correct line length and may need to be done manually.  Running the basic syntax validation command on the output file indicates whether any further manual line folding is required.<a href="#appendix-A.1.1.2-1" class="pilcrow">¶</a></p>
 <div class="lang-shell sourcecode" id="appendix-A.1.1.2-2">
 <pre>
 pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p &lt;dep-module-directory&gt; -o &lt;output-file&gt; &lt;treeOpts&gt; ietf-module-name.yang
@@ -2447,13 +2447,13 @@ pyang --check-update-semver --check-update-from module-name@old-version.yang mod
                 </ul>
 </li>
               <li class="normal" id="appendix-A.1.1.3-8.2">
-                <p id="appendix-A.1.1.3-8.2.1">will indicate whether the <code>rev:non-backwards-compatible</code> extension statement is needed.<a href="#appendix-A.1.1.3-8.2.1" class="pilcrow">¶</a></p>
+                <p id="appendix-A.1.1.3-8.2.1">indicates whether the <code>rev:non-backwards-compatible</code> extension statement is needed.<a href="#appendix-A.1.1.3-8.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="appendix-A.1.1.3-8.3">
-                <p id="appendix-A.1.1.3-8.3.1">will highlight any non-backwards-compatible changes, which are reported as errors.<a href="#appendix-A.1.1.3-8.3.1" class="pilcrow">¶</a></p>
+                <p id="appendix-A.1.1.3-8.3.1">highlights any non-backwards-compatible changes, which are reported as errors.<a href="#appendix-A.1.1.3-8.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="appendix-A.1.1.3-8.4">
-                <p id="appendix-A.1.1.3-8.4.1">will indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurred and hence if the change is non-backwards-compatible rather than editorial.<a href="#appendix-A.1.1.3-8.4.1" class="pilcrow">¶</a></p>
+                <p id="appendix-A.1.1.3-8.4.1">indicates if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurred and hence if the change is non-backwards-compatible rather than editorial.<a href="#appendix-A.1.1.3-8.4.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="appendix-A.1.1.3-8.5">
                 <p id="appendix-A.1.1.3-8.5.1">may emit additional semver policy diagnostics if a declared new <code>ysv:version</code> is inconsistent with the tool's semver policy checks.<a href="#appendix-A.1.1.3-8.5.1" class="pilcrow">¶</a></p>
