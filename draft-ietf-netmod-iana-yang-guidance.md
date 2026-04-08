@@ -96,7 +96,7 @@ This document provides informational guidance to both the RFC Editor and IANA fo
 
 2. **Managing IANA-Maintained YANG Modules**: When IANA registries are updated, any YANG modules derived from those registries must be updated accordingly with proper versioning.
 
-The guidance in this document is informational rather than prescriptive. It describes recommended practices and procedures that reflect current consensus within the NETMOD working group and the IETF operations and management community. While following this guidance will help ensure consistent and correct handling of YANG modules, specific situations may require consultation with the YANG Doctors (as described in {{sec-additional-guidance}}).
+This document describes recommended practices and procedures that reflect current consensus within the NETMOD working group and the IETF operations and management community. While following this guidance will help ensure consistent and correct handling of YANG modules, specific situations may require consultation with the YANG Doctors (as described in {{sec-additional-guidance}}).
 
 > **Note:** In addition to the guidance detailed in this document, there is a broader, ongoing discussion within the IETF community around the processes and responsibilities for managing YANG modules in RFCs. For further information and the latest proposals, see {{I-D.boucadair-veloce-yang}}. The recommendations and operational practices described here may be revised in the future to reflect outcomes from that work.
 
