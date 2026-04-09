@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-02T00:17:37.228138+00:00",
+  "timestamp": "2026-04-09T00:16:27.425567+00:00",
   "repo": "rgwilton/iana-yang-guidance",
   "labels": [
     {
@@ -220,25 +220,33 @@
       "id": "PR_kwDOQTkdsc7PSzL1",
       "title": "Minor edit suggestions",
       "url": "https://github.com/rgwilton/iana-yang-guidance/pull/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "* update reference\r\n* Added terminology from 9907 for consistency.\r\n* make sure the guidance applies to normative modules (per 9907 terminology) not any random/example modules in an RFC.\r\n\r\nand fixing nits.\r\n\r\nHaving frozen requirements (MUST) for pyang, etc. may not be appropriate in an RFC.\r\n\r\nThere is some guidance that is duplicate existing ones (e.g., RFC editor to make only editorial change, IANA to update a module, etc.). Better to refer to existing practice to avoid that we define new process, but simply leveraging existing.",
       "createdAt": "2026-04-01T15:17:36Z",
-      "updatedAt": "2026-04-01T15:17:36Z",
+      "updatedAt": "2026-04-08T11:30:00Z",
       "baseRepository": "rgwilton/iana-yang-guidance",
       "baseRefName": "main",
       "baseRefOid": "5faa87d7497b7ee9fd24d0f64eab84984770afac",
       "headRepository": "boucadair/iana-yang-guidance",
       "headRefName": "patch-1",
       "headRefOid": "d19b6cbc6f588db1daad5fc9e8936735a447cca6",
-      "closedAt": null,
+      "closedAt": "2026-04-08T11:29:59Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "Merged via https://github.com/rgwilton/iana-yang-guidance/commit/8cc41d82f85ee5b0eaa1414ae265aa4bd61f7645 to  post-ietf-125 branch.",
+          "createdAt": "2026-04-08T11:29:59Z",
+          "updatedAt": "2026-04-08T11:29:59Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -246,26 +254,109 @@
       "id": "PR_kwDOQTkdsc7PUiu0",
       "title": "Additional changes based on the pyang approach.",
       "url": "https://github.com/rgwilton/iana-yang-guidance/pull/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "xorrkaz",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "* reference and description are treated similarly\r\n* I updated certain Editorial types to Analyze.  This may be overkill, but I wanted to match how pyang treats these diffs",
       "createdAt": "2026-04-01T16:59:41Z",
-      "updatedAt": "2026-04-01T16:59:41Z",
+      "updatedAt": "2026-04-08T10:41:03Z",
       "baseRepository": "rgwilton/iana-yang-guidance",
       "baseRefName": "main",
       "baseRefOid": "5faa87d7497b7ee9fd24d0f64eab84984770afac",
       "headRepository": "xorrkaz/iana-yang-guidance",
       "headRefName": "more-changes-based-on-pyang-code",
       "headRefOid": "09fd0908417f3b48eca212e5e3c6d8bd5a7bae54",
-      "closedAt": null,
+      "closedAt": "2026-04-08T10:40:46Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "I've merged some of your changes here https://github.com/rgwilton/iana-yang-guidance/commit/5cfddb645b2a213f8dd98c8aed9ccf249aaf9115. Based on yesterday's discussion, I think that the remaining changes in this PR and not needed, hence closing this PR. ",
+          "createdAt": "2026-04-08T10:40:46Z",
+          "updatedAt": "2026-04-08T10:41:03Z"
+        }
+      ],
       "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOQTkdsc7QhRNE",
+      "title": "Fix typos, grammar, and terminology inconsistencies",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/pull/8",
+      "state": "MERGED",
+      "author": "xorrkaz",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "- Fix typos\r\n- Fix broken backticks\r\n- Fix invalid YANG syntax\r\n- Use consistent terminology\r\n- Minor grammar fixes",
+      "createdAt": "2026-04-07T14:20:42Z",
+      "updatedAt": "2026-04-08T13:24:08Z",
+      "baseRepository": "rgwilton/iana-yang-guidance",
+      "baseRefName": "main",
+      "baseRefOid": "5faa87d7497b7ee9fd24d0f64eab84984770afac",
+      "headRepository": "xorrkaz/iana-yang-guidance",
+      "headRefName": "jclarke-full-review",
+      "headRefOid": "676621e3e41480ebbf07f7e896ca14f66534a0ae",
+      "closedAt": "2026-04-07T16:29:06Z",
+      "mergedAt": "2026-04-07T16:29:06Z",
+      "mergedBy": "rgwilton",
+      "mergeCommit": {
+        "oid": "054fec9f68af93cb6e267019e10a158ca53dfac4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQTkdsc7yrknt",
+          "commit": {
+            "abbreviatedOid": "676621e"
+          },
+          "author": "reshad-equinix",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "LGTM.",
+          "createdAt": "2026-04-07T21:55:51Z",
+          "updatedAt": "2026-04-07T21:59:27Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "No change on this line right?",
+              "createdAt": "2026-04-07T21:55:51Z",
+              "updatedAt": "2026-04-07T21:59:27Z"
+            },
+            {
+              "originalPosition": 89,
+              "body": "Is future the right tense here?",
+              "createdAt": "2026-04-07T21:57:15Z",
+              "updatedAt": "2026-04-07T21:59:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQTkdsc7y6beh",
+          "commit": {
+            "abbreviatedOid": "676621e"
+          },
+          "author": "xorrkaz",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-08T13:24:08Z",
+          "updatedAt": "2026-04-08T13:24:08Z",
+          "comments": [
+            {
+              "originalPosition": 89,
+              "body": "Good question!  I went off the first verb in the list.  But now that you bring it up, perhaps present tense and making each word more verb-y is the way to go.",
+              "createdAt": "2026-04-08T13:24:08Z",
+              "updatedAt": "2026-04-08T13:24:08Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
