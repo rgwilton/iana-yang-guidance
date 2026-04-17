@@ -541,11 +541,11 @@ Table of Contents
    IETF does not publish invalid YANG modules.
 
    After all updates are completed, or as updates are made, and after
-   any formatting, then validation tools MUST be run over the resultant
-   module to ensure that there are no warnings or errors. pyang
-   validation (Appendix A.1.1.1) MUST be performed, and it is
-   RECOMMENDED that yanglint (Appendix A.1.2) validation is also
-   performed.
+   any formatting, then appropriate YANG validation tools MUST be run
+   over the resultant module to ensure that there are no warnings or
+   errors.  At time of publication, it is suggested that both pyang
+   validation (Appendix A.1.1.1) and yanglint validation
+   (Appendix A.1.2) be performed.
 
    If the tools return any warnings or errors then the authors should
    help fix them, potentially seeking additional guidance if required,
@@ -605,7 +605,8 @@ Table of Contents
 
    When these registries are updated, the corresponding YANG modules
    MUST be updated accordingly by IANA, following the same versioning
-   rules described in Section 4.
+   rules described in Section 4.  These considerations MUST be followed
+   in addition to the guidance in Section 5.3 of [RFC9907].
 
 6.2.  Characteristics of IANA-Maintained Modules
 
