@@ -4,8 +4,8 @@
 
 NETMOD                                                         R. Wilton
 Internet-Draft                                                     Cisco
-Intended status: Informational                              8 April 2026
-Expires: 10 October 2026
+Intended status: Informational                             17 April 2026
+Expires: 19 October 2026
 
 
      Guidance for Managing YANG Modules in RFCs and IANA Registries
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 October 2026.
+   This Internet-Draft will expire on 19 October 2026.
 
 Copyright Notice
 
@@ -185,9 +185,9 @@ Table of Contents
       there is a broader, ongoing discussion within the IETF community
       around the processes and responsibilities for managing YANG
       modules in RFCs.  For further information and the latest
-      proposals, see [I-D.boucadair-veloce-yang].  The recommendations
-      and operational practices described here may be revised in the
-      future to reflect outcomes from that work.
+      proposals, see [I-D.mahesh-veloce-yang].  The recommendations and
+      operational practices described here may be revised in the future
+      to reflect outcomes from that work.
 
    The procedures and classifications in this document are drawn from
    text and general guidance on the following IETF specifications:
@@ -299,9 +299,9 @@ Table of Contents
    not completed the IETF standardization process and whose revision
    content is subject to change in non-backwards-compatible ways without
    corresponding changes to the major version number.  Published IETF
-   and IANA-maintained YANG modules should always be at version "1.0.0"
-   or later, and should never include a pre-release suffix.  The initial
-   published version should be "1.0.0".
+   and IANA-maintained YANG modules SHOULD always be at version "1.0.0"
+   or later, and SHOULD never include a pre-release suffix.  The initial
+   published version SHOULD be "1.0.0".
 
 4.2.  Backwards Compatibility Rules
 
@@ -982,9 +982,9 @@ Table of Contents
    [I-D.ietf-netmod-yang-module-filename]
               Andersson, P., "YANG module file name convention", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-module-
-              filename-07, 2 April 2026,
+              filename-08, 15 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              yang-module-filename-07>.
+              yang-module-filename-08>.
 
    [I-D.ietf-netmod-yang-module-versioning]
               Wilton, R., Rahman, R., Lengyel, B., Clarke, J., and J.
@@ -998,9 +998,8 @@ Table of Contents
               Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
               J., and B. Claise, "YANG Semantic Versioning", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
-              24, 29 September 2025,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              yang-semver-24>.
+              25, 13 April 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-netmod-yang-semver-25>.
 
    [IANA-YANG-PARAMETERS]
               IANA, "YANG Parameters", n.d.,
@@ -1036,19 +1035,15 @@ Table of Contents
 
 11.2.  Informative References
 
-   [I-D.boucadair-veloce-yang]
-              Boucadair, M., "YANG deVELpment PrOCEss & maintenance
-              (VELOCE)", Work in Progress, Internet-Draft, draft-
-              boucadair-veloce-yang-05, 18 September 2025,
-              <https://datatracker.ietf.org/doc/html/draft-boucadair-
-              veloce-yang-05>.
-
    [I-D.ietf-netmod-yang-schema-comparison]
               Andersson, P., Wilton, R., and M. Vaško, "YANG Schema
               Comparison", Work in Progress, Internet-Draft, draft-ietf-
               netmod-yang-schema-comparison-06, 15 February 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
               yang-schema-comparison-06>.
+
+   [I-D.mahesh-veloce-yang]
+              "*** BROKEN REFERENCE ***".
 
    [iana-afnum-registry]
               IANA, "Address Family Numbers", n.d.,
@@ -1420,8 +1415,12 @@ B.1.  Quick Reference Table
    | Rename entry     | Change      | NBC            | MAJOR   | Yes   |
    |                  | identifier  |                |         |       |
    +------------------+-------------+----------------+---------+-------+
-   | Remove entry     | Remove      | NBC            | MAJOR   | Yes   |
-   | completely       | enum/       |                |         |       |
+   | Remove obsolete  | Remove      | BC             | MINOR   | No    |
+   | entry            | enum/       |                |         |       |
+   |                  | identity    |                |         |       |
+   +------------------+-------------+----------------+---------+-------+
+   | Remove non-      | Remove      | NBC            | MAJOR   | Yes   |
+   | obsolete entry   | enum/       |                |         |       |
    |                  | identity    |                |         |       |
    +------------------+-------------+----------------+---------+-------+
    | Change value     | Change      | NBC            | MAJOR   | Yes   |
@@ -2023,8 +2022,9 @@ Acknowledgments
    this document.
 
    The authors would like to thank those providing comments on the
-   draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mohamed
-   Boucadair, Reshad Rahman, Sabrina Tanamal, and Sandy Ginoza.
+   draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mahesh
+   Jethanandani, Mohamed Boucadair, Reshad Rahman, Sabrina Tanamal, and
+   Sandy Ginoza.
 
    The authors also thank the NETMOD working group for their extensive
    work on YANG versioning specifications that form the foundation of
