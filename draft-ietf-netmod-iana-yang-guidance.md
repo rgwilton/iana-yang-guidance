@@ -37,6 +37,7 @@ normative:
   I-D.ietf-netmod-yang-module-versioning:
   I-D.ietf-netmod-yang-semver:
   RFC9907:
+  RFC9890:
   I-D.ietf-netmod-yang-module-filename:
   IANA-YANG-PARAMETERS:
     title: "YANG Parameters"
@@ -296,9 +297,8 @@ IANA SHOULD delay publishing a normative YANG module to the IANA YANG Parameters
 Once the RFC Editor has finalized the module:
 
 - The RFC is published with the final module content
-- IANA publishes the module to the IANA YANG Parameters registry at approximately the same time
+- IANA publishes the module version to the IANA YANG Parameters "YANG Module Names" registry at approximately the same time, as per {{RFC6020}}{{RFC9890}}
 - The module filename follows the conventions in {{I-D.ietf-netmod-yang-module-filename}}
-- IANA registers the module in the "YANG Module Names" registry if it is not already registered
 
 # IANA-Maintained YANG Modules {#sec-iana-modules}
 
