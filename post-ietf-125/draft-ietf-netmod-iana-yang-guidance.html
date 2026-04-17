@@ -1608,10 +1608,10 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
 <p id="section-4.4-2">This immutability principle has important implications:<a href="#section-4.4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.4-3.1">
-            <p id="section-4.4-3.1.1">Modules in Internet-Drafts <span class="bcp14">MUST</span> use pre-release versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the content may still change.<a href="#section-4.4-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-3.1.1">Normative YANG modules in Internet-Drafts <span class="bcp14">MUST</span> use pre-release versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the content may still change.<a href="#section-4.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-3.2">
-            <p id="section-4.4-3.2.1">Once a document is approved by the IESG and has been processed by the RFC Editor, then the module version <span class="bcp14">MUST</span> be updated to the correct release version (e.g., 1.0.0 or 2.0.0) before publication in an RFC or made available in the IANA YANG Module Names registry <span>[<a href="#IANA-YANG-PARAMETERS" class="cite xref">IANA-YANG-PARAMETERS</a>]</span>.<a href="#section-4.4-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-3.2.1">Once a document containing normative YANG modules is approved by the IESG and has been processed by the RFC Editor, then each normative YANG module version <span class="bcp14">MUST</span> be updated to the correct release version (e.g., 1.0.0 or 2.0.0) before publication in an RFC or before being made available in the IANA YANG Module Names registry <span>[<a href="#IANA-YANG-PARAMETERS" class="cite xref">IANA-YANG-PARAMETERS</a>]</span>.<a href="#section-4.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-3.3">
             <p id="section-4.4-3.3.1">IANA-maintained YANG modules <span class="bcp14">MUST</span> publish a new YANG module revision any time IANA registry changes require YANG module updates.<a href="#section-4.4-3.3.1" class="pilcrow">¶</a></p>
@@ -1635,15 +1635,15 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
 <p id="section-5.1-1">All new normative YANG modules published by the RFC Editor or maintained by IANA <span class="bcp14">MUST</span> meet the following requirements:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.1-2">
 <li id="section-5.1-2.1">
-            <p id="section-5.1-2.1.1"><strong>YANG Semver Version</strong>: Every normative module <span class="bcp14">MUST</span> include a semantic version number using the <code>ysv:version</code> statement in its most recent revision. The version <span class="bcp14">MUST</span> be correct relative to any previous version of the same module published either by the RFC editor or on the IANA website.<a href="#section-5.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-2.1.1"><strong>YANG Semver Version</strong>: Every normative YANG module <span class="bcp14">MUST</span> include a semantic version number using the <code>ysv:version</code> statement in its most recent revision. The version <span class="bcp14">MUST</span> be correct relative to any previous version of the same module published either by the RFC editor or on the IANA website.<a href="#section-5.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-2.2">
-            <p id="section-5.1-2.2.1"><strong>NBC Extension for NBC Changes</strong>: If the normative module contains non-backwards-compatible changes relative to the previously published version, the revision statement <span class="bcp14">MUST</span> include the <code>rev:non-backwards-compatible</code> extension.<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-2.2.1"><strong>NBC Extension for NBC Changes</strong>: If the normative YANG module contains non-backwards-compatible changes relative to the previously published version, the revision statement <span class="bcp14">MUST</span> include the <code>rev:non-backwards-compatible</code> extension.<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2.2.2">
 In current tooling, general enforcement of this rule is performed by update comparison checks such as the <code>--check-update-from</code> option to <code>pyang</code>. Please also note, the <code>pyang</code> checks provided by the <code>--ietf</code> option only provide a narrower validation based on revision-to-revision YANG Semver major-version changes.<a href="#section-5.1-2.2.2" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-2.3">
-            <p id="section-5.1-2.3.1"><strong>Revision Immutability</strong>: A published YANG module with a specific revision date and version number is immutable. Its content <span class="bcp14">MUST NOT</span> change without also changing the revision date and version number. For this reason, modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-05, where the -05 is the Internet Draft number where the YANG module was updated) to indicate that content may still change before final publication.<a href="#section-5.1-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-2.3.1"><strong>Revision Immutability</strong>: A published YANG module with a specific revision date and version number is immutable. Its content <span class="bcp14">MUST NOT</span> change without also changing the revision date and version number. For this reason, normative YANG modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-05, where the -05 is the Internet Draft number where the YANG module was updated) to indicate that content may still change before final publication.<a href="#section-5.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-2.4">
             <p id="section-5.1-2.4.1"><strong>RFC Code Markers</strong>: Normative YANG modules in RFCs <span class="bcp14">MUST</span> be properly marked with <code>&lt;CODE BEGINS&gt;</code> and <code>&lt;CODE ENDS&gt;</code> markers (or equivalent in the source format) to enable automated extraction per <span><a href="https://rfc-editor.org/rfc/rfc9907#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>. The markers <span class="bcp14">MUST</span> include the filename following the conventions in <span>[<a href="#I-D.ietf-netmod-yang-module-filename" class="cite xref">I-D.ietf-netmod-yang-module-filename</a>]</span>.<a href="#section-5.1-2.4.1" class="pilcrow">¶</a></p>
@@ -1694,7 +1694,7 @@ In current tooling, general enforcement of this rule is performed by update comp
               <p id="section-5.2.2-4.2.1">Ensure that only editorial changes (as defined in <a href="#sec-background" class="auto internal xref">Section 4</a>) are made without author consultation.<a href="#section-5.2.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.2.2-4.3">
-              <p id="section-5.2.2-4.3.1">For modules that have previously been published, e.g., updated YANG modules in -bis documents:<a href="#section-5.2.2-4.3.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.2-4.3.1">For normative YANG modules that have previously been published, e.g., updated YANG modules in -bis documents:<a href="#section-5.2.2-4.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.2-4.3.2.1">
                   <p id="section-5.2.2-4.3.2.1.1">If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the <code>rev:non-backwards-compatible</code> extension is required.<a href="#section-5.2.2-4.3.2.1.1" class="pilcrow">¶</a></p>
@@ -1712,16 +1712,16 @@ In current tooling, general enforcement of this rule is performed by update comp
           <h4 id="name-step-3-finalizing-the-modul">
 <a href="#section-5.2.3" class="section-number selfRef">5.2.3. </a><a href="#name-step-3-finalizing-the-modul" class="section-name selfRef">Step 3: Finalizing the Module Version</a>
           </h4>
-<p id="section-5.2.3-1">Before publication, the module version <span class="bcp14">MUST</span> be updated from the pre-release version to a release version. The RFC Editor, in coordination with the document authors:<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.2.3-1">Before publication, each normative YANG module version <span class="bcp14">MUST</span> be updated from the pre-release version to a release version. The RFC Editor, in coordination with the document authors:<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.3-2.1">
-              <p id="section-5.2.3-2.1.1">Updates the revision date to reflect the date of the final revision.<a href="#section-5.2.3-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.3-2.1.1">Updates the revision date to reflect the date of the final revision for each normative YANG module.<a href="#section-5.2.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.2.3-2.2">
-              <p id="section-5.2.3-2.2.1">Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-&lt;draft-num&gt; → 1.1.0).<a href="#section-5.2.3-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.3-2.2.1">Updates the version to remove pre-release indicators for each normative YANG module (e.g., 0.1.0 → 1.0.0, or 1.1.0-&lt;draft-num&gt; → 1.1.0).<a href="#section-5.2.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.2.3-2.3">
-              <p id="section-5.2.3-2.3.1">For modules that have previously been published, e.g., updated YANG modules in -bis documents:<a href="#section-5.2.3-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.3-2.3.1">For normative YANG modules that have previously been published, e.g., updated YANG modules in -bis documents:<a href="#section-5.2.3-2.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.3-2.3.2.1">
                   <p id="section-5.2.3-2.3.2.1.1">Uses <code>pyang</code> (<a href="#pyang-next-version" class="auto internal xref">Appendix A.1.1.3</a>) to compare the candidate module against the previously published version and obtain a recommended next YANG Semver, subject to the tool limitations described in <a href="#pyang-next-version" class="auto internal xref">Appendix A.1.1.3</a> and <a href="#tool-limitations" class="auto internal xref">Appendix A.2</a>.
@@ -1776,13 +1776,10 @@ In current tooling, general enforcement of this rule is performed by update comp
               <p id="section-5.2.6-2.1.1">The RFC is published with the final module content<a href="#section-5.2.6-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.2.6-2.2">
-              <p id="section-5.2.6-2.2.1">IANA publishes the module to the IANA YANG Parameters registry at approximately the same time<a href="#section-5.2.6-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.6-2.2.1">IANA publishes the module version to the IANA YANG Parameters "YANG Module Names" registry at approximately the same time, as per <span>[<a href="#RFC6020" class="cite xref">RFC6020</a>]</span><span>[<a href="#RFC9890" class="cite xref">RFC9890</a>]</span><a href="#section-5.2.6-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.2.6-2.3">
               <p id="section-5.2.6-2.3.1">The module filename follows the conventions in <span>[<a href="#I-D.ietf-netmod-yang-module-filename" class="cite xref">I-D.ietf-netmod-yang-module-filename</a>]</span><a href="#section-5.2.6-2.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.2.6-2.4">
-              <p id="section-5.2.6-2.4.1">IANA registers the module in the "YANG Module Names" registry if it is not already registered<a href="#section-5.2.6-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2299,6 +2296,10 @@ Thank you for your guidance.
         <dd>
 <span class="refAuthor">Bjorklund, M.</span> and <span class="refAuthor">L. Berger, Ed.</span>, <span class="refTitle">"YANG Tree Diagrams"</span>, <span class="seriesInfo">BCP 215</span>, <span class="seriesInfo">RFC 8340</span>, <span class="seriesInfo">DOI 10.17487/RFC8340</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8340">https://www.rfc-editor.org/rfc/rfc8340</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC9890">[RFC9890]</dt>
+        <dd>
+<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Boucadair, M., Ed.</span>, and <span class="refAuthor">Q. Wu</span>, <span class="refTitle">"An Update to YANG Module Names Registration"</span>, <span class="seriesInfo">RFC 9890</span>, <span class="seriesInfo">DOI 10.17487/RFC9890</span>, <time datetime="2025-10" class="refDate">October 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9890">https://www.rfc-editor.org/rfc/rfc9890</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9907">[RFC9907]</dt>
       <dd>
 <span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Boucadair, M., Ed.</span>, and <span class="refAuthor">Q. Wu</span>, <span class="refTitle">"Guidelines for Authors and Reviewers of Documents Containing YANG Data Models"</span>, <span class="seriesInfo">BCP 216</span>, <span class="seriesInfo">RFC 9907</span>, <span class="seriesInfo">DOI 10.17487/RFC9907</span>, <time datetime="2026-03" class="refDate">March 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9907">https://www.rfc-editor.org/rfc/rfc9907</a>&gt;</span>. </dd>
@@ -2397,7 +2398,7 @@ Thank you for your guidance.
             <h5 id="name-basic-yang-syntax-validatio">
 <a href="#appendix-A.1.1.1" class="section-number selfRef">A.1.1.1. </a><a href="#name-basic-yang-syntax-validatio" class="section-name selfRef">Basic YANG Syntax Validation</a>
             </h5>
-<p id="appendix-A.1.1.1-1">This command below validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. IETF and IANA modules <span class="bcp14">SHOULD</span> have no errors or warnings before publication.<a href="#appendix-A.1.1.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.1-1">This command below validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. Normative IETF YANG modules and IANA-maintained YANG modules <span class="bcp14">SHOULD</span> have no errors or warnings before publication.<a href="#appendix-A.1.1.1-1" class="pilcrow">¶</a></p>
 <div class="lang-shell sourcecode" id="appendix-A.1.1.1-2">
 <pre>
 pyang --ietf --strict --max-line-length=69 -Werror -p &lt;dep-module-directory&gt; ietf-module-name.yang
