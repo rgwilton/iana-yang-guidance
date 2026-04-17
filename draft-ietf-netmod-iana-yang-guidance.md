@@ -48,7 +48,7 @@ informative:
   RFC8526:
   RFC8791:
   I-D.ietf-netmod-yang-schema-comparison:
-  I-D.boucadair-veloce-yang:
+  I-D.mahesh-veloce-yang:
   iana-iftype-registry:
     title: "Interface Types (ifType) Registry"
     target: "https://www.iana.org/assignments/smi-numbers"
@@ -100,7 +100,7 @@ This document provides informational guidance to both the RFC Editor and IANA fo
 
 This document describes recommended practices and procedures that reflect current consensus within the NETMOD working group and the IETF operations and management community. While following this guidance will help ensure consistent and correct handling of YANG modules, specific situations may require consultation with the YANG Doctors (as described in {{sec-additional-guidance}}).
 
-> **Note:** In addition to the guidance detailed in this document, there is a broader, ongoing discussion within the IETF community around the processes and responsibilities for managing YANG modules in RFCs. For further information and the latest proposals, see {{I-D.boucadair-veloce-yang}}. The recommendations and operational practices described here may be revised in the future to reflect outcomes from that work.
+> **Note:** In addition to the guidance detailed in this document, there is a broader, ongoing discussion within the IETF community around the processes and responsibilities for managing YANG modules in RFCs. For further information and the latest proposals, see {{I-D.mahesh-veloce-yang}}. The recommendations and operational practices described here may be revised in the future to reflect outcomes from that work.
 
 The procedures and classifications in this document are drawn from text and general guidance on the following IETF specifications:
 
@@ -159,7 +159,7 @@ For example, if a published IETF YANG module is at version *1.2.3*:
 - A backwards-compatible addition would update it to *1.3.0*
 - A non-backwards-compatible change would update it to *2.0.0*.
 
-Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-04") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA-maintained YANG modules should always be at version "1.0.0" or later, and should never include a pre-release suffix.  The initial published version should be "1.0.0".
+Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-04") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA-maintained YANG modules SHOULD always be at version "1.0.0" or later, and SHOULD never include a pre-release suffix.  The initial published version SHOULD be "1.0.0".
 
 ## Backwards Compatibility Rules
 
@@ -728,7 +728,8 @@ The assumption is that the YANG module uses the registry entry name, numeric ide
 | Deprecate entry (keep name) | status deprecated | BC | MINOR | No |
 | Obsolete entry | status obsolete | NBC | MAJOR | Yes |
 | Rename entry | Change identifier | NBC | MAJOR | Yes |
-| Remove entry completely | Remove enum/identity | NBC | MAJOR | Yes |
+| Remove obsolete entry | Remove enum/identity | BC | MINOR | No |
+| Remove non-obsolete entry | Remove enum/identity | NBC | MAJOR | Yes |
 | Change value number | Change value | NBC | MAJOR | Yes |
 | Reuse old value (previously removed) | Same as adding new entry| BC | MINOR | No |
 | Add footnote | Optionally update description | Editorial | PATCH | No |
@@ -1302,7 +1303,7 @@ Special thanks to Joe Clarke for his presentation on YANG versioning tooling at 
 
 The authors thank the RFC Editor and IANA teams for their collaboration in refining the operational procedures described in this document.
 
-The authors would like to thank those providing comments on the draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mohamed Boucadair, Reshad Rahman, Sabrina Tanamal, and Sandy Ginoza.
+The authors would like to thank those providing comments on the draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mahesh Jethanandani, Mohamed Boucadair, Reshad Rahman, Sabrina Tanamal, and Sandy Ginoza.
 
 The authors also thank the NETMOD working group for their extensive work on YANG versioning specifications that form the foundation of this guidance, including the module versioning framework, semantic versioning, and associated tooling.
 
