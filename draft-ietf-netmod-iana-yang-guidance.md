@@ -278,7 +278,7 @@ Before publication, each normative YANG module version MUST be updated from the 
 
 Normative YANG modules are expected to be provided to the RFC Editor for publication already passing validation (`pyang` and `yanglint`).  However, it is possible that mistakes could be introduced when editing a YANG module so validation should be re-run to ensure that IETF does not publish invalid YANG modules.
 
-After all updates are completed, or as updates are made, and after any formatting, then validation tools MUST be run over the resultant module to ensure that there are no warnings or errors. `pyang` validation ({{pyang-validation}}) MUST be performed, and it is RECOMMENDED that `yanglint` ({{yang-lint-validation}}) validation is also performed.
+After all updates are completed, or as updates are made, and after any formatting, then appropriate YANG validation tools MUST be run over the resultant module to ensure that there are no warnings or errors.  At time of publication, it is suggested that both `pyang` validation ({{pyang-validation}}) and `yanglint` validation ({{yang-lint-validation}}) be performed.
 
 If the tools return any warnings or errors then the authors should help fix them, potentially seeking additional guidance if required, as per {{sec-additional-guidance}}.
 
@@ -312,7 +312,7 @@ Some IANA registries have corresponding YANG modules that represent registry con
 - **iana-routing-types.yang** - derived from Address Family Numbers {{iana-afnum-registry}} and SAFI Parameters {{iana-safi-registry}} registries
 - **iana-bgp-types.yang** - derived from BGP Parameters registries {{iana-bgp-parameters}}
 
-When these registries are updated, the corresponding YANG modules MUST be updated accordingly by IANA, following the same versioning rules described in {{sec-background}}.
+When these registries are updated, the corresponding YANG modules MUST be updated accordingly by IANA, following the same versioning rules described in {{sec-background}}.  These considerations MUST be followed in addition to the guidance in {{Section 5.3 of RFC9907}}.
 
 ## Characteristics of IANA-Maintained Modules
 
