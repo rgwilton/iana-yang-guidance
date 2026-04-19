@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-09T00:16:27.425567+00:00",
+  "timestamp": "2026-04-19T00:21:29.291277+00:00",
   "repo": "rgwilton/iana-yang-guidance",
   "labels": [
     {
@@ -126,6 +126,78 @@
           "body": "Module versioning draft needs a few paragraphs of non-normative text to be deleted, no changes to the other drafts are required. ",
           "createdAt": "2026-04-01T10:54:19Z",
           "updatedAt": "2026-04-01T10:54:19Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOQTkdsc7_PShd",
+      "title": "Should this document be informational or a BCP?",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/issues/9",
+      "state": "OPEN",
+      "author": "rgwilton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "My uber level comment is, is this an Informational document? Owing to the extensive use of BCP 14 words, and if this language is intended to be binding, this document sounds more like a BCP than Informational. If that is not the intended, and you want to keep this informational, explicitly state that normative language in this draft is non-normative, i.e., clarify that the requirements are meant to be strong but not binding, and softening some of the MUST and SHOULD in the draft.",
+      "createdAt": "2026-04-17T11:18:35Z",
+      "updatedAt": "2026-04-17T11:21:41Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "Yes, I think that this document should only be informational giving guidance.  I think that there are already existing documents that specify various requirements on IANA, and this documents is deliberately not trying to update or replace those.  The original goal here, was IANA asking for a more permanent reference of what steps are expected to process YANG files written in a way that could act as a reference and be shared with future team members, if required.  This document could be made into a BCP,  but given that the audience is small, then I'm not sure that is really required or helpful. ",
+          "createdAt": "2026-04-17T11:21:41Z",
+          "updatedAt": "2026-04-17T11:21:41Z"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOQTkdsc7_PTV1",
+      "title": "Should the document use 2119 language?",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/issues/10",
+      "state": "OPEN",
+      "author": "rgwilton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Document has Informational status, but uses the RFC2119 keywords \"SHOULD NOT\",\n\"SHOULD\", \"MUST NOT\", \"MUST\", \"NOT RECOMMENDED\", \"MUST NOT\", \"SHOULD NOT\", and\n\"RECOMMENDED\". Check if this is really necessary?",
+      "createdAt": "2026-04-17T11:19:15Z",
+      "updatedAt": "2026-04-17T11:22:11Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "I think that we want to careful not to get wrapped around the axel for using RFC 2119 language. \u00a0I.e., I think that it would be a bad idea to specify that RFC 2119 language has a different meaning in this doc because that would just end up being confusing. \u00a0Potentially the easiest fix is to just change to use lowercase statements rather RFC 2119 statements. \u00a0 What do you think?",
+          "createdAt": "2026-04-17T11:22:11Z",
+          "updatedAt": "2026-04-17T11:22:11Z"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOQTkdsc7_PUDP",
+      "title": "Should this document change the process for when IANA publishes YANG modules from RFCs?",
+      "url": "https://github.com/rgwilton/iana-yang-guidance/issues/11",
+      "state": "OPEN",
+      "author": "rgwilton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 5.2.5, paragraph 0\n> \u00a0 \u00a0IANA SHOULD delay publishing a normative YANG module to the IANA YANG\n> \u00a0 \u00a0Parameters registry until the RFC Editor has completed editing the\n> \u00a0 \u00a0module. \u00a0This coordination ensures that:\n\nThis is not the current practice: IANA typically acts upon IESG approval.\u00a0\nThis change needs explicit buy-in from IANA and should be clearly\u00a0\ndescribed as a process change, not just as guidance.",
+      "createdAt": "2026-04-17T11:19:47Z",
+      "updatedAt": "2026-04-17T11:43:32Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "rgwilton",
+          "authorAssociation": "OWNER",
+          "body": "Regarding the timing of when YANG modules are published by IANA. \u00a0Yes, I agree that this is a deliberate process change. \u00a0Basically, I think that IETF/IANA should delay publishing the YANG module until any markups (e.g., from the RFC Editor) to the YANG module have been complete and the final version of the module (with the final version label) is ready, otherwise IANA will end up publishing a pre-release version. \u00a0I doubt that the existing process of when to publish is specified anywhere, and I'm not sure that we want this document to be defining the process. \u00a0Hence, that I propose is that it would be better for IANA + RFC Editor + IESG to agree on whether the process should change and then we can ensure it is documented correctly (informationally rather than normatively) in this document",
+          "createdAt": "2026-04-17T11:22:50Z",
+          "updatedAt": "2026-04-17T11:22:50Z"
         }
       ]
     }
