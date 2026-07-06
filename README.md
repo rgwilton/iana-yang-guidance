@@ -1,15 +1,13 @@
 <!-- regenerate: on (set to off if you edit this file) -->
 
-# IANA Guidance Drafts
+# Guidance for Managing YANG Modules in RFCs and IANA Registries
 
-This is the working area for individual Internet-Drafts.
+This is the working area for the IETF [NETMOD Working Group](https://datatracker.ietf.org/group/netmod/documents/) Internet-Draft, "Guidance for Managing YANG Modules in RFCs and IANA Registries".
 
-## Guidance to IANA for managing YANG modules
-
-* [Editor's Copy](https://rgwilton.github.io/iana-yang-guidance/#go.draft-verdt-iana-yang-guidance.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-verdt-iana-yang-guidance)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-verdt-iana-yang-guidance)
-* [Compare Editor's Copy to Individual Draft](https://rgwilton.github.io/iana-yang-guidance/#go.draft-verdt-iana-yang-guidance.diff)
+* [Editor's Copy](https://rgwilton.github.io/iana-yang-guidance/#go.draft-ietf-netmod-iana-yang-guidance.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-netmod-iana-yang-guidance)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-netmod-iana-yang-guidance)
+* [Compare Editor's Copy to Working Group Draft](https://rgwilton.github.io/iana-yang-guidance/#go.draft-ietf-netmod-iana-yang-guidance.diff)
 
 
 ## Contributing
