@@ -49,7 +49,7 @@ informative:
   RFC8526:
   RFC8791:
   I-D.ietf-netmod-yang-schema-comparison:
-  I-D.mahesh-veloce-yang:
+  I-D.mahesh-opsawg-veloce-yang:
   iana-iftype-registry:
     title: "Interface Types (ifType) Registry"
     target: "https://www.iana.org/assignments/smi-numbers"
@@ -101,7 +101,7 @@ This document provides informational guidance to both the RFC Editor and IANA fo
 
 This document describes recommended practices and procedures that reflect current consensus within the NETMOD working group and the IETF operations and management community. While following this guidance will help ensure consistent and correct handling of YANG modules, specific situations may require consultation with the YANG Doctors (as described in {{sec-additional-guidance}}).
 
-> **Note:** In addition to the guidance detailed in this document, there is a broader, ongoing discussion within the IETF community around the processes and responsibilities for managing YANG modules in RFCs. For further information and the latest proposals, see {{I-D.mahesh-veloce-yang}}. The recommendations and operational practices described here may be revised in the future to reflect outcomes from that work.
+> **Note:** In addition to the guidance detailed in this document, there is a broader, ongoing discussion within the IETF community around the processes and responsibilities for managing YANG modules in RFCs. For further information and the latest proposals, see {{I-D.mahesh-opsawg-veloce-yang}}. The recommendations and operational practices described here may be revised in the future to reflect outcomes from that work.
 
 The procedures and classifications in this document are drawn from text and general guidance on the following IETF specifications:
 
@@ -448,9 +448,10 @@ The RFC Editor and IANA should contact the YANG Doctors in the following situati
 
 ## How to Seek Guidance
 
-Email the YANG Doctors mailing list and the Operations and Management Area Directors (OPS ADs):
+Email the YANG Doctor Secretaries, who will consult with the YANG Doctors
+mailing list as needed and then coordinate a response:
 
-- **Email**: yang-doctors@ietf.org & ops-ads@ietf.org
+- **Email**: yangdoctors-chairs@ietf.org
 - **Purpose**: Technical review and guidance on YANG module versioning.
 - **Response Time**: Typically 1-2 weeks
 
@@ -472,7 +473,7 @@ The expectation is that the YANG Doctors should reply to the request within the 
 
 Subject: YANG Versioning Question - iana-if-type Update
 
-Dear YANG Doctors,
+Dear YANG Doctor Secretaries,
 
 I need guidance on classifying a change to the iana-if-type module.
 
@@ -527,7 +528,7 @@ This document gives instructions to IANA on how to handle YANG modules that are 
 
 Incorrect interpretation of this document could cause incorrect handling or versioning of IANA-maintained YANG modules.
 
-This document recommends the usage of various tools.  Bugs or attacks on these tools could cause the tools to give incorrect or misleading guidance.  In all cases, secondary evaluation of output of the tools should be performed to confirm that they are giving the anticipated results.  The *YANG Doctors* or *Operations and Management Area Directors* can also be contacted for further advice, if required.
+This document recommends the usage of various tools.  Bugs or attacks on these tools could cause the tools to give incorrect or misleading guidance.  In all cases, secondary evaluation of output of the tools should be performed to confirm that they are giving the anticipated results.  The *YANG Doctor Secretaries* or *Operations and Management Area Directors* can also be contacted for further advice, if required.
 
 
 # IANA Considerations
