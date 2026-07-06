@@ -4,8 +4,8 @@
 
 NETMOD                                                         R. Wilton
 Internet-Draft                                                     Cisco
-Intended status: Informational                             17 April 2026
-Expires: 19 October 2026
+Intended status: Informational                               6 July 2026
+Expires: 7 January 2027
 
 
      Guidance for Managing YANG Modules in RFCs and IANA Registries
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 October 2026.
+   This Internet-Draft will expire on 7 January 2027.
 
 Copyright Notice
 
@@ -207,12 +207,6 @@ Table of Contents
 
 3.  Conventions and Definitions
 
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
-   capitals, as shown here.
-
    This document uses the following terminology from
    [I-D.ietf-netmod-yang-module-versioning]:
 
@@ -299,9 +293,9 @@ Table of Contents
    not completed the IETF standardization process and whose revision
    content is subject to change in non-backwards-compatible ways without
    corresponding changes to the major version number.  Published IETF
-   and IANA-maintained YANG modules SHOULD always be at version "1.0.0"
-   or later, and SHOULD never include a pre-release suffix.  The initial
-   published version SHOULD be "1.0.0".
+   and IANA-maintained YANG modules should always be at version "1.0.0"
+   or later, and should never include a pre-release suffix.  The initial
+   published version should be "1.0.0".
 
 4.2.  Backwards Compatibility Rules
 
@@ -355,7 +349,7 @@ Table of Contents
 
    The YANG module versioning framework
    [I-D.ietf-netmod-yang-module-versioning] defines the "rev:non-
-   backwards-compatible" extension statement.  This extension MUST be
+   backwards-compatible" extension statement.  This extension must be
    added as a substatement of a revision statement whenever that
    revision contains non-backwards-compatible changes relative to the
    previous revision.
@@ -388,24 +382,24 @@ Table of Contents
    A fundamental principle of YANG module versioning is that once a
    module revision is published with a specific revision date and
    version number, its content is immutable (much like an RFC is).  The
-   published content of that revision MUST NOT change.  Any change to
+   published content of that revision must not change.  Any change to
    the module content requires publishing a new revision with a new
    revision date and an updated YANG Semver.
 
    This immutability principle has important implications:
 
-   *  Normative YANG modules in Internet-Drafts MUST use pre-release
+   *  Normative YANG modules in Internet-Drafts must use pre-release
       versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the
       content may still change.
 
    *  Once a document containing normative YANG modules is approved by
       the IESG and has been processed by the RFC Editor, then each
-      normative YANG module version MUST be updated to the correct
+      normative YANG module version must be updated to the correct
       release version (e.g., 1.0.0 or 2.0.0) before publication in an
       RFC or before being made available in the IANA YANG Module Names
       registry [IANA-YANG-PARAMETERS].
 
-   *  IANA-maintained YANG modules MUST publish a new YANG module
+   *  IANA-maintained YANG modules must publish a new YANG module
       revision any time IANA registry changes require YANG module
       updates.
 
@@ -419,17 +413,17 @@ Table of Contents
 5.1.  Core Requirements
 
    All new normative YANG modules published by the RFC Editor or
-   maintained by IANA MUST meet the following requirements:
+   maintained by IANA must meet the following requirements:
 
-   1.  *YANG Semver Version*: Every normative YANG module MUST include a
+   1.  *YANG Semver Version*: Every normative YANG module must include a
        semantic version number using the ysv:version statement in its
-       most recent revision.  The version MUST be correct relative to
+       most recent revision.  The version must be correct relative to
        any previous version of the same module published either by the
        RFC editor or on the IANA website.
 
    2.  *NBC Extension for NBC Changes*: If the normative YANG module
        contains non-backwards-compatible changes relative to the
-       previously published version, the revision statement MUST include
+       previously published version, the revision statement must include
        the rev:non-backwards-compatible extension.
 
        In current tooling, general enforcement of this rule is performed
@@ -439,8 +433,8 @@ Table of Contents
        revision-to-revision YANG Semver major-version changes.
 
    3.  *Revision Immutability*: A published YANG module with a specific
-       revision date and version number is immutable.  Its content MUST
-       NOT change without also changing the revision date and version
+       revision date and version number is immutable.  Its content must
+       not change without also changing the revision date and version
        number.  For this reason, normative YANG modules in Internet-
        Drafts use pre-release versions (e.g., versions with MAJOR = 0
        such as 0.1.0, or versions with a pre-release suffix such as
@@ -448,10 +442,10 @@ Table of Contents
        YANG module was updated) to indicate that content may still
        change before final publication.
 
-   4.  *RFC Code Markers*: Normative YANG modules in RFCs MUST be
+   4.  *RFC Code Markers*: Normative YANG modules in RFCs must be
        properly marked with <CODE BEGINS> and <CODE ENDS> markers (or
        equivalent in the source format) to enable automated extraction
-       per Section 3.2 of [RFC9907].  The markers MUST include the
+       per Section 3.2 of [RFC9907].  The markers must include the
        filename following the conventions in
        [I-D.ietf-netmod-yang-module-filename].
 
@@ -485,7 +479,7 @@ Table of Contents
 
    These editorial changes are appropriate and expected.  Consistent
    with the editing practices when preparing edited RFCs, the RFC Editor
-   SHOULD:
+   should:
 
    *  Coordinate with document authors regarding any substantive
       changes.
@@ -506,7 +500,7 @@ Table of Contents
 
 5.2.3.  Step 3: Finalizing the Module Version
 
-   Before publication, each normative YANG module version MUST be
+   Before publication, each normative YANG module version must be
    updated from the pre-release version to a release version.  The RFC
    Editor, in coordination with the document authors:
 
@@ -541,7 +535,7 @@ Table of Contents
    IETF does not publish invalid YANG modules.
 
    After all updates are completed, or as updates are made, and after
-   any formatting, then appropriate YANG validation tools MUST be run
+   any formatting, then appropriate YANG validation tools must be run
    over the resultant module to ensure that there are no warnings or
    errors.  At time of publication, it is suggested that both pyang
    validation (Appendix A.1.1.1) and yanglint validation
@@ -552,12 +546,12 @@ Table of Contents
    as per Section 7.
 
    If further changes are made, then for previously published modules,
-   the step 3 versioning check MUST be re-run to ensure that the module
+   the step 3 versioning check must be re-run to ensure that the module
    version is still correct.
 
 5.2.5.  Step 5: IANA Delay of Publication
 
-   IANA SHOULD delay publishing a normative YANG module to the IANA YANG
+   IANA should delay publishing a normative YANG module to the IANA YANG
    Parameters registry until the RFC Editor has completed editing the
    module.  This coordination ensures that:
 
@@ -604,8 +598,8 @@ Table of Contents
       [iana-bgp-parameters]
 
    When these registries are updated, the corresponding YANG modules
-   MUST be updated accordingly by IANA, following the same versioning
-   rules described in Section 4.  These considerations MUST be followed
+   must be updated accordingly by IANA, following the same versioning
+   rules described in Section 4.  These considerations must be followed
    in addition to the guidance in Section 5.3 of [RFC9907].
 
 6.2.  Characteristics of IANA-Maintained Modules
@@ -682,20 +676,19 @@ Table of Contents
    IANA registries and YANG modules use the term _deprecated_
    differently:
 
-   *  In IANA registries, deprecated generally means the value SHOULD
-      NOT be used for new deployments.
+   *  In IANA registries, deprecated generally means the value should
+      not be used for new deployments.
 
    *  In YANG modules, status deprecated means the definition is still
       supported (including for new deployments) but it is expected to be
       obsoleted (or removed) in a future module version.
 
    To avoid confusion, when an IANA registry entry is marked deprecated,
-   the corresponding enum or identity description SHOULD include
-   indicate that the base IANA registry entry is deprecated and
-   therefore the entry SHOULD NOT be used.  I.e., the following sentence
-   SHOULD be added to the end of the enum/identity description: This
-   value is deprecated in the base IANA registry which means that its
-   use is NOT RECOMMENDED.
+   the corresponding enum or identity description should indicate that
+   the base IANA registry entry is deprecated and therefore the entry
+   should not be used.  I.e., the following sentence should be added to
+   the end of the enum/identity description: This value is deprecated in
+   the base IANA registry which means that its use is NOT RECOMMENDED.
 
 6.4.  Process for Updating IANA-Maintained YANG Modules
 
@@ -983,34 +976,29 @@ Table of Contents
    [I-D.ietf-netmod-yang-module-filename]
               Andersson, P., "YANG module file name convention", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-module-
-              filename-08, 15 April 2026,
+              filename-14, 4 June 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              yang-module-filename-08>.
+              yang-module-filename-14>.
 
    [I-D.ietf-netmod-yang-module-versioning]
               Wilton, R., Rahman, R., Lengyel, B., Clarke, J., and J.
               Sterne, "Updated YANG Module Revision Handling", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-module-
-              versioning-15, 18 October 2025,
+              versioning-17, 29 June 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              yang-module-versioning-15>.
+              yang-module-versioning-17>.
 
    [I-D.ietf-netmod-yang-semver]
               Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
               J., and B. Claise, "YANG Semantic Versioning", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
-              25, 13 April 2026, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-netmod-yang-semver-25>.
+              26, 7 May 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-netmod-yang-semver-26>.
 
    [IANA-YANG-PARAMETERS]
               IANA, "YANG Parameters", n.d.,
               <https://www.iana.org/assignments/yang-parameters/yang-
               parameters.xhtml>.
-
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/rfc/rfc2119>.
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
@@ -1020,10 +1008,6 @@ Table of Contents
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
               <https://www.rfc-editor.org/rfc/rfc7950>.
-
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
@@ -1044,9 +1028,9 @@ Table of Contents
    [I-D.ietf-netmod-yang-schema-comparison]
               Andersson, P., Wilton, R., and M. Vaško, "YANG Schema
               Comparison", Work in Progress, Internet-Draft, draft-ietf-
-              netmod-yang-schema-comparison-06, 15 February 2026,
+              netmod-yang-schema-comparison-09, 3 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              yang-schema-comparison-06>.
+              yang-schema-comparison-09>.
 
    [I-D.mahesh-veloce-yang]
               "*** BROKEN REFERENCE ***".
@@ -1132,7 +1116,7 @@ A.1.1.  pyang
    this is often the latest version of the published YANG modules, but
    if a draft contains a set of YANG modules, or if there are set of
    drafts with YANG modules being published together then all the YANG
-   modules in those drafts MUST be extracted together and validated.
+   modules in those drafts must be extracted together and validated.
    These dependent YANG modules can either be stored in the same
    directory as the YANG module being validated/checked, or they can be
    stored in a separate directory and passed using the -p argument to
@@ -1143,7 +1127,7 @@ A.1.1.1.  Basic YANG Syntax Validation
    This command below validates the module syntax and checks compliance
    with IETF-specific conventions.  The output will show any errors or
    warnings.  Normative IETF YANG modules and IANA-maintained YANG
-   modules SHOULD have no errors or warnings before publication.
+   modules should have no errors or warnings before publication.
 
    pyang --ietf --strict --max-line-length=69 -Werror -p <dep-module-directory> ietf-module-name.yang
 
@@ -1670,7 +1654,7 @@ B.2.4.  Scenario 4: Obsoleting a Registry Entry
 
    *NBC Extension Required*: Yes
 
-   *Rationale*: Changing status to obsolete indicates the value MUST NOT
+   *Rationale*: Changing status to obsolete indicates the value must not
    be used, breaking compatibility.  Note, the description comment about
    deprecation can also be removed.
 

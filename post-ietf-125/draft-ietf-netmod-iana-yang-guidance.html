@@ -9,25 +9,26 @@
 <meta content="
        This document provides guidance to the RFC Editor and IANA on managing YANG modules in RFCs and IANA registries, ensuring consistent application of YANG Semantic Versioning rules. 
     " name="description">
-<meta content="xml2rfc 3.32.0" name="generator">
+<meta content="xml2rfc 3.34.0" name="generator">
 <meta content="IANA" name="keyword">
 <meta content="RFC Editor" name="keyword">
 <meta content="YANG" name="keyword">
 <meta content="Versioning" name="keyword">
 <meta content="draft-ietf-netmod-iana-yang-guidance-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.32.0
-    Python 3.12.12
-    ConfigArgParse 1.7
+  xml2rfc 3.34.0
+    Python 3.14.5
+    ConfigArgParse 1.7.5
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 6.0.2
-    platformdirs 4.9.4
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.10.0
     pycountry 24.6.1
     PyYAML 6.0.3
-    requests 2.32.5
-    wcwidth 0.6.0
+    requests 2.33.1
+    wcwidth 0.8.2
 -->
 <link href="draft-ietf-netmod-iana-yang-guidance.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -294,16 +295,19 @@ h1, h2, h3, h4, h5, h6 {
   font-size-adjust: 0.5;
   color: var(--title-color);
 }
-h1#title {
-  font-size: 32px;
-  line-height: 40px;
-  clear: both;
-}
-h1#title, h1#rfcnum {
-  margin: 1.5em 0 0.2em;
-}
-h1#rfcnum + h1#title {
-  margin: 0.2em 0;
+h1 {
+  &#title {
+    font-size: 32px;
+    line-height: 40px;
+    clear: both;
+    margin: 1.5em 0 0.2em;
+  }
+  &#rfcnum {
+    margin: 1.5em 0 0.2em;
+    & + h1#title {
+      margin: 0.2em 0;
+    }
+  }
 }
 
 h1, h2, h3 {
@@ -323,10 +327,10 @@ h4, h5, h6 {
 #abstract+p {
   font-size: 18px;
   line-height: 24px;
-}
-#abstract+p code, #abstract+p samp, #abstract+p tt {
-  font-size: 16px;
-  line-height: 0;
+  & code, & samp, & tt {
+    font-size: 16px;
+    line-height: 0;
+  }
 }
 
 p {
@@ -337,59 +341,59 @@ p {
 div {
   margin: 0;
 }
-.alignRight.art-text {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
-}
-.alignRight.art-text pre {
-  padding: 0;
-  width: auto;
-}
 .alignRight {
   margin: 1em 0;
-}
-.alignRight > *:first-child {
-  border: none;
-  margin: 0;
-  float: right;
-  clear: both;
-}
-.alignRight > *:nth-child(2) {
-  clear: both;
-  display: block;
-  border: none;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    margin: 0;
+    float: right;
+    clear: both;
+  }
+  & > *:nth-child(2) {
+    clear: both;
+    display: block;
+    border: none;
+  }
 }
 svg {
   display: block;
-}
-/* font-family isn't space-separated, but =~ will have to do */
-svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
-  font-family: var(--font-mono);
-}
-.alignCenter.art-text {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
-}
-.alignCenter.art-text pre {
-  padding: 0;
-  width: auto;
+  /* font-family isn't space-separated, but =~ will have to do */
+  &[font-family~="monospace" i], & [font-family~="monospace" i] {
+    font-family: var(--font-mono);
+  }
 }
 .alignCenter {
   margin: 1em 0;
-}
-.alignCenter > *:first-child {
-  border: none;
-  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
-     support flexbox yet.
-  */
-  display: table;
-  margin: 0 auto;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+       support flexbox yet.
+    */
+    display: table;
+    margin: 0 auto;
+  }
 }
 
 /* lists */
@@ -427,26 +431,25 @@ dl {
     --indent: 5ch;
     & > dt {
       min-width: calc(var(--indent) - 2ch);
+      float: none;
     }
-  }
-  &.olPercent > dt {
-    float: none;
   }
 
   dl > dd > & {
     margin-top: 0.5em;
     margin-bottom: 0;
   }
-}
-dl:not(.dlNewline) > dt {
-  float: left;
-  margin-right: 2ch;
-  min-width: 8ch;
-}
-dl > dd {
-  margin-bottom: .8em;
-  margin-left: var(--indent) !important; /* stupid element overrides */
-  min-height: 2ex;
+
+  &:not(.dlNewline) > dt {
+    float: left;
+    margin-right: 2ch;
+    min-width: 8ch;
+  }
+  & > dd {
+    margin-bottom: .8em;
+    margin-left: var(--indent) !important; /* stupid element overrides */
+    min-height: 2ex;
+  }
 }
 :is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0;
@@ -462,20 +465,22 @@ dl > dd {
 }
 
 /* links */
-a, a[href].selfRef:hover {
+a {
   text-decoration: none;
+  &[href] {
+    color: var(--link-color);
+    &:hover { text-decoration: underline; }
+    &.selfRef {
+      color: var(--text-color);
+      &:hover {
+        text-decoration: none;
+        background-color: var(--highlight-color);
+      }
+    }
+  }
 }
-a[href] {
-  color: var(--link-color);
-}
-a[href].selfRef, .iref + a[href].internal {
+.iref + a[href].internal {
   color: var(--text-color);
-}
-a[href]:hover {
-  text-decoration: underline;
-}
-a[href].selfRef:hover {
-  background-color: var(--highlight-color);
 }
 a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
   white-space: nowrap;
@@ -511,9 +516,9 @@ img {
 figure {
   margin: 0.5em 0;
   padding: 0;
-}
-figure blockquote {
-  margin: 0.8em 0.4em 0.4em;
+  & blockquote {
+    margin: 0.8em 0.4em 0.4em;
+  }
 }
 figcaption, caption {
   font-style: italic;
@@ -523,17 +528,19 @@ figcaption, caption {
 }
 @media screen {
   /* Auto-collapse boilerplate. */
-  :is(#status-of-memo, #copyright) p {
-    margin: -2px 0;
-    max-height: 0;
-    transition: max-height 2s ease, margin 0.5s ease 0.5s;
-    overflow: hidden;
-  }
-  :is(#status-of-memo, #copyright):hover p,
-  :is(#status-of-memo, #copyright) h2:target ~ p {
-    margin: 0.5em 0;
-    max-height: 500px;
-    overflow: auto;
+  :is(#status-of-memo, #copyright) {
+    & p {
+      margin: -2px 0;
+      max-height: 0;
+      transition: max-height 2s ease, margin 0.5s ease 0.5s;
+      overflow: hidden;
+    }
+    &:hover p,
+    & h2:target ~ p {
+      margin: 0.5em 0;
+      max-height: 500px;
+      overflow: auto;
+    }
   }
   pre, svg {
     display: inline-block;
@@ -583,25 +590,17 @@ table {
   max-width: 100%;
   margin: 0 0 1em;
   border-collapse: collapse;
-}
-table.right {
-  margin-left: auto;
-}
-table.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-table.left {
-  margin-right: auto;
-}
-table .text-left {
-  text-align: left;
-}
-table .text-center {
-  text-align: center;
-}
-table .text-right {
-  text-align: right;
+  &.right { margin-left: auto; }
+  &.center { margin-left: auto; margin-right: auto; }
+  &.left { margin-right: auto; }
+  & .text-left { text-align: left; }
+  & .text-center { text-align: center; }
+  & .text-right { text-align: right; }
+  & caption {
+    margin: 0;
+    padding: 3px 0 3px 1em;
+  }
+  & p { margin: 0; }
 }
 
 thead, tbody {
@@ -621,13 +620,6 @@ th {
 :is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
   background-color: var(--highlight-color);
 }
-table caption {
-  margin: 0;
-  padding: 3px 0 3px 1em;
-}
-table p {
-  margin: 0;
-}
 
 /* pilcrow */
 a.pilcrow {
@@ -638,18 +630,16 @@ a.pilcrow {
     color: var(--pilcrow-weak);
     &:hover { text-decoration: none; }
   }
-}
-@media not print {
-  :hover > a.pilcrow, a.pilcrow:focus {
-    opacity: 1;
+  @media not print {
+    :hover > &, &:focus {
+      opacity: 1;
+    }
+    &[href]:hover {
+      color: var(--pilcrow-strong);
+      background-color: transparent;
+    }
   }
-  a.pilcrow[href]:hover {
-    color: var(--pilcrow-strong);
-    background-color: transparent;
-  }
-}
-@media print {
-  a.pilcrow {
+  @media print {
     display: none;
   }
 }
@@ -708,9 +698,9 @@ sub, sup {
   font-size: 0.9em;
   font-style: italic;
   margin-top: 2em;
-}
-.docInfo .prepared {
-  float: right;
+  & .prepared {
+    float: right;
+  }
 }
 
 /* table of contents */
@@ -800,23 +790,27 @@ hr.addr {
   max-width: calc(100% - 16px);
 }
 @media (min-width: 500px) {
-  #authors-addresses > section {
-    column-count: 2;
-    column-gap: 20px;
-  }
-  #authors-addresses > section > h2 {
-    column-span: all;
-  }
-  /* hack for break-inside: avoid-column */
-  #authors-addresses address {
-    display: inline-block;
-    break-inside: avoid-column;
+  #authors-addresses {
+    & > section {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    & > section > h2 {
+      column-span: all;
+    }
+    /* hack for break-inside: avoid-column */
+    & address {
+      display: inline-block;
+      break-inside: avoid-column;
+    }
   }
 }
 
 /* Comments */
-.rfcEditorRemove p:first-of-type {
-  font-style: italic;
+.rfcEditorRemove {
+  & p:first-of-type {
+    font-style: italic;
+  }
 }
 .cref {
   background-color: rgba(249, 232, 105, 0.3);
@@ -827,19 +821,21 @@ hr.addr {
 }
 
 @media screen {
-  #toc nav {
-    font-family: var(--font-title);
-    font-weight: 360;
-    & > ul { margin-bottom: 2em; }
-    & ul {
-      margin: 0 0 0 4px;
-      & :is(p, li) {
-        margin: 2px 0;
+  #toc {
+    & nav {
+      font-family: var(--font-title);
+      font-weight: 360;
+      & > ul { margin-bottom: 2em; }
+      & ul {
+        margin: 0 0 0 4px;
+        & :is(p, li) {
+          margin: 2px 0;
+        }
       }
     }
-  }
-  #toc a.toplink {
-    float: right;
+    & a.toplink {
+      float: right;
+    }
   }
 }
 @media not screen {
@@ -860,54 +856,54 @@ hr.addr {
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
-  }
-  #toc h2 {
-    margin: 0;
-    padding: 2px 0 2px 6px;
-    padding-right: 1em;
-    font-size: 18px;
-    line-height: 24px;
-    min-width: 190px;
-    text-align: right;
-    background-color: #444;
-    color: white;
-    cursor: pointer;
-    &::before { /* css hamburger */
-      float: right;
-      position: relative;
-      width: 1em;
-      height: 1px;
-      left: -164px;
-      margin: 8px 0 0 0;
-      background: white none repeat scroll 0 0;
-      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
-      content: "";
+    & h2 {
+      margin: 0;
+      padding: 2px 0 2px 6px;
+      padding-right: 1em;
+      font-size: 18px;
+      line-height: 24px;
+      min-width: 190px;
+      text-align: right;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      &::before { /* css hamburger */
+        float: right;
+        position: relative;
+        width: 1em;
+        height: 1px;
+        left: -164px;
+        margin: 8px 0 0 0;
+        background: white none repeat scroll 0 0;
+        box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+        content: "";
+      }
     }
-  }
-  #toc nav {
-    display: none;
-    background-color: var(--background-color);
-    padding: 0.5em 1em 1em;
-    overflow: auto;
-    overscroll-behavior: contain;
-    height: calc(100vh - 48px);
-    border-left: 1px solid #ddd;
-  }
-  #toc.active {
-    opacity: 1;
-    & nav { display: block; }
-  }
-  /* Make the collapsed ToC header render white on gray also when it's a link */
-  #toc h2 a,
-  #toc h2 a:is(:link, :focus, :hover),
-  #toc a.toplink,
-  #toc a.toplink:hover {
-    color: white;
-    background-color: #444;
-    text-decoration: none;
-  }
-  #toc a.toplink {
-    margin: 2px 0.5em 0;
+    & nav {
+      display: none;
+      background-color: var(--background-color);
+      padding: 0.5em 1em 1em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      height: calc(100vh - 48px);
+      border-left: 1px solid #ddd;
+    }
+    &.active {
+      opacity: 1;
+      & nav { display: block; }
+    }
+    /* Make the collapsed ToC header render white on gray also when it's a link */
+    & h2 a,
+    & h2 a:is(:link, :focus, :hover),
+    & a.toplink,
+    & a.toplink:hover {
+      color: white;
+      background-color: #444;
+      text-decoration: none;
+    }
+    & a.toplink {
+      margin: 2px 0.5em 0;
+    }
   }
 }
 
@@ -926,26 +922,26 @@ hr.addr {
     margin: 0;
     padding: 0;
     z-index: 1;
-  }
-  #toc h2 {
-    margin: 0;
-    padding: 0.25em 1em 1em 0;
-  }
-  #toc nav {
-    display: block;
-    height: calc(90vh - 84px);
-    bottom: 0;
-    padding: 0.5em 0 2em;
-    overflow: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
+    & h2 {
+      margin: 0;
+      padding: 0.25em 1em 1em 0;
+    }
+    & nav {
+      display: block;
+      height: calc(90vh - 84px);
+      bottom: 0;
+      padding: 0.5em 0 2em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+    & a.toplink {
+      margin: 8px 0.5em 0;
+    }
   }
   img { /* future proofing */
     max-width: 100%;
     height: auto;
-  }
-  #toc a.toplink {
-    margin: 8px 0.5em 0;
   }
 }
 
@@ -961,12 +957,13 @@ hr.addr {
   #n-copyright-notice {
     border-bottom: none;
   }
-  #toc, #n-introduction {
-    page-break-before: always;
-  }
   #toc {
+    page-break-before: always;
     border-top: none;
     padding-top: 0;
+  }
+  #n-introduction {
+    page-break-before: always;
   }
   figure, pre, .vcard {
     page-break-inside: avoid;
@@ -1028,17 +1025,19 @@ hr.addr {
 }
 
 /* SVG Trick: a prefix match works because only black and white are allowed */
-svg :is([stroke="black"], [stroke^="#000"]) {
-  stroke: var(--text-color);
-}
-svg :is([stroke="white"], [stroke^="#fff"]) {
-  stroke: var(--background-color);
-}
-svg :is([fill="black"], [fill^="#000"], :not([fill])) {
-  fill: var(--text-color);
-}
-svg :is([fill="white"], [fill^="#fff"]) {
-  fill: var(--background-color);
+svg {
+  & :is([stroke="black"], [stroke^="#000"]) {
+    stroke: var(--text-color);
+  }
+  & :is([stroke="white"], [stroke^="#fff"]) {
+    stroke: var(--background-color);
+  }
+  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+    fill: var(--text-color);
+  }
+  & :is([fill="white"], [fill^="#fff"]) {
+    fill: var(--background-color);
+  }
 }
 </style>
 
@@ -1048,11 +1047,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">IANA &amp; RFC Editor YANG Guidance</td>
-<td class="right">April 2026</td>
+<td class="right">July 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Wilton</td>
-<td class="center">Expires 19 October 2026</td>
+<td class="center">Expires 7 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1064,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-netmod-iana-yang-guidance-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-04-17" class="published">17 April 2026</time>
+<time datetime="2026-07-06" class="published">6 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-10-19">19 October 2026</time></dd>
+<dd class="expires"><time datetime="2027-01-07">7 January 2027</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1120,7 +1119,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1426,51 +1425,47 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-conventions-and-definitions">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
       </h2>
-<p id="section-3-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
-"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
-described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">This document uses the following terminology from <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>:<a href="#section-3-2" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-3-3">
-        <dt id="section-3-3.1"><strong>Backwards-Compatible (BC) Change</strong></dt>
-        <dd style="margin-left: 1.5em" id="section-3-3.2">
-          <p id="section-3-3.2.1">A change to a YANG module that conforms to the backwards-compatible update rules defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15#section-3.1.1" class="relref">Section 3.1.1</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. BC changes require incrementing the MINOR version number.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
+<p id="section-3-1">This document uses the following terminology from <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>:<a href="#section-3-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-3-2">
+        <dt id="section-3-2.1"><strong>Backwards-Compatible (BC) Change</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-3-2.2">
+          <p id="section-3-2.2.1">A change to a YANG module that conforms to the backwards-compatible update rules defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-17#section-3.1.1" class="relref">Section 3.1.1</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. BC changes require incrementing the MINOR version number.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-3-3.3"><strong>Non-Backwards-Compatible (NBC) Change</strong></dt>
-        <dd style="margin-left: 1.5em" id="section-3-3.4">
-          <p id="section-3-3.4.1">A change to a YANG module that does not conform to the backwards-compatible update rules defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15#section-3.1.2" class="relref">Section 3.1.2</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. NBC changes require incrementing the MAJOR version number and adding the <code>rev:non-backwards-compatible</code> extension statement within the <code>revision</code> statement in the YANG module.<a href="#section-3-3.4.1" class="pilcrow">¶</a></p>
+<dt id="section-3-2.3"><strong>Non-Backwards-Compatible (NBC) Change</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-3-2.4">
+          <p id="section-3-2.4.1">A change to a YANG module that does not conform to the backwards-compatible update rules defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-17#section-3.1.2" class="relref">Section 3.1.2</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. NBC changes require incrementing the MAJOR version number and adding the <code>rev:non-backwards-compatible</code> extension statement within the <code>revision</code> statement in the YANG module.<a href="#section-3-2.4.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-3-4">This document uses the following terminology from <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span>:<a href="#section-3-4" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-3-5">
-        <dt id="section-3-5.1"><strong>YANG Semver</strong></dt>
-        <dd style="margin-left: 1.5em" id="section-3-5.2">
-          <p id="section-3-5.2.1">YANG Semantic Versioning - a version identifier in the format <em>MAJOR.MINOR.PATCH_COMPAT</em> that indicates the compatibility level of a YANG module, as defined in <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span>.<a href="#section-3-5.2.1" class="pilcrow">¶</a></p>
+<p id="section-3-3">This document uses the following terminology from <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span>:<a href="#section-3-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-3-4">
+        <dt id="section-3-4.1"><strong>YANG Semver</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-3-4.2">
+          <p id="section-3-4.2.1">YANG Semantic Versioning - a version identifier in the format <em>MAJOR.MINOR.PATCH_COMPAT</em> that indicates the compatibility level of a YANG module, as defined in <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span>.<a href="#section-3-4.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-3-5.3"><strong>Editorial Change</strong></dt>
-        <dd style="margin-left: 1.5em" id="section-3-5.4">
-          <p id="section-3-5.4.1">A change to a YANG module that does not affect the semantic meaning or functionality of the module. Editorial changes only require incrementing the PATCH version number, as described in section 4.4 of <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span>.<a href="#section-3-5.4.1" class="pilcrow">¶</a></p>
+<dt id="section-3-4.3"><strong>Editorial Change</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-3-4.4">
+          <p id="section-3-4.4.1">A change to a YANG module that does not affect the semantic meaning or functionality of the module. Editorial changes only require incrementing the PATCH version number, as described in section 4.4 of <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span>.<a href="#section-3-4.4.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-3-6">In addition, this document uses this terms from <span>[<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>:<a href="#section-3-6" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-3-7">
-        <dt id="section-3-7.1"><strong>IANA-maintained module</strong></dt>
-        <dd style="margin-left: 1.5em" id="section-3-7.2">
-          <p id="section-3-7.2.1">A YANG module that is maintained by IANA and has an IANA registry associated with it (e.g., "iana-tunnel-type" <span>[<a href="#RFC8675" class="cite xref">RFC8675</a>]</span> or "iana-pseudowire-types" <span>[<a href="#RFC9291" class="cite xref">RFC9291</a>]</span>).<a href="#section-3-7.2.1" class="pilcrow">¶</a></p>
+<p id="section-3-5">In addition, this document uses this terms from <span>[<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>:<a href="#section-3-5" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-3-6">
+        <dt id="section-3-6.1"><strong>IANA-maintained module</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-3-6.2">
+          <p id="section-3-6.2.1">A YANG module that is maintained by IANA and has an IANA registry associated with it (e.g., "iana-tunnel-type" <span>[<a href="#RFC8675" class="cite xref">RFC8675</a>]</span> or "iana-pseudowire-types" <span>[<a href="#RFC9291" class="cite xref">RFC9291</a>]</span>).<a href="#section-3-6.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-3-7.3"></dt>
-        <dd style="margin-left: 1.5em" id="section-3-7.4">
-          <p id="section-3-7.4.1">Once an IANA-maintained YANG module is initialized, new values are not directly added to the module. These values are instead added to the companion registry, a new version of the IANA-maintained is generated based on the changes made to the registry.<a href="#section-3-7.4.1" class="pilcrow">¶</a></p>
+<dt id="section-3-6.3"></dt>
+        <dd style="margin-left: 1.5em" id="section-3-6.4">
+          <p id="section-3-6.4.1">Once an IANA-maintained YANG module is initialized, new values are not directly added to the module. These values are instead added to the companion registry, a new version of the IANA-maintained is generated based on the changes made to the registry.<a href="#section-3-6.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-3-7.5"><strong>IETF module</strong></dt>
-        <dd style="margin-left: 1.5em" id="section-3-7.6">
-          <p id="section-3-7.6.1">A YANG module that is published by the IETF and that is not maintained by IANA.<a href="#section-3-7.6.1" class="pilcrow">¶</a></p>
+<dt id="section-3-6.5"><strong>IETF module</strong></dt>
+        <dd style="margin-left: 1.5em" id="section-3-6.6">
+          <p id="section-3-6.6.1">A YANG module that is published by the IETF and that is not maintained by IANA.<a href="#section-3-6.6.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
@@ -1514,7 +1509,7 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
             <p id="section-4.1-5.3.1">A non-backwards-compatible change would update it to <em>2.0.0</em>.<a href="#section-4.1-5.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.1-6">Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-04") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA-maintained YANG modules <span class="bcp14">SHOULD</span> always be at version "1.0.0" or later, and <span class="bcp14">SHOULD</span> never include a pre-release suffix.  The initial published version <span class="bcp14">SHOULD</span> be "1.0.0".<a href="#section-4.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.1-6">Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-04") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA-maintained YANG modules should always be at version "1.0.0" or later, and should never include a pre-release suffix.  The initial published version should be "1.0.0".<a href="#section-4.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="backwards-compatibility-rules">
@@ -1522,8 +1517,8 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
         <h3 id="name-backwards-compatibility-rul">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-backwards-compatibility-rul" class="section-name selfRef">Backwards Compatibility Rules</a>
         </h3>
-<p id="section-4.2-1">The rules that determine whether a change to a YANG module is backwards-compatible or non-backwards-compatible are defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15#section-3.1" class="relref">Section 3.1</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. These rules refine and extend the update rules specified in <span><a href="https://rfc-editor.org/rfc/rfc7950#section-11" class="relref">Section 11</a> of [<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2"><span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15#section-3.1.1" class="relref">Section 3.1.1</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines backwards-compatible changes; examples include:<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">The rules that determine whether a change to a YANG module is backwards-compatible or non-backwards-compatible are defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-17#section-3.1" class="relref">Section 3.1</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. These rules refine and extend the update rules specified in <span><a href="https://rfc-editor.org/rfc/rfc7950#section-11" class="relref">Section 11</a> of [<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-2"><span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-17#section-3.1.1" class="relref">Section 3.1.1</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines backwards-compatible changes; examples include:<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2-3.1">
             <p id="section-4.2-3.1.1">Adding new schema nodes (e.g., new enum values, identities, leafs, containers)<a href="#section-4.2-3.1.1" class="pilcrow">¶</a></p>
@@ -1535,7 +1530,7 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
             <p id="section-4.2-3.3.1">Changing the status of a schema node from "current" to "deprecated" (e.g., by adding a <code>status deprecated;</code> statement)<a href="#section-4.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.2-4"><span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15#section-3.1.2" class="relref">Section 3.1.2</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines non-backwards-compatible changes; examples include:<a href="#section-4.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.2-4"><span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-17#section-3.1.2" class="relref">Section 3.1.2</a> of [<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines non-backwards-compatible changes; examples include:<a href="#section-4.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2-5.1">
             <p id="section-4.2-5.1.1">Removing schema nodes (unless they already have status "obsolete")<a href="#section-4.2-5.1.1" class="pilcrow">¶</a></p>
@@ -1556,7 +1551,7 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
             <p id="section-4.2-5.6.1">Modifying "description" statements in ways that change semantic meaning or behavior<a href="#section-4.2-5.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.2-6">In addition,  <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-semver-25#section-4.4" class="relref">Section 4.4</a> of [<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span> defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, such as:<a href="#section-4.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.2-6">In addition,  <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-semver-26#section-4.4" class="relref">Section 4.4</a> of [<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span> defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, such as:<a href="#section-4.2-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2-7.1">
             <p id="section-4.2-7.1.1">Corrections to comments, descriptions, or references that do not change the semantic meaning<a href="#section-4.2-7.1.1" class="pilcrow">¶</a></p>
@@ -1575,7 +1570,7 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
         <h3 id="name-the-revnon-backwards-compat">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-the-revnon-backwards-compat" class="section-name selfRef">The rev:non-backwards-compatible Extension</a>
         </h3>
-<p id="section-4.3-1">The YANG module versioning framework <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines the "rev:non-backwards-compatible" extension statement. This extension <span class="bcp14">MUST</span> be added as a substatement of a revision statement whenever that revision contains non-backwards-compatible changes relative to the previous revision.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">The YANG module versioning framework <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines the "rev:non-backwards-compatible" extension statement. This extension must be added as a substatement of a revision statement whenever that revision contains non-backwards-compatible changes relative to the previous revision.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <p id="section-4.3-2">The following example illustrates this extension in use. In the example, an identity 'foo' was added in version 1.3.0, but was subsequently renamed to 'bar' in version 2.0.0. Since renaming is a non-backwards-compatible change, the major version number is incremented and the <code>rev:non-backwards-compatible</code> extension is included in the revision statement in version 2.0.0 of the YANG module:<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 <span id="name-revision-history-example-fr"></span><figure id="figure-1">
           <div class="lang-yang sourcecode" id="section-4.3-3.1">
@@ -1604,17 +1599,17 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
         <h3 id="name-module-immutability">
 <a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-module-immutability" class="section-name selfRef">Module Immutability</a>
         </h3>
-<p id="section-4.4-1">A fundamental principle of YANG module versioning is that once a module revision is published with a specific revision date and version number, its content is immutable (much like an RFC is). The published content of that revision <span class="bcp14">MUST NOT</span> change. Any change to the module content requires publishing a new revision with a new revision date and an updated YANG Semver.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.4-1">A fundamental principle of YANG module versioning is that once a module revision is published with a specific revision date and version number, its content is immutable (much like an RFC is). The published content of that revision must not change. Any change to the module content requires publishing a new revision with a new revision date and an updated YANG Semver.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <p id="section-4.4-2">This immutability principle has important implications:<a href="#section-4.4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.4-3.1">
-            <p id="section-4.4-3.1.1">Normative YANG modules in Internet-Drafts <span class="bcp14">MUST</span> use pre-release versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the content may still change.<a href="#section-4.4-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-3.1.1">Normative YANG modules in Internet-Drafts must use pre-release versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the content may still change.<a href="#section-4.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-3.2">
-            <p id="section-4.4-3.2.1">Once a document containing normative YANG modules is approved by the IESG and has been processed by the RFC Editor, then each normative YANG module version <span class="bcp14">MUST</span> be updated to the correct release version (e.g., 1.0.0 or 2.0.0) before publication in an RFC or before being made available in the IANA YANG Module Names registry <span>[<a href="#IANA-YANG-PARAMETERS" class="cite xref">IANA-YANG-PARAMETERS</a>]</span>.<a href="#section-4.4-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-3.2.1">Once a document containing normative YANG modules is approved by the IESG and has been processed by the RFC Editor, then each normative YANG module version must be updated to the correct release version (e.g., 1.0.0 or 2.0.0) before publication in an RFC or before being made available in the IANA YANG Module Names registry <span>[<a href="#IANA-YANG-PARAMETERS" class="cite xref">IANA-YANG-PARAMETERS</a>]</span>.<a href="#section-4.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-3.3">
-            <p id="section-4.4-3.3.1">IANA-maintained YANG modules <span class="bcp14">MUST</span> publish a new YANG module revision any time IANA registry changes require YANG module updates.<a href="#section-4.4-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-3.3.1">IANA-maintained YANG modules must publish a new YANG module revision any time IANA registry changes require YANG module updates.<a href="#section-4.4-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1632,21 +1627,21 @@ appear in all capitals, as shown here.<a href="#section-3-1" class="pilcrow">¶<
         <h3 id="name-core-requirements">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-core-requirements" class="section-name selfRef">Core Requirements</a>
         </h3>
-<p id="section-5.1-1">All new normative YANG modules published by the RFC Editor or maintained by IANA <span class="bcp14">MUST</span> meet the following requirements:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">All new normative YANG modules published by the RFC Editor or maintained by IANA must meet the following requirements:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.1-2">
 <li id="section-5.1-2.1">
-            <p id="section-5.1-2.1.1"><strong>YANG Semver Version</strong>: Every normative YANG module <span class="bcp14">MUST</span> include a semantic version number using the <code>ysv:version</code> statement in its most recent revision. The version <span class="bcp14">MUST</span> be correct relative to any previous version of the same module published either by the RFC editor or on the IANA website.<a href="#section-5.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-2.1.1"><strong>YANG Semver Version</strong>: Every normative YANG module must include a semantic version number using the <code>ysv:version</code> statement in its most recent revision. The version must be correct relative to any previous version of the same module published either by the RFC editor or on the IANA website.<a href="#section-5.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-2.2">
-            <p id="section-5.1-2.2.1"><strong>NBC Extension for NBC Changes</strong>: If the normative YANG module contains non-backwards-compatible changes relative to the previously published version, the revision statement <span class="bcp14">MUST</span> include the <code>rev:non-backwards-compatible</code> extension.<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-2.2.1"><strong>NBC Extension for NBC Changes</strong>: If the normative YANG module contains non-backwards-compatible changes relative to the previously published version, the revision statement must include the <code>rev:non-backwards-compatible</code> extension.<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2.2.2">
 In current tooling, general enforcement of this rule is performed by update comparison checks such as the <code>--check-update-from</code> option to <code>pyang</code>. Please also note, the <code>pyang</code> checks provided by the <code>--ietf</code> option only provide a narrower validation based on revision-to-revision YANG Semver major-version changes.<a href="#section-5.1-2.2.2" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-2.3">
-            <p id="section-5.1-2.3.1"><strong>Revision Immutability</strong>: A published YANG module with a specific revision date and version number is immutable. Its content <span class="bcp14">MUST NOT</span> change without also changing the revision date and version number. For this reason, normative YANG modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-05, where the -05 is the Internet Draft number where the YANG module was updated) to indicate that content may still change before final publication.<a href="#section-5.1-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-2.3.1"><strong>Revision Immutability</strong>: A published YANG module with a specific revision date and version number is immutable. Its content must not change without also changing the revision date and version number. For this reason, normative YANG modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-05, where the -05 is the Internet Draft number where the YANG module was updated) to indicate that content may still change before final publication.<a href="#section-5.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-2.4">
-            <p id="section-5.1-2.4.1"><strong>RFC Code Markers</strong>: Normative YANG modules in RFCs <span class="bcp14">MUST</span> be properly marked with <code>&lt;CODE BEGINS&gt;</code> and <code>&lt;CODE ENDS&gt;</code> markers (or equivalent in the source format) to enable automated extraction per <span><a href="https://rfc-editor.org/rfc/rfc9907#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>. The markers <span class="bcp14">MUST</span> include the filename following the conventions in <span>[<a href="#I-D.ietf-netmod-yang-module-filename" class="cite xref">I-D.ietf-netmod-yang-module-filename</a>]</span>.<a href="#section-5.1-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-2.4.1"><strong>RFC Code Markers</strong>: Normative YANG modules in RFCs must be properly marked with <code>&lt;CODE BEGINS&gt;</code> and <code>&lt;CODE ENDS&gt;</code> markers (or equivalent in the source format) to enable automated extraction per <span><a href="https://rfc-editor.org/rfc/rfc9907#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>. The markers must include the filename following the conventions in <span>[<a href="#I-D.ietf-netmod-yang-module-filename" class="cite xref">I-D.ietf-netmod-yang-module-filename</a>]</span>.<a href="#section-5.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
@@ -1685,7 +1680,7 @@ In current tooling, general enforcement of this rule is performed by update comp
               <p id="section-5.2.2-2.4.1">Standardizing formatting and style<a href="#section-5.2.2-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-5.2.2-3">These editorial changes are appropriate and expected. Consistent with the editing practices when preparing edited RFCs, the RFC Editor <span class="bcp14">SHOULD</span>:<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2.2-3">These editorial changes are appropriate and expected. Consistent with the editing practices when preparing edited RFCs, the RFC Editor should:<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.2-4.1">
               <p id="section-5.2.2-4.1.1">Coordinate with document authors regarding any substantive changes.<a href="#section-5.2.2-4.1.1" class="pilcrow">¶</a></p>
@@ -1712,7 +1707,7 @@ In current tooling, general enforcement of this rule is performed by update comp
           <h4 id="name-step-3-finalizing-the-modul">
 <a href="#section-5.2.3" class="section-number selfRef">5.2.3. </a><a href="#name-step-3-finalizing-the-modul" class="section-name selfRef">Step 3: Finalizing the Module Version</a>
           </h4>
-<p id="section-5.2.3-1">Before publication, each normative YANG module version <span class="bcp14">MUST</span> be updated from the pre-release version to a release version. The RFC Editor, in coordination with the document authors:<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.2.3-1">Before publication, each normative YANG module version must be updated from the pre-release version to a release version. The RFC Editor, in coordination with the document authors:<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.3-2.1">
               <p id="section-5.2.3-2.1.1">Updates the revision date to reflect the date of the final revision for each normative YANG module.<a href="#section-5.2.3-2.1.1" class="pilcrow">¶</a></p>
@@ -1741,9 +1736,9 @@ In current tooling, general enforcement of this rule is performed by update comp
 <a href="#section-5.2.4" class="section-number selfRef">5.2.4. </a><a href="#name-step-4-validate-the-module" class="section-name selfRef">Step 4: Validate the Module</a>
           </h4>
 <p id="section-5.2.4-1">Normative YANG modules are expected to be provided to the RFC Editor for publication already passing validation (<code>pyang</code> and <code>yanglint</code>).  However, it is possible that mistakes could be introduced when editing a YANG module so validation should be re-run to ensure that IETF does not publish invalid YANG modules.<a href="#section-5.2.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.2.4-2">After all updates are completed, or as updates are made, and after any formatting, then appropriate YANG validation tools <span class="bcp14">MUST</span> be run over the resultant module to ensure that there are no warnings or errors.  At time of publication, it is suggested that both <code>pyang</code> validation (<a href="#pyang-validation" class="auto internal xref">Appendix A.1.1.1</a>) and <code>yanglint</code> validation (<a href="#yang-lint-validation" class="auto internal xref">Appendix A.1.2</a>) be performed.<a href="#section-5.2.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.2.4-2">After all updates are completed, or as updates are made, and after any formatting, then appropriate YANG validation tools must be run over the resultant module to ensure that there are no warnings or errors.  At time of publication, it is suggested that both <code>pyang</code> validation (<a href="#pyang-validation" class="auto internal xref">Appendix A.1.1.1</a>) and <code>yanglint</code> validation (<a href="#yang-lint-validation" class="auto internal xref">Appendix A.1.2</a>) be performed.<a href="#section-5.2.4-2" class="pilcrow">¶</a></p>
 <p id="section-5.2.4-3">If the tools return any warnings or errors then the authors should help fix them, potentially seeking additional guidance if required, as per <a href="#sec-additional-guidance" class="auto internal xref">Section 7</a>.<a href="#section-5.2.4-3" class="pilcrow">¶</a></p>
-<p id="section-5.2.4-4">If further changes are made, then for previously published modules, the step 3 versioning check <span class="bcp14">MUST</span> be re-run to ensure that the module version is still correct.<a href="#section-5.2.4-4" class="pilcrow">¶</a></p>
+<p id="section-5.2.4-4">If further changes are made, then for previously published modules, the step 3 versioning check must be re-run to ensure that the module version is still correct.<a href="#section-5.2.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="step-5-iana-delay-of-publication">
@@ -1751,7 +1746,7 @@ In current tooling, general enforcement of this rule is performed by update comp
           <h4 id="name-step-5-iana-delay-of-public">
 <a href="#section-5.2.5" class="section-number selfRef">5.2.5. </a><a href="#name-step-5-iana-delay-of-public" class="section-name selfRef">Step 5: IANA Delay of Publication</a>
           </h4>
-<p id="section-5.2.5-1">IANA <span class="bcp14">SHOULD</span> delay publishing a normative YANG module to the IANA YANG Parameters registry until the RFC Editor has completed editing the module. This coordination ensures that:<a href="#section-5.2.5-1" class="pilcrow">¶</a></p>
+<p id="section-5.2.5-1">IANA should delay publishing a normative YANG module to the IANA YANG Parameters registry until the RFC Editor has completed editing the module. This coordination ensures that:<a href="#section-5.2.5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2.5-2.1">
               <p id="section-5.2.5-2.1.1">The IANA-published version matches the RFC-published version exactly<a href="#section-5.2.5-2.1.1" class="pilcrow">¶</a></p>
@@ -1811,7 +1806,7 @@ In current tooling, general enforcement of this rule is performed by update comp
             <p id="section-6.1-2.3.1"><strong>iana-bgp-types.yang</strong> - derived from BGP Parameters registries <span>[<a href="#iana-bgp-parameters" class="cite xref">iana-bgp-parameters</a>]</span><a href="#section-6.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.1-3">When these registries are updated, the corresponding YANG modules <span class="bcp14">MUST</span> be updated accordingly by IANA, following the same versioning rules described in <a href="#sec-background" class="auto internal xref">Section 4</a>.  These considerations <span class="bcp14">MUST</span> be followed in addition to the guidance in <span><a href="https://rfc-editor.org/rfc/rfc9907#section-5.3" class="relref">Section 5.3</a> of [<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-3">When these registries are updated, the corresponding YANG modules must be updated accordingly by IANA, following the same versioning rules described in <a href="#sec-background" class="auto internal xref">Section 4</a>.  These considerations must be followed in addition to the guidance in <span><a href="https://rfc-editor.org/rfc/rfc9907#section-5.3" class="relref">Section 5.3</a> of [<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="characteristics-of-iana-maintained-modules">
@@ -1903,13 +1898,13 @@ In current tooling, general enforcement of this rule is performed by update comp
 <p id="section-6.3.1-1">IANA registries and YANG modules use the term <em>deprecated</em> differently:<a href="#section-6.3.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.3.1-2.1">
-              <p id="section-6.3.1-2.1.1">In IANA registries, deprecated generally means the value <span class="bcp14">SHOULD NOT</span> be used for new deployments.<a href="#section-6.3.1-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-6.3.1-2.1.1">In IANA registries, deprecated generally means the value should not be used for new deployments.<a href="#section-6.3.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.3.1-2.2">
               <p id="section-6.3.1-2.2.1">In YANG modules, <code>status deprecated</code> means the definition is still supported (including for new deployments) but it is expected to be obsoleted (or removed) in a future module version.<a href="#section-6.3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-6.3.1-3">To avoid confusion, when an IANA registry entry is marked deprecated, the corresponding enum or identity description <span class="bcp14">SHOULD</span> include indicate that the base IANA registry entry is deprecated and therefore the entry <span class="bcp14">SHOULD NOT</span> be used. I.e., the following sentence <span class="bcp14">SHOULD</span> be added to the end of the enum/identity description: <code>This value is deprecated in the base IANA registry which means that its use is NOT RECOMMENDED.</code><a href="#section-6.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.3.1-3">To avoid confusion, when an IANA registry entry is marked deprecated, the corresponding enum or identity description should indicate that the base IANA registry entry is deprecated and therefore the entry should not be used. I.e., the following sentence should be added to the end of the enum/identity description: <code>This value is deprecated in the base IANA registry which means that its use is NOT RECOMMENDED.</code><a href="#section-6.3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2262,23 +2257,19 @@ Thank you for your guidance.
 <dl class="references">
 <dt id="I-D.ietf-netmod-yang-module-filename">[I-D.ietf-netmod-yang-module-filename]</dt>
         <dd>
-<span class="refAuthor">Andersson, P.</span>, <span class="refTitle">"YANG module file name convention"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-module-filename-08</span>, <time datetime="2026-04-15" class="refDate">15 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-filename-08">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-filename-08</a>&gt;</span>. </dd>
+<span class="refAuthor">Andersson, P.</span>, <span class="refTitle">"YANG module file name convention"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-module-filename-14</span>, <time datetime="2026-06-04" class="refDate">4 June 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-filename-14">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-filename-14</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-netmod-yang-module-versioning">[I-D.ietf-netmod-yang-module-versioning]</dt>
         <dd>
-<span class="refAuthor">Wilton, R.</span>, <span class="refAuthor">Rahman, R.</span>, <span class="refAuthor">Lengyel, B.</span>, <span class="refAuthor">Clarke, J.</span>, and <span class="refAuthor">J. Sterne</span>, <span class="refTitle">"Updated YANG Module Revision Handling"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-module-versioning-15</span>, <time datetime="2025-10-18" class="refDate">18 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-15</a>&gt;</span>. </dd>
+<span class="refAuthor">Wilton, R.</span>, <span class="refAuthor">Rahman, R.</span>, <span class="refAuthor">Lengyel, B.</span>, <span class="refAuthor">Clarke, J.</span>, and <span class="refAuthor">J. Sterne</span>, <span class="refTitle">"Updated YANG Module Revision Handling"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-module-versioning-17</span>, <time datetime="2026-06-29" class="refDate">29 June 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-17">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-module-versioning-17</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-netmod-yang-semver">[I-D.ietf-netmod-yang-semver]</dt>
         <dd>
-<span class="refAuthor">Clarke, J.</span>, <span class="refAuthor">Wilton, R.</span>, <span class="refAuthor">Rahman, R.</span>, <span class="refAuthor">Lengyel, B.</span>, <span class="refAuthor">Sterne, J.</span>, and <span class="refAuthor">B. Claise</span>, <span class="refTitle">"YANG Semantic Versioning"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-semver-25</span>, <time datetime="2026-04-13" class="refDate">13 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-semver-25">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-semver-25</a>&gt;</span>. </dd>
+<span class="refAuthor">Clarke, J.</span>, <span class="refAuthor">Wilton, R.</span>, <span class="refAuthor">Rahman, R.</span>, <span class="refAuthor">Lengyel, B.</span>, <span class="refAuthor">Sterne, J.</span>, and <span class="refAuthor">B. Claise</span>, <span class="refTitle">"YANG Semantic Versioning"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-semver-26</span>, <time datetime="2026-05-07" class="refDate">7 May 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-semver-26">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-semver-26</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA-YANG-PARAMETERS">[IANA-YANG-PARAMETERS]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"YANG Parameters"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/yang-parameters/yang-parameters.xhtml">https://www.iana.org/assignments/yang-parameters/yang-parameters.xhtml</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC2119">[RFC2119]</dt>
-        <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6020">[RFC6020]</dt>
         <dd>
@@ -2287,10 +2278,6 @@ Thank you for your guidance.
 <dt id="RFC7950">[RFC7950]</dt>
         <dd>
 <span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refTitle">"The YANG 1.1 Data Modeling Language"</span>, <span class="seriesInfo">RFC 7950</span>, <span class="seriesInfo">DOI 10.17487/RFC7950</span>, <time datetime="2016-08" class="refDate">August 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7950">https://www.rfc-editor.org/rfc/rfc7950</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8174">[RFC8174]</dt>
-        <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8340">[RFC8340]</dt>
         <dd>
@@ -2315,7 +2302,7 @@ Thank you for your guidance.
 <dl class="references">
 <dt id="I-D.ietf-netmod-yang-schema-comparison">[I-D.ietf-netmod-yang-schema-comparison]</dt>
         <dd>
-<span class="refAuthor">Andersson, P.</span>, <span class="refAuthor">Wilton, R.</span>, and <span class="refAuthor">M. Vaško</span>, <span class="refTitle">"YANG Schema Comparison"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-schema-comparison-06</span>, <time datetime="2026-02-15" class="refDate">15 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-schema-comparison-06">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-schema-comparison-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Andersson, P.</span>, <span class="refAuthor">Wilton, R.</span>, and <span class="refAuthor">M. Vaško</span>, <span class="refTitle">"YANG Schema Comparison"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-yang-schema-comparison-09</span>, <time datetime="2026-07-03" class="refDate">3 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-schema-comparison-09">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-yang-schema-comparison-09</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.mahesh-veloce-yang">[I-D.mahesh-veloce-yang]</dt>
         <dd>
@@ -2392,13 +2379,13 @@ Thank you for your guidance.
           </ol>
 <p id="appendix-A.1.1-4"><strong>Installation</strong>: <code>pyang</code> is available via PyPI (<code>pip install pyang</code>) or from <a href="https://github.com/mbj4668/pyang">https://github.com/mbj4668/pyang</a>.  It is recommended to periodically check and update the version to pick up bugfixes and new functionality (which could include stricter checks).<a href="#appendix-A.1.1-4" class="pilcrow">¶</a></p>
 <p id="appendix-A.1.1-5"><strong>Note to RFC Editor and reviewers, some of the tooling enhancements documented here are not yet been merged into the master pyang repository, so depending on publication timing we need to add further references.</strong><a href="#appendix-A.1.1-5" class="pilcrow">¶</a></p>
-<p id="appendix-A.1.1-6">To ensure that <code>pyang</code> correctly processes the YANG files, then the correct versions of any YANG module dependencies must also be used, this is often the latest version of the published YANG modules, but if a draft contains a set of YANG modules, or if there are set of drafts with YANG modules being published together then all the YANG modules in those drafts <span class="bcp14">MUST</span> be extracted together and validated.  These dependent YANG modules can either be stored in the same directory as the YANG module being validated/checked, or they can be stored in a separate directory and passed using the <code>-p</code> argument to provide a path to the directory.<a href="#appendix-A.1.1-6" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1-6">To ensure that <code>pyang</code> correctly processes the YANG files, then the correct versions of any YANG module dependencies must also be used, this is often the latest version of the published YANG modules, but if a draft contains a set of YANG modules, or if there are set of drafts with YANG modules being published together then all the YANG modules in those drafts must be extracted together and validated.  These dependent YANG modules can either be stored in the same directory as the YANG module being validated/checked, or they can be stored in a separate directory and passed using the <code>-p</code> argument to provide a path to the directory.<a href="#appendix-A.1.1-6" class="pilcrow">¶</a></p>
 <div id="pyang-validation">
 <section id="appendix-A.1.1.1">
             <h5 id="name-basic-yang-syntax-validatio">
 <a href="#appendix-A.1.1.1" class="section-number selfRef">A.1.1.1. </a><a href="#name-basic-yang-syntax-validatio" class="section-name selfRef">Basic YANG Syntax Validation</a>
             </h5>
-<p id="appendix-A.1.1.1-1">This command below validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. Normative IETF YANG modules and IANA-maintained YANG modules <span class="bcp14">SHOULD</span> have no errors or warnings before publication.<a href="#appendix-A.1.1.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.1-1">This command below validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. Normative IETF YANG modules and IANA-maintained YANG modules should have no errors or warnings before publication.<a href="#appendix-A.1.1.1-1" class="pilcrow">¶</a></p>
 <div class="lang-shell sourcecode" id="appendix-A.1.1.1-2">
 <pre>
 pyang --ietf --strict --max-line-length=69 -Werror -p &lt;dep-module-directory&gt; ietf-module-name.yang
@@ -2959,7 +2946,7 @@ typedef interface-type {
 <p id="appendix-B.2.4-3"><strong>Classification</strong>: Non-Backwards-Compatible (NBC)<a href="#appendix-B.2.4-3" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.4-4"><strong>Version Change</strong>: Increment MAJOR version (e.g., 2.4.0 → 3.0.0)<a href="#appendix-B.2.4-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.4-5"><strong>NBC Extension Required</strong>: Yes<a href="#appendix-B.2.4-5" class="pilcrow">¶</a></p>
-<p id="appendix-B.2.4-6"><strong>Rationale</strong>: Changing status to obsolete indicates the value <span class="bcp14">MUST NOT</span> be used, breaking compatibility.  Note, the description comment about deprecation can also be removed.<a href="#appendix-B.2.4-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2.4-6"><strong>Rationale</strong>: Changing status to obsolete indicates the value must not be used, breaking compatibility.  Note, the description comment about deprecation can also be removed.<a href="#appendix-B.2.4-6" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.4-7"><strong>Example</strong>:<a href="#appendix-B.2.4-7" class="pilcrow">¶</a></p>
 <p id="appendix-B.2.4-8">Previous version (<em>2.4.0</em>):<a href="#appendix-B.2.4-8" class="pilcrow">¶</a></p>
 <div class="lang-yang sourcecode" id="appendix-B.2.4-9">
