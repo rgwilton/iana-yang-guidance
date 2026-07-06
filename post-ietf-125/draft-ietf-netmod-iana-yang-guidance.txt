@@ -185,9 +185,9 @@ Table of Contents
       there is a broader, ongoing discussion within the IETF community
       around the processes and responsibilities for managing YANG
       modules in RFCs.  For further information and the latest
-      proposals, see [I-D.mahesh-veloce-yang].  The recommendations and
-      operational practices described here may be revised in the future
-      to reflect outcomes from that work.
+      proposals, see [I-D.mahesh-opsawg-veloce-yang].  The
+      recommendations and operational practices described here may be
+      revised in the future to reflect outcomes from that work.
 
    The procedures and classifications in this document are drawn from
    text and general guidance on the following IETF specifications:
@@ -832,10 +832,10 @@ Table of Contents
 
 7.2.  How to Seek Guidance
 
-   Email the YANG Doctors mailing list and the Operations and Management
-   Area Directors (OPS ADs):
+   Email the YANG Doctor Secretaries, who will consult with the YANG
+   Doctors mailing list as needed and then coordinate a response:
 
-   *  *Email*: yang-doctors@ietf.org & ops-ads@ietf.org
+   *  *Email*: yangdoctors-chairs@ietf.org
 
    *  *Purpose*: Technical review and guidance on YANG module
       versioning.
@@ -866,7 +866,7 @@ Table of Contents
 
    Subject: YANG Versioning Question - iana-if-type Update
 
-   Dear YANG Doctors,
+   Dear YANG Doctor Secretaries,
 
    I need guidance on classifying a change to the iana-if-type module.
 
@@ -950,8 +950,9 @@ Table of Contents
    on these tools could cause the tools to give incorrect or misleading
    guidance.  In all cases, secondary evaluation of output of the tools
    should be performed to confirm that they are giving the anticipated
-   results.  The _YANG Doctors_ or _Operations and Management Area
-   Directors_ can also be contacted for further advice, if required.
+   results.  The _YANG Doctor Secretaries_ or _Operations and Management
+   Area Directors_ can also be contacted for further advice, if
+   required.
 
 10.  IANA Considerations
 
@@ -1032,8 +1033,12 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
               yang-schema-comparison-09>.
 
-   [I-D.mahesh-veloce-yang]
-              "*** BROKEN REFERENCE ***".
+   [I-D.mahesh-opsawg-veloce-yang]
+              Jethanandani, M., "YANG deVELpment PrOCEss and maintenance
+              (VELOCE)", Work in Progress, Internet-Draft, draft-mahesh-
+              opsawg-veloce-yang-01, 5 May 2026,
+              <https://datatracker.ietf.org/doc/html/draft-mahesh-
+              opsawg-veloce-yang-01>.
 
    [iana-afnum-registry]
               IANA, "Address Family Numbers", n.d.,
