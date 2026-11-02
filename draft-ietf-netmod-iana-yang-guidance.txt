@@ -91,16 +91,22 @@ Table of Contents
      6.3.  Rules Applicable to IANA-Maintained Modules
        6.3.1.  Special YANG Considerations for Deprecated Registry
                Entries
-     6.4.  Process for Updating IANA-Maintained YANG Modules
-       6.4.1.  Step 1: Follow RFC-Defined Rules
-       6.4.2.  Step 2: Identify the Registry Change
-       6.4.3.  Step 3: Apply Equivalent Changes to the YANG Module
-       6.4.4.  Step 4: Use Pyang Tooling to Check/Recommend Next
+     6.4.  Process for Publishing an Initial IANA-Maintained YANG
+           Module
+       6.4.1.  Step 1: Check the Registry Mapping
+       6.4.2.  Step 2: Finalize the Initial Version
+       6.4.3.  Step 3: Check Formatting and Validate
+       6.4.4.  Step 4: Publish the Initial Module
+     6.5.  Process for Updating IANA-Maintained YANG Modules
+       6.5.1.  Step 1: Follow RFC-Defined Rules
+       6.5.2.  Step 2: Identify the Registry Change
+       6.5.3.  Step 3: Apply Equivalent Changes to the YANG Module
+       6.5.4.  Step 4: Use Pyang Tooling to Check/Recommend Next
                Version
-       6.4.5.  Step 5: Validate the Module
-       6.4.6.  Step 6: Seek additional help if Needed
-       6.4.7.  Step 7: Publish the Updated Module
-     6.5.  Examples
+       6.5.5.  Step 5: Validate the Module
+       6.5.6.  Step 6: Seek additional help if Needed
+       6.5.7.  Step 7: Publish the Updated Module
+     6.6.  Examples
    7.  Seeking Additional Guidance
      7.1.  When to Seek Guidance
      7.2.  How to Seek Guidance
@@ -141,10 +147,8 @@ Table of Contents
 
    *  IANA and RFC Editor to check that they agree with the workflows
 
-   *  OPS ADs & IESG (if needed) that they agree that the IETF should
-      delay publishing YANG modules in approved internet drafts until
-      after the RFC Editor has had the opportunity to review and amend
-      the text.
+   *  OPS ADs & IESG (if needed) to check consistency with the existing
+      YANG module publication process.
 
    *  YANG Doctors and NETMOD to ensure that they are happy with the
       requirements being placed upon them.
@@ -408,8 +412,8 @@ Table of Contents
       the IESG and has been processed by the RFC Editor, then each
       normative YANG module version must be updated to the correct
       release version (e.g., 1.0.0 or 2.0.0) before publication in an
-      RFC or before being made available in the IANA YANG Module Names
-      registry [IANA-YANG-PARAMETERS].
+      RFC and before the published module is made available in the IANA
+      YANG Module Names registry [IANA-YANG-PARAMETERS].
 
    *  IANA-maintained YANG modules must publish a new YANG module
       revision any time IANA registry changes require YANG module
@@ -463,8 +467,9 @@ Table of Contents
 
 5.2.  Workflow Steps
 
-   The following steps describe the coordinated process between the RFC
-   Editor and IANA for handling YANG modules during RFC publication:
+   The following steps apply to normative YANG modules published in
+   RFCs.  IANA-maintained modules omitted from RFCs follow Section 6
+   instead:
 
 5.2.1.  Step 1: IESG Approval with Pre-Release Version
 
@@ -473,6 +478,11 @@ Table of Contents
    1.1.0-03, or 2.0.0-07).  These pre-release versions indicate that the
    module content may still be subject to editorial changes during RFC
    Editor processing.
+
+   At IESG approval, IANA creates the YANG Module Names registry entry
+   [IANA-YANG-PARAMETERS] with the module name and a reference to the
+   Internet-Draft, but without the module file.  The file is made
+   available only after RFC Editor processing and RFC publication.
 
 5.2.2.  Step 2: RFC Editor Processing
 
@@ -580,18 +590,21 @@ Table of Contents
 
    *  The RFC is published with the final module content
 
-   *  IANA publishes the module version to the IANA YANG Parameters
-      "YANG Module Names" registry at approximately the same time, as
-      per [RFC6020][RFC9890]
+   *  After receiving the RFC publication announcement, IANA extracts
+      and posts the final module file and updates its registry entry to
+      reference the RFC, as per [RFC6020][RFC9890].  There may be a
+      short delay after RFC publication before the module is available
+      in the IANA registry.
 
    *  The module filename follows the conventions in
       [I-D.ietf-netmod-yang-module-filename]
 
 6.  IANA-Maintained YANG Modules
 
-   This section describes the process for IANA to update and publish
-   YANG modules that are maintained by IANA and derived from IANA
-   registries.
+   This section describes the process for IANA to prepare, update, and
+   publish YANG modules derived from IANA registries.  Prior RFC Editor
+   review or editing is not required for IANA-maintained modules, which
+   should be omitted from RFCs at publication.
 
 6.1.  Overview
 
@@ -702,13 +715,43 @@ Table of Contents
    the end of the enum/identity description: This value is deprecated in
    the base IANA registry which means that its use is NOT RECOMMENDED.
 
-6.4.  Process for Updating IANA-Maintained YANG Modules
+6.4.  Process for Publishing an Initial IANA-Maintained YANG Module
+
+   IANA is responsible for checking the initial module before
+   publication:
+
+6.4.1.  Step 1: Check the Registry Mapping
+
+   Use the author-supplied module from the last Internet-Draft available
+   before RFC publication and the instructions in the defining document.
+   IANA should ensure it understands how registry fields map to the YANG
+   definitions and that the module reflects the current registry
+   contents.  Seek clarification as described in Section 7 if needed.
+
+6.4.2.  Step 2: Finalize the Initial Version
+
+   Set the initial published YANG Semver to 1.0.0 and update the
+   revision date to reflect the final revision.
+
+6.4.3.  Step 3: Check Formatting and Validate
+
+   Authors should supply a well-formatted module that validates without
+   warnings or errors.  IANA should check the formatting using
+   Appendix A.1.1.2 and follow the validation procedure in
+   Section 6.5.5.
+
+6.4.4.  Step 4: Publish the Initial Module
+
+   After the defining RFC is published, follow the publication procedure
+   in Section 6.5.7.
+
+6.5.  Process for Updating IANA-Maintained YANG Modules
 
    When a change is made to an IANA registry that has a corresponding
    YANG module, it is recommended that IANA update the module following
    these steps:
 
-6.4.1.  Step 1: Follow RFC-Defined Rules
+6.5.1.  Step 1: Follow RFC-Defined Rules
 
    First, consult the RFC that defines the IANA registry and its
    associated YANG module.  That RFC may specify:
@@ -724,7 +767,7 @@ Table of Contents
    Always follow the specific guidance in the RFC that created the
    registry and module.
 
-6.4.2.  Step 2: Identify the Registry Change
+6.5.2.  Step 2: Identify the Registry Change
 
    Determine exactly what changed in the registry:
 
@@ -738,7 +781,7 @@ Table of Contents
 
    *  Were multiple changes made simultaneously?
 
-6.4.3.  Step 3: Apply Equivalent Changes to the YANG Module
+6.5.3.  Step 3: Apply Equivalent Changes to the YANG Module
 
    Update the YANG module to reflect the registry changes.  For IANA-
    maintained modules, this typically involves:
@@ -762,7 +805,7 @@ Table of Contents
    *  _(Optional) Use tooling to format the YANG module, as described in
       Appendix A.1.1.2._
 
-6.4.4.  Step 4: Use Pyang Tooling to Check/Recommend Next Version
+6.5.4.  Step 4: Use Pyang Tooling to Check/Recommend Next Version
 
    Use the tools described in Appendix A.1.1.3 to recommend or check (if
    provided in step 3) the next module version.  Be aware of the tooling
@@ -774,14 +817,14 @@ Table of Contents
    *  Add rev:non-backwards-compatible extension if NBC changes have
       occurred
 
-6.4.5.  Step 5: Validate the Module
+6.5.5.  Step 5: Validate the Module
 
    Use validation tools, as per Appendix A.1.1.1, to ensure the updated
    module is syntactically correct.  Since these modules are simple,
    just checking with the pyang tool is sufficient but
    yanglint(Appendix A.1.2) may be used as an alternative.
 
-6.4.6.  Step 6: Seek additional help if Needed
+6.5.6.  Step 6: Seek additional help if Needed
 
    In most cases, the classification will be straightforward.  However,
    if any of the following apply, IANA should seek additional guidance
@@ -797,7 +840,7 @@ Table of Contents
    *  Any situation not covered by the guidance above, or examples in
       Appendix B
 
-6.4.7.  Step 7: Publish the Updated Module
+6.5.7.  Step 7: Publish the Updated Module
 
    Once the module is validated and the version is confirmed:
 
@@ -812,7 +855,7 @@ Table of Contents
 
    *  Ensure the new version is discoverable and accessible
 
-6.5.  Examples
+6.6.  Examples
 
    Detailed examples of common scenarios (adding entries, updating
    references, deprecating entries, etc.) are given in Appendix B.
