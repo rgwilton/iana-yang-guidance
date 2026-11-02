@@ -86,7 +86,7 @@ This document provides guidance to the RFC Editor and IANA on managing YANG modu
 This draft should be carefully reviewed by:
 
 - IANA and RFC Editor to check that they agree with the workflows
-- OPS ADs & IESG (if needed) that they agree that the IETF should delay publishing YANG modules in approved internet drafts until after the RFC Editor has had the opportunity to review and amend the text.
+- OPS ADs & IESG (if needed) to check consistency with the existing YANG module publication process.
 - YANG Doctors and NETMOD to ensure that they are happy with the requirements being placed upon them.
 
 # Introduction
@@ -219,7 +219,7 @@ A fundamental principle of YANG module versioning is that once a module revision
 This immutability principle has important implications:
 
 - Normative YANG modules in Internet-Drafts must use pre-release versions (e.g., 0.1.0 or 2.0.0-04) to indicate that the content may still change.
-- Once a document containing normative YANG modules is approved by the IESG and has been processed by the RFC Editor, then each normative YANG module version must be updated to the correct release version (e.g., 1.0.0 or 2.0.0) before publication in an RFC or before being made available in the IANA YANG Module Names registry {{IANA-YANG-PARAMETERS}}.
+- Once a document containing normative YANG modules is approved by the IESG and has been processed by the RFC Editor, then each normative YANG module version must be updated to the correct release version (e.g., 1.0.0 or 2.0.0) before publication in an RFC and before the published module is made available in the IANA YANG Module Names registry {{IANA-YANG-PARAMETERS}}.
 - IANA-maintained YANG modules must publish a new YANG module revision any time IANA registry changes require YANG module updates.
 
 # YANG Modules in Documents Being Published as RFCs {#sec-rfc-workflow}
@@ -242,11 +242,13 @@ All new normative YANG modules published by the RFC Editor or maintained by IANA
 
 ## Workflow Steps
 
-The following steps describe the coordinated process between the RFC Editor and IANA for handling YANG modules during RFC publication:
+The following steps apply to normative YANG modules published in RFCs. IANA-maintained modules omitted from RFCs follow {{sec-iana-modules}} instead:
 
 ### Step 1: IESG Approval with Pre-Release Version
 
 When a document is approved by the IESG, any normative YANG modules it contains typically have pre-release version numbers (e.g., 0.4.0, 1.1.0-03, or 2.0.0-07). These pre-release versions indicate that the module content may still be subject to editorial changes during RFC Editor processing.
+
+At IESG approval, IANA creates the YANG Module Names registry entry {{IANA-YANG-PARAMETERS}} with the module name and a reference to the Internet-Draft, but without the module file. The file is made available only after RFC Editor processing and RFC publication.
 
 ### Step 2: RFC Editor Processing
 
@@ -300,12 +302,12 @@ IANA should delay publishing a normative YANG module to the IANA YANG Parameters
 Once the RFC Editor has finalized the module:
 
 - The RFC is published with the final module content
-- IANA publishes the module version to the IANA YANG Parameters "YANG Module Names" registry at approximately the same time, as per {{RFC6020}}{{RFC9890}}
+- After receiving the RFC publication announcement, IANA extracts and posts the final module file and updates its registry entry to reference the RFC, as per {{RFC6020}}{{RFC9890}}. There may be a short delay after RFC publication before the module is available in the IANA registry.
 - The module filename follows the conventions in {{I-D.ietf-netmod-yang-module-filename}}
 
 # IANA-Maintained YANG Modules {#sec-iana-modules}
 
-This section describes the process for IANA to update and publish YANG modules that are maintained by IANA and derived from IANA registries.
+This section describes the process for IANA to prepare, update, and publish YANG modules derived from IANA registries. Prior RFC Editor review or editing is not required for IANA-maintained modules, which should be omitted from RFCs at publication.
 
 ## Overview
 
@@ -367,6 +369,26 @@ IANA registries and YANG modules use the term *deprecated* differently:
 
 To avoid confusion, when an IANA registry entry is marked deprecated, the corresponding enum or identity description should indicate that the base IANA registry entry is deprecated and therefore the entry should not be used. I.e., the following sentence should be added to the end of the enum/identity description: ```This value is deprecated in the base IANA registry which means that its use is NOT RECOMMENDED.```
 
+## Process for Publishing an Initial IANA-Maintained YANG Module
+
+IANA is responsible for checking the initial module before publication:
+
+### Step 1: Check the Registry Mapping
+
+Use the author-supplied module from the last Internet-Draft available before RFC publication and the instructions in the defining document. IANA should ensure it understands how registry fields map to the YANG definitions and that the module reflects the current registry contents. Seek clarification as described in {{sec-additional-guidance}} if needed.
+
+### Step 2: Finalize the Initial Version
+
+Set the initial published YANG Semver to 1.0.0 and update the revision date to reflect the final revision.
+
+### Step 3: Check Formatting and Validate
+
+Authors should supply a well-formatted module that validates without warnings or errors. IANA should check the formatting using {{pyang-formatting}} and follow the validation procedure in {{iana-module-validation}}.
+
+### Step 4: Publish the Initial Module
+
+After the defining RFC is published, follow the publication procedure in {{iana-module-publication}}.
+
 ## Process for Updating IANA-Maintained YANG Modules
 
 When a change is made to an IANA registry that has a corresponding YANG module, it is recommended that IANA update the module following these steps:
@@ -411,7 +433,7 @@ Use the tools described in {{pyang-next-version}} to recommend or check (if prov
 - Add or update the version statement with the correct version
 - Add `rev:non-backwards-compatible` extension if NBC changes have occurred
 
-### Step 5: Validate the Module
+### Step 5: Validate the Module {#iana-module-validation}
 
 Use validation tools, as per {{pyang-validation}}, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the `pyang` tool is sufficient but `yanglint`({{yang-lint-validation}}) may be used as an alternative.
 
@@ -424,7 +446,7 @@ In most cases, the classification will be straightforward. However, if any of th
 - Description changes, where it is not obvious if they change semantic meaning
 - Any situation not covered by the guidance above, or examples in {{appendix-scenarios}}
 
-### Step 7: Publish the Updated Module
+### Step 7: Publish the Updated Module {#iana-module-publication}
 
 Once the module is validated and the version is confirmed:
 
