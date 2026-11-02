@@ -93,7 +93,9 @@ This draft should be carefully reviewed by:
 
 YANG {{RFC6020}} {{RFC7950}} modules are used to model network management data, protocol RPCs {{RFC8526}}, and even abstract data structures {{RFC8791}}. The IETF publishes YANG modules as part of RFCs, and the Internet Assigned Numbers Authority (IANA) maintains YANG modules that are derived from IANA registries (a.k.a. IANA-maintained YANG modules {{RFC9907}}). Both processes require careful attention to module versioning and the timing of publication to ensure that implementations can correctly assess module version compatibility when modules are updated.
 
-This document provides informational guidance to both the RFC Editor and IANA for managing YANG modules in two distinct scenarios:
+The intended audience for this document is the RFC Editor and IANA. YANG module authors should follow the author guidelines in {{RFC9907}} and the applicable YANG versioning specifications. Authors are expected to provide correctly versioned modules, with assistance from YANG Doctors reviews. The publication checks described here help the RFC Editor and IANA verify that these rules have been applied correctly.
+
+The guidance covers two distinct scenarios:
 
 1. **Managing YANG Modules in RFCs**: When documents containing normative YANG modules are approved by the IESG and processed for publication as RFCs, both the RFC Editor and IANA have responsibilities to ensure that modules are correctly versioned and published.
 
@@ -112,6 +114,9 @@ The procedures and classifications in this document are drawn from text and gene
 
 
 # Conventions and Definitions {#sec-conventions}
+
+**Normative YANG module**
+: A YANG module published as part of a document's specification, rather than solely as an illustrative example.
 
 This document uses the following terminology from {{I-D.ietf-netmod-yang-module-versioning}}:
 
@@ -148,9 +153,9 @@ YANG Semantic Versioning (YANG Semver) {{I-D.ietf-netmod-yang-semver}} uses a ve
 - **MAJOR** version increments indicate non-backwards-compatible (NBC) changes, with *MINOR* and *PATCH* fields reset to 0.
 - **MINOR** version increments indicate backwards-compatible (BC) additions, with the *PATCH* field reset to 0.
 - **PATCH** version increments indicate editorial or documentation-only changes.
-- **_COMPAT** is used for branched development trees and is not applicable to normative modules published by the IETF or IANA-maintained modules.
+- **_COMPAT** is an optional modifier used to describe version compatibility within branched revision histories. IETF and IANA-maintained modules are expected to have linear revision histories and therefore do not normally use this modifier.
 
-If an update to a YANG module contains a mix of changes, then the version number is updated as per the most impactful change.  For example, if a change included both backwards-compatible feature additions and editorial changes then the *MINOR* version field is incremented and the *PATCH* version field is set to 0, e.g., as per the second example below.  If in doubt as to which category a particular change fits into, it is always better to err on the side of caution and choose the more significant version change.
+If an update to a YANG module contains a mix of changes, then the version number is updated as per the most impactful change.  For example, a mix of backwards-compatible feature additions and editorial corrections requires a *MINOR* version increment, with *PATCH* reset to 0.  If in doubt as to which category a particular change fits into, it is always better to err on the side of caution and choose the more significant version change.
 
 For example, if a published IETF YANG module is at version *1.2.3*:
 
@@ -158,7 +163,7 @@ For example, if a published IETF YANG module is at version *1.2.3*:
 - A backwards-compatible addition would update it to *1.3.0*
 - A non-backwards-compatible change would update it to *2.0.0*.
 
-Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-04") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA-maintained YANG modules should always be at version "1.0.0" or later, and should never include a pre-release suffix.  The initial published version should be "1.0.0".
+Pre-release versions indicate modules whose content may still change before final publication. New IETF modules use a MAJOR version of 0 (e.g., 0.2.0); updates to previously published modules use the intended release version followed by the Internet-Draft revision number (e.g., 1.3.0-04). See {{Section 6 of I-D.ietf-netmod-yang-semver}} for the complete development versioning rules. Published IETF and IANA-maintained YANG modules should use version 1.0.0 or later without a pre-release suffix, with 1.0.0 as the initial published version.
 
 ## Backwards Compatibility Rules
 
@@ -213,7 +218,7 @@ A fundamental principle of YANG module versioning is that once a module revision
 
 This immutability principle has important implications:
 
-- Normative YANG modules in Internet-Drafts must use pre-release versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the content may still change.
+- Normative YANG modules in Internet-Drafts must use pre-release versions (e.g., 0.1.0 or 2.0.0-04) to indicate that the content may still change.
 - Once a document containing normative YANG modules is approved by the IESG and has been processed by the RFC Editor, then each normative YANG module version must be updated to the correct release version (e.g., 1.0.0 or 2.0.0) before publication in an RFC or before being made available in the IANA YANG Module Names registry {{IANA-YANG-PARAMETERS}}.
 - IANA-maintained YANG modules must publish a new YANG module revision any time IANA registry changes require YANG module updates.
 
@@ -231,7 +236,7 @@ All new normative YANG modules published by the RFC Editor or maintained by IANA
 
    In current tooling, general enforcement of this rule is performed by update comparison checks such as the `--check-update-from` option to `pyang`. Please also note, the `pyang` checks provided by the `--ietf` option only provide a narrower validation based on revision-to-revision YANG Semver major-version changes.
 
-3. **Revision Immutability**: A published YANG module with a specific revision date and version number is immutable. Its content must not change without also changing the revision date and version number. For this reason, normative YANG modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-05, where the -05 is the Internet Draft number where the YANG module was updated) to indicate that content may still change before final publication.
+3. **Revision Immutability**: A published YANG module with a specific revision date and version number is immutable. Its content must not change without also changing the revision date and version number. For this reason, normative YANG modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-05, where -05 identifies the Internet-Draft revision in which the module revision was introduced or updated) to indicate that content may still change before final publication.
 
 4. **RFC Code Markers**: Normative YANG modules in RFCs must be properly marked with `<CODE BEGINS>` and `<CODE ENDS>` markers (or equivalent in the source format) to enable automated extraction per {{Section 3.2 of RFC9907}}. The markers must include the filename following the conventions in {{I-D.ietf-netmod-yang-module-filename}}.
 
@@ -1302,7 +1307,7 @@ Special thanks to Joe Clarke for his presentation on YANG versioning tooling at 
 
 The authors thank the RFC Editor and IANA teams for their collaboration in refining the operational procedures described in this document.
 
-The authors would like to thank those providing comments on the draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mahesh Jethanandani, Mohamed Boucadair, Reshad Rahman, Sabrina Tanamal, and Sandy Ginoza.
+The authors would like to thank those providing comments on the draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mahesh Jethanandani, Mohamed Boucadair, Qin Wu, Reshad Rahman, Sabrina Tanamal, and Sandy Ginoza.
 
 The authors also thank the NETMOD working group for their extensive work on YANG versioning specifications that form the foundation of this guidance, including the module versioning framework, semantic versioning, and associated tooling.
 
