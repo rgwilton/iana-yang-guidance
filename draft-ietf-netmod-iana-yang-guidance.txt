@@ -4,8 +4,8 @@
 
 NETMOD                                                         R. Wilton
 Internet-Draft                                                     Cisco
-Intended status: Informational                               6 July 2026
-Expires: 7 January 2027
+Intended status: Informational                           2 November 2026
+Expires: 6 May 2027
 
 
      Guidance for Managing YANG Modules in RFCs and IANA Registries
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 6 May 2027.
 
 Copyright Notice
 
@@ -161,8 +161,15 @@ Table of Contents
    implementations can correctly assess module version compatibility
    when modules are updated.
 
-   This document provides informational guidance to both the RFC Editor
-   and IANA for managing YANG modules in two distinct scenarios:
+   The intended audience for this document is the RFC Editor and IANA.
+   YANG module authors should follow the author guidelines in [RFC9907]
+   and the applicable YANG versioning specifications.  Authors are
+   expected to provide correctly versioned modules, with assistance from
+   YANG Doctors reviews.  The publication checks described here help the
+   RFC Editor and IANA verify that these rules have been applied
+   correctly.
+
+   The guidance covers two distinct scenarios:
 
    1.  *Managing YANG Modules in RFCs*: When documents containing
        normative YANG modules are approved by the IESG and processed for
@@ -206,6 +213,10 @@ Table of Contents
       conventions for YANG modules versioned using YANG Semver.
 
 3.  Conventions and Definitions
+
+   *Normative YANG module*  A YANG module published as part of a
+      document's specification, rather than solely as an illustrative
+      example.
 
    This document uses the following terminology from
    [I-D.ietf-netmod-yang-module-versioning]:
@@ -267,18 +278,18 @@ Table of Contents
    *  *PATCH* version increments indicate editorial or documentation-
       only changes.
 
-   *  *_COMPAT* is used for branched development trees and is not
-      applicable to normative modules published by the IETF or IANA-
-      maintained modules.
+   *  *_COMPAT* is an optional modifier used to describe version
+      compatibility within branched revision histories.  IETF and IANA-
+      maintained modules are expected to have linear revision histories
+      and therefore do not normally use this modifier.
 
    If an update to a YANG module contains a mix of changes, then the
    version number is updated as per the most impactful change.  For
-   example, if a change included both backwards-compatible feature
-   additions and editorial changes then the _MINOR_ version field is
-   incremented and the _PATCH_ version field is set to 0, e.g., as per
-   the second example below.  If in doubt as to which category a
-   particular change fits into, it is always better to err on the side
-   of caution and choose the more significant version change.
+   example, a mix of backwards-compatible feature additions and
+   editorial corrections requires a _MINOR_ version increment, with
+   _PATCH_ reset to 0.  If in doubt as to which category a particular
+   change fits into, it is always better to err on the side of caution
+   and choose the more significant version change.
 
    For example, if a published IETF YANG module is at version _1.2.3_:
 
@@ -288,14 +299,15 @@ Table of Contents
 
    *  A non-backwards-compatible change would update it to _2.0.0_.
 
-   Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with
-   a pre-release suffix, e.g., "1.3.0-04") indicate modules that have
-   not completed the IETF standardization process and whose revision
-   content is subject to change in non-backwards-compatible ways without
-   corresponding changes to the major version number.  Published IETF
-   and IANA-maintained YANG modules should always be at version "1.0.0"
-   or later, and should never include a pre-release suffix.  The initial
-   published version should be "1.0.0".
+   Pre-release versions indicate modules whose content may still change
+   before final publication.  New IETF modules use a MAJOR version of 0
+   (e.g., 0.2.0); updates to previously published modules use the
+   intended release version followed by the Internet-Draft revision
+   number (e.g., 1.3.0-04).  See Section 6 of
+   [I-D.ietf-netmod-yang-semver] for the complete development versioning
+   rules.  Published IETF and IANA-maintained YANG modules should use
+   version 1.0.0 or later without a pre-release suffix, with 1.0.0 as
+   the initial published version.
 
 4.2.  Backwards Compatibility Rules
 
@@ -389,8 +401,8 @@ Table of Contents
    This immutability principle has important implications:
 
    *  Normative YANG modules in Internet-Drafts must use pre-release
-      versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the
-      content may still change.
+      versions (e.g., 0.1.0 or 2.0.0-04) to indicate that the content
+      may still change.
 
    *  Once a document containing normative YANG modules is approved by
       the IESG and has been processed by the RFC Editor, then each
@@ -438,9 +450,9 @@ Table of Contents
        number.  For this reason, normative YANG modules in Internet-
        Drafts use pre-release versions (e.g., versions with MAJOR = 0
        such as 0.1.0, or versions with a pre-release suffix such as
-       2.0.0-05, where the -05 is the Internet Draft number where the
-       YANG module was updated) to indicate that content may still
-       change before final publication.
+       2.0.0-05, where -05 identifies the Internet-Draft revision in
+       which the module revision was introduced or updated) to indicate
+       that content may still change before final publication.
 
    4.  *RFC Code Markers*: Normative YANG modules in RFCs must be
        properly marked with <CODE BEGINS> and <CODE ENDS> markers (or
@@ -975,11 +987,11 @@ Table of Contents
 11.1.  Normative References
 
    [I-D.ietf-netmod-yang-module-filename]
-              Andersson, P., "YANG module file name convention", Work in
+              Andersson, P., "YANG Module File Name Convention", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-module-
-              filename-14, 4 June 2026,
+              filename-15, 20 August 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              yang-module-filename-14>.
+              yang-module-filename-15>.
 
    [I-D.ietf-netmod-yang-module-versioning]
               Wilton, R., Rahman, R., Lengyel, B., Clarke, J., and J.
@@ -993,8 +1005,9 @@ Table of Contents
               Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
               J., and B. Claise, "YANG Semantic Versioning", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
-              26, 7 May 2026, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-netmod-yang-semver-26>.
+              29, 6 October 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
+              yang-semver-29>.
 
    [IANA-YANG-PARAMETERS]
               IANA, "YANG Parameters", n.d.,
@@ -1027,11 +1040,11 @@ Table of Contents
 11.2.  Informative References
 
    [I-D.ietf-netmod-yang-schema-comparison]
-              Andersson, P., Wilton, R., and M. Vaško, "YANG Schema
+              Vaško, M., Andersson, P., and R. Wilton, "YANG Schema
               Comparison", Work in Progress, Internet-Draft, draft-ietf-
-              netmod-yang-schema-comparison-09, 3 July 2026,
+              netmod-yang-schema-comparison-10, 22 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              yang-schema-comparison-09>.
+              yang-schema-comparison-10>.
 
    [I-D.mahesh-opsawg-veloce-yang]
               Jethanandani, M., "YANG deVELpment PrOCEss and maintenance
@@ -2018,8 +2031,8 @@ Acknowledgments
 
    The authors would like to thank those providing comments on the
    draft, including: Amanda Baber, Jason Sterne, Joe Clarke, Mahesh
-   Jethanandani, Mohamed Boucadair, Reshad Rahman, Sabrina Tanamal, and
-   Sandy Ginoza.
+   Jethanandani, Mohamed Boucadair, Qin Wu, Reshad Rahman, Sabrina
+   Tanamal, and Sandy Ginoza.
 
    The authors also thank the NETMOD working group for their extensive
    work on YANG versioning specifications that form the foundation of
